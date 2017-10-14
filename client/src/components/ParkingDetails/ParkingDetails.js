@@ -1,7 +1,13 @@
 import React from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer} from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Rectangle} from 'recharts';
 
-import { getFreeSpotsClassName } from '../../helpers';
+import { getFreeSpotsClassName, getFreeSpotsColor } from '../../helpers';
+
+const CustomBar = (props) => {
+    const fill = getFreeSpotsColor(props.freeSpots);
+    return <Rectangle {...props} fill={fill} />
+  };
+
 const ParkingDetails = ({
     detailsPageActiveClassName,
     goBack,
@@ -24,7 +30,7 @@ const ParkingDetails = ({
                     <ResponsiveContainer width="100%" height={200}>
                         <BarChart data={activeParkingChartData}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <Bar dataKey='freeSpots' fill='#68abe6'/>
+                            <Bar dataKey='freeSpots' shape={CustomBar}/>
                             <XAxis dataKey="time"/>
                             <YAxis dataKey="freeSpots" />
                         </BarChart>
