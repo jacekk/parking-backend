@@ -1,20 +1,23 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { getCollection } = require('./repository');
+const { getRepository } = require('./repository');
 const { fetchAndParseParkings } = require('./data-fetch/run');
 
-getCollection((err, collection) => {
-  if (err === null) {
-    console.log("connected successfully");
-  } else {
-    console.log("DATABASE ERROR!!!!");
-  }
-
-  collection.insert({ test: 'test' }, (err, result) => {
-    console.log('inserted data successfully!!!', result);
-  });
-});
+getRepository()
+  .then((repository) => {
+    repository.addParkingEntry({
+      name: 'Test name',
+      time: new Date(),
+      freeSpots: 38,
+      carsIn: 12,
+      carsOut: 5,
+    }).then(() => {
+      repository.getParkingEntries()
+        .then(entries => console.log('entries:', entries));
+    });
+  })
+  .catch(err => console.log(err));
 
 
 /*
