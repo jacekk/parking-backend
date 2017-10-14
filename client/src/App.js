@@ -19,7 +19,7 @@ const Parking = ({ name, freePlaces }) =>
     <li className="parkingList-item">
         <h3 className="parking-name">{name}</h3>
         <span className="parking-data">
-          <label className="parking-label">Wolnych miejsc</label> <span className={getFreePlacesClassName(freePlaces)}>{freePlaces}</span>
+          <label className="parking-label">Miejsca</label> <span className={getFreePlacesClassName(freePlaces)}>{freePlaces}</span>
         </span>
     </li>
 
@@ -29,8 +29,11 @@ class App extends Component {
         super(props)
 
         this.state = {
-            parkings: []
-        }
+            parkings: [],
+            errorMessage: null,
+        };
+
+        this.closeErrorMessage = this.closeErrorMessage.bind(this);
     }
 
     componentDidMount() {
@@ -42,8 +45,37 @@ class App extends Component {
             this.setState(() => ({
                 parkings
             }))
+            if (!parkings.length) {
+              this.setErrorMessage(<div><p><strong>Brak wyników.</strong></p><p>Prosimy spróbować później.</p></div>);
+            }
+        }).catch(error => {
+          this.setErrorMessage(<div><p><strong>Wystąpił nieoczekiwany błąd.</strong></p><p>Prosimy spróbować później.</p></div>);
         });
     }
+
+  setErrorMessage(errorMessage) {
+    this.setState({
+      errorMessage
+    });
+  }
+
+  renderErrorMessage() {
+    const { errorMessage } = this.state;
+    if (!errorMessage) {
+      return null;
+    }
+    return (
+      <div className="error" onClick={this.closeErrorMessage}>
+        { errorMessage }
+      </div>
+    );
+  }
+
+  closeErrorMessage() {
+    this.setState({
+      errorMessage: null
+    });
+  }
 
   render() {
     return (
@@ -51,6 +83,7 @@ class App extends Component {
         <header className="app-header">
           <h1 className="app-title">parkly</h1>
         </header>
+        { this.renderErrorMessage() }
         <main className="app-body">
         <ul className="parkingList">
             {this.state.parkings.map(({name, freePlaces}) => <Parking key={name} name={name} freePlaces={freePlaces} />)}
