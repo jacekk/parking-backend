@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Overpass', sans-serif;
+}
+
+.app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.app-header {
+  background: #fff;
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgb(208, 208, 208);
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  max-height: 60px;
+}
+
+.app-title {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 1.3em;
+  padding: 0.8em;
+}
+
+.app-body {
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+  position: absolute;
+}
+
+/********************************************************/
+
+.parkingList {
+  margin: 0;
+  padding: 0;
+}
+
+.parkingList-item {
+  margin: 0;
+  padding: 10px 20px;
+}
+
+/********************************************************/
+
+.parking-name {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.parking-data {
+  font-size: 0.9em;
+}
+
+.parking-label {
+  color: #717171;
+}
+
+/********************************************************/
+
+.parking-spot {
+  border-radius: 3px;
+  background: black;
+  color: #fff;
+  padding: 2px 5px;
+}
+
+.parking-spot--good {
+  background-color: rgb(0, 186, 3);
+}
+.parking-spot--enough {
+  background-color: rgb(232, 163, 0);
+}
+.parking-spot--shortage {
+  background-color: rgb(255, 98, 0);
+}
+.parking-spot--nospace {
+  background-color: rgb(215, 36, 0);
+}
