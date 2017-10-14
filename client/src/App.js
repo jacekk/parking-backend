@@ -53,14 +53,14 @@ class App extends Component {
         });
     }
 
-    showDetailsPage(event, parkingName) {
+    showDetailsPage(event, parkingName, parkingId) {
         event.preventDefault();
         this.setState({
             activeParkingName: parkingName,
             spinner: true,
         });
         Promise.all([
-            this.props.getHistory(parkingName),
+            this.props.getHistory(parkingId),
             this.props.getPredictions(parkingName),
         ]).then(([ history = [], predictions = []]) => {
             this.setState({
@@ -148,11 +148,11 @@ class App extends Component {
                 <ul className="parkingList">
                     {this.state
                         .parkings
-                        .map(({ name, freeSpots }) => <Parking
-                            key={name}
+                        .map(({ name, freeSpots, id }) => <Parking
+                            key={id}
                             name={name}
                             freeSpots={freeSpots}
-                            onClick={event => this.showDetailsPage(event, name)}
+                            onClick={event => this.showDetailsPage(event, name, id)}
                         />)
                     }
                 </ul>
