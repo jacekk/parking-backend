@@ -1,7 +1,7 @@
 FROM node:8.6
 
-RUN mkdir -p /app
-WORKDIR /app
+RUN mkdir -p /server
+WORKDIR /server
 
 COPY build/docker/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
