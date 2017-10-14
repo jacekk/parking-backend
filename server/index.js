@@ -16,20 +16,20 @@ getRepository()
 
 /*
     name: string,
-    freePlaces: number
+    freeSpots: number
 */
 const fakeParkings = [
     {
         name: 'Renoma',
-        freePlaces: 230,
+        freeSpots: 230,
     },
     {
         name: 'Nowy Targ',
-        freePlaces: 30,
+        freeSpots: 30,
     },
     {
         name: 'Galeria Dominikańska',
-        freePlaces: 0,
+        freeSpots: 0,
     },
 ];
 
