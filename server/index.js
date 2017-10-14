@@ -4,6 +4,8 @@ const cors = require('cors');
 
 const repository = require('./repository');
 
+const { fetchAndParseParkings } = require('./data-fetch/run')
+
 /*
     name: string,
     freePlaces: number

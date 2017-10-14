@@ -7,26 +7,25 @@ const fetchError = (err) => {
     console.error('Fetch error', err);
 }
 
-const appendParsed = (parsed, line) => {
+const appendParsed = (parsed = [], line) => {
     const [time, freeSpots, carsIn, carsOut, location] = line.split(';');
     
-    parsed[location] = parsed[location] || [];
-    
     const newEntry = {
+        name: location,
         time: new Date(time),
         freeSpots: +freeSpots,
         carsIn: +carsIn,
         carsOut: +carsOut,
     };
     
-    parsed[location].push(newEntry);
+    parsed.push(newEntry);
 }
 
 const fetchSuccess = (lines) => {
     if (!Array.isArray(lines)) {
         return new Error('Returned "lines" is not an array.');
     }
-    const parsed = {};
+    const parsed = [];
     Object.keys(lines).forEach((lineIndex) => {
         const line = lines[lineIndex][0];
 
@@ -41,8 +40,7 @@ const fetchSuccess = (lines) => {
         appendParsed(parsed, line);
     });
 
-    console.log('Founded locations:');
-    console.log(Object.keys(parsed));
+    console.log(parsed)
 };
     
 const run = () => {
@@ -52,4 +50,6 @@ const run = () => {
     ;
 };
 
-run();
+module.exports = {
+    fetchAndParseParkings: run,
+}
