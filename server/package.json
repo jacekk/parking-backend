@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "express": "^4.16.2",
-    "request": "^2.83.0"
+    "get-csv": "^3.0.3"
   }
 }
