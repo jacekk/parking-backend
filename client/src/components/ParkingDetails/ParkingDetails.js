@@ -4,7 +4,7 @@ import {BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Rectang
 import { getFreeSpotsClassName, getFreeSpotsColor } from '../../helpers';
 
 const CustomBar = (props) => {
-    const fill = getFreeSpotsColor(props.freeSpots);
+    const fill = getFreeSpotsColor(props.freeSpots, props.isFuture);
     return <Rectangle {...props} fill={fill} />
   };
 

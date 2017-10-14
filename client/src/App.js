@@ -114,9 +114,11 @@ class App extends Component {
   }
   getActiveParkingChartData() {
       const { history, predictions } = this.state;
+      const lastHistoryItem = history[history.length - 1];
       return history.concat(predictions).map(({ freeSpots, time }) => ({
         freeSpots,
-        time: moment(time).fromNow()
+        time: moment(time).fromNow(),
+        isFuture: lastHistoryItem && moment(time).isAfter(lastHistoryItem.time),
       }))
   }
   getBarChartWidth() {
