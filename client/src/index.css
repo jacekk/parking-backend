@@ -60,6 +60,14 @@ body {
   font-weight: bold;
 }
 
+.parking-data {
+  font-size: 0.9em;
+}
+
+.parking-label {
+  color: #717171;
+}
+
 /********************************************************/
 
 .parking-spot {
@@ -70,5 +78,5 @@ body {
 }
 
 .parking-spot--good {
-
+  padding: 2px 5px;
 }

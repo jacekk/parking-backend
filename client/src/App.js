@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const Parking = ({ name, freeSpaces }) => 
+const Parking = ({ name, freeSpaces }) =>
     <li className="parkingList-item">
         <h3 className="parking-name">{name}</h3>
-        Wolnych miejsc: <strong className="parking-spot--good">{freeSpaces}</strong>
+        <span className="parking-data">
+          <label className="parking-label">Wolnych miejsc</label> <span className="parking-spot parking-spot--good">{freeSpaces}</span>
+        </span>
     </li>
 
 
@@ -28,7 +30,7 @@ class App extends Component {
             }))
         });
     }
-    
+
   render() {
     return (
       <div className="app">
@@ -38,6 +40,7 @@ class App extends Component {
         <main className="app-body">
         <ul className="parkingList">
             {this.state.parkings.map(({name, freeSpaces}) => <Parking key={name} name={name} freeSpaces={freeSpaces} />)}
+            <Parking key="galeria" name="Galeria Dominikanska" freeSpaces={32} />
         </ul>
         </main>
       </div>
