@@ -50,8 +50,32 @@ app.get('/parkings', async (req, res) => {
 
 });
 
-app.get('/history/:parkingName', (req, res) => {
-    res.send(historyMock);
+app.get('/history/:id', async (req, res) => {
+    const repo = await getRepository();
+    
+    try {
+        const now = new Date();
+        const entries =  await repo.getParkingEntriesByIdAndTime(
+            req.params.id,
+            {
+                $gte: new Date(
+                  now.getFullYear(),
+                  now.getMonth(),
+                  now.getHours() - 4
+                )
+                   
+            }
+        );
+
+        if (!entries || entries.length === 0) {
+            res.status(404).end();
+        }
+
+        res.send(entries);
+    } catch (err) {
+        console.log(err)
+        res.status(500).end(err);
+    }
 });
 
 app.get('/mocked/parkings', async (req, res) => {
