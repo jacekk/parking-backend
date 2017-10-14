@@ -31,7 +31,7 @@ class App extends Component {
         this.state = {
             parkings: [],
             errorMessage: null,
-            activeParking: null,
+            activeParkingName: null,
         };
 
         this.closeErrorMessage = this.closeErrorMessage.bind(this);
@@ -42,14 +42,14 @@ class App extends Component {
     showListPage(event) {
         event.preventDefault();
         this.setState({
-            activeParking: null
+            activeParkingName: null
         });
     }
 
     showDetailsPage(event, parkingName) {
         event.preventDefault();
         this.setState({
-            activeParking: parkingName
+            activeParkingName: parkingName
         });
     }
 
@@ -94,13 +94,15 @@ class App extends Component {
     });
   }
 
-  getPageClassName(pageName) {
-
+  getActiveParking() {
+      const { activeParkingName, parkings } = this.state;
+      return parkings.filter(({ name }) => name === activeParkingName)[0] || {};
   }
   render() {
-    const { activeParking } = this.state;
-    const listPageActiveClassName = !activeParking ? 'app-page--visible' : 'app-page--hidden';
-    const detailsPageActiveClassName = activeParking ? 'app-page--visible' : 'app-page--hidden';
+    const { activeParkingName } = this.state;
+    const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
+    const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
+    const activeParking = this.getActiveParking();
     return (
       <div className="app">
         <div className={`active-page ${listPageActiveClassName}`}>
@@ -127,7 +129,10 @@ class App extends Component {
                 <button className="app-back" onClick={this.showListPage}>Powrót</button> <h1 className="app-title">parkly</h1>
             </header>
             <section className="app-body">
-                <p>Parking details</p>
+                <h3 className="parking-name">{activeParking.name}</h3>
+                <span className="parking-data">
+                    <label className="parking-label">Wolne miejsca obecnie</label> <span className={getFreeSpotsClassName(activeParking.freeSpots)}>{activeParking.freeSpots}</span>
+                </span>
             </section>
         </div>
       </div>
