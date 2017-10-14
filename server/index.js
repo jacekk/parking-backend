@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const moment = require('moment');
 
 const { getRepository } = require('./repository');
 const { fetchAndParseParkings } = require('./data-fetch/run');
@@ -50,8 +51,27 @@ app.get('/parkings', async (req, res) => {
 
 });
 
-app.get('/history/:parkingName', (req, res) => {
-    res.send(historyMock);
+app.get('/history/:id', async (req, res) => {
+    const repo = await getRepository();
+    
+    try {
+        const now = new Date();
+        const entries =  await repo.getParkingEntriesByIdAndTime(
+            req.params.id,
+            {
+                $gte: moment().subtract(4, 'hours').toDate()
+            }
+        );
+
+        if (!entries || entries.length === 0) {
+            res.status(404).end();
+        }
+
+        res.send(entries);
+    } catch (err) {
+        console.log(err)
+        res.status(500).end(err);
+    }
 });
 
 app.get('/mocked/parkings', async (req, res) => {
