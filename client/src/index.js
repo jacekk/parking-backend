@@ -6,7 +6,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = 'http://localhost:4000';
 const PARKINGS_ROUTE = 'parkings';
 
 const getAllParkings = () =>

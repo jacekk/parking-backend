@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const Parking = ({ name, freeSpaces }) => 
+const Parking = ({ name, freePlaces }) => 
     <li className="parkingList-item">
         <h3 className="parking-name">{name}</h3>
-        Wolnych miejsc: <strong className="parking-spot--good">{freeSpaces}</strong>
+        Wolnych miejsc: <strong className="parking-spot--good">{freePlaces}</strong>
     </li>
 
 
@@ -18,7 +18,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        // this.getParkings();
+        this.getParkings();
     }
 
     getParkings() {
@@ -37,7 +37,7 @@ class App extends Component {
         </header>
         <main className="app-body">
         <ul className="parkingList">
-            {this.state.parkings.map(({name, freeSpaces}) => <Parking key={name} name={name} freeSpaces={freeSpaces} />)}
+            {this.state.parkings.map(({name, freePlaces}) => <Parking key={name} name={name} freePlaces={freePlaces} />)}
         </ul>
         </main>
       </div>
