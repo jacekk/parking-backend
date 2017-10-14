@@ -8,6 +8,8 @@ services:
       - ./server:/server
     depends_on:
       - mongodb
+    ports:
+      - 4000:4000
   mongodb:
     image: mongo:latest
     container_name: mongodb
