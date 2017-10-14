@@ -41,6 +41,7 @@ const fetchSuccess = (lines) => {
     });
 
     console.log(parsed)
+    return parsed;
 };
     
 const run = () => {
