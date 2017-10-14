@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Bar } from 'react-chartjs-2';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 import moment from 'moment';
 
 const getFreeSpotsClassName = (freeSpots) => {
@@ -126,21 +126,10 @@ class App extends Component {
   }
   getActiveParkingChartData() {
       const { history, predictions } = this.state;
-      const allTime = history.concat(predictions);
-      const data = allTime.map(item => item.freeSpots);
-      const labels = allTime.map(item => moment(item.time).fromNow());
-    return {
-        labels,
-        datasets: [
-          {
-            label: 'My First dataset',
-            backgroundColor: '#ccc',
-            borderWidth: 0,
-            hoverBackgroundColor: '#999',
-            data
-          }
-        ]
-      };
+      return history.concat(predictions).map(({ freeSpots, time }) => ({
+        freeSpots,
+        time: moment(time).fromNow()
+      }))
   }
   render() {
     const { activeParkingName } = this.state;
@@ -178,13 +167,9 @@ class App extends Component {
                 <span className="parking-data">
                     <label className="parking-label">Wolne miejsca obecnie</label> <span className={getFreeSpotsClassName(activeParking.freeSpots)}>{activeParking.freeSpots}</span>
                 </span>
-                <Bar
-                    data={activeParkingChartData}
-                    height={200}
-                    options={{
-                        maintainAspectRatio: true
-                    }}
-                />
+                <BarChart width={150} height={40} data={activeParkingChartData}>
+                    <Bar dataKey='freeSpots' fill='#8884d8' label/>
+                </BarChart>
             </section>
         </div>
       </div>
