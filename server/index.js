@@ -11,19 +11,11 @@ const predictionsMock = require('./mocks/predictions');
 
 const now = new Date();
 
-fetchAndParseParkings().then((parkings) => {
+fetchAndParseParkings().then(({ locations, entries }) => {
   getRepository()
     .then((repository) => {
-      repository.addParkingEntry(parkings).then(() => {
-        repository.getParkingEntriesByNameAndTime('Renoma', {
-          $lte: new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getHours() - 4
-          )
-        })
-          .then(entries => console.log('entries:', entries));
-      });
+      repository.addParkingLocation(locations);
+      repository.addParkingEntry(entries);
     })
     .catch(err => console.log(err));
 });
