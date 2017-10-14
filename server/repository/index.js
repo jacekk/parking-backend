@@ -53,19 +53,21 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
       });
     }),
     getParkingEntriesByIdAndTime: (id, timeOptions) => new Promise((resolve, reject) => {
-      entriesCollection.find({ locationId: id, time: timeOptions }).toArray((err, data) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve(data);
-      });
+        entriesCollection
+            .find({ locationId: id, time: timeOptions })
+            .toArray((err, data) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(data);
+            });
     }),
     getParkings: () => new Promise((resolve, reject) => {
         entriesCollection.aggregate([
             { $sort: { time: -1 } },
-            { $group: { 
-                _id: '$name', 
+            { $group: {
+                _id: '$name',
                 freeSpots: { $first: '$freeSpots' },
                 id: { $first: '$locationId' }
             }},
@@ -79,7 +81,7 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
 
             resolve(data);
         });
-    })
+    }),
   };
 });
 
