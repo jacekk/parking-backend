@@ -3,7 +3,6 @@ const uuid = require('uuid');
 const getCSV = require('get-csv');
 const C = require('./constants');
 
-
 const fetchError = (err) => {
     console.error('Fetch error', err);
 }
@@ -51,23 +50,23 @@ const fetchSuccess = (lines) => {
 
     const locationIdMap = {};
     const locations = Object.keys(groupedEntriesByLocation).map(location => {
-      const locationId = uuid.v4();
-      locationIdMap[location] = locationId;
+        const locationId = uuid.v4();
+        locationIdMap[location] = locationId;
 
-      return {
-        id: locationId,
-        name: location,
-      };
+        return {
+            id: locationId,
+            name: location,
+        };
     });
 
     parsedEntries = parsedEntries.map(entry => ({
-      locationId: locationIdMap[entry.name],
-      ...entry
+        locationId: locationIdMap[entry.name],
+        ...entry
     }));
 
     return {
-      locations: locations,
-      entries: parsedEntries,
+        locations: locations,
+        entries: parsedEntries,
     };
 };
 
