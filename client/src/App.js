@@ -15,8 +15,8 @@ const getFreeSpotsClassName = (freeSpots) => {
   return `parking-spot parking-spot--${sufix}`;
 }
 
-const Parking = ({ name, freeSpots }) =>
-    <li className="parkingList-item">
+const Parking = ({ name, freeSpots, onClick }) =>
+    <li className="parkingList-item" onClick={onClick}>
         <h3 className="parking-name">{name}</h3>
         <span className="parking-data">
           <label className="parking-label">Miejsca</label> <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
@@ -31,9 +31,26 @@ class App extends Component {
         this.state = {
             parkings: [],
             errorMessage: null,
+            activeParking: null,
         };
 
         this.closeErrorMessage = this.closeErrorMessage.bind(this);
+        this.showListPage = this.showListPage.bind(this);
+        this.showDetailsPage = this.showDetailsPage.bind(this);
+    }
+
+    showListPage(event) {
+        event.preventDefault();
+        this.setState({
+            activeParking: null
+        });
+    }
+
+    showDetailsPage(event, parkingName) {
+        event.preventDefault();
+        this.setState({
+            activeParking: parkingName
+        });
     }
 
     componentDidMount() {
@@ -77,25 +94,42 @@ class App extends Component {
     });
   }
 
+  getPageClassName(pageName) {
+
+  }
   render() {
+    const { activeParking } = this.state;
+    const listPageActiveClassName = !activeParking ? 'app-page--visible' : 'app-page--hidden';
+    const detailsPageActiveClassName = activeParking ? 'app-page--visible' : 'app-page--hidden';
     return (
       <div className="app">
-        <header className="app-header">
-          <h1 className="app-title">parkly</h1>
-        </header>
-        { this.renderErrorMessage() }
-        <main className="app-body">
-        <ul className="parkingList">
-            {this.state
-                .parkings
-                .map(({ name, freeSpots }) => <Parking
-                    key={name}
-                    name={name}
-                    freeSpots={freeSpots}
-                />)
-            }
-        </ul>
-        </main>
+        <div className={`active-page ${listPageActiveClassName}`}>
+            <header className="app-header">
+                <h1 className="app-title">parkly</h1>
+            </header>
+            { this.renderErrorMessage() }
+            <section className="app-body">
+                <ul className="parkingList">
+                    {this.state
+                        .parkings
+                        .map(({ name, freeSpots }) => <Parking
+                            key={name}
+                            name={name}
+                            freeSpots={freeSpots}
+                            onClick={event => this.showDetailsPage(event, name)}
+                        />)
+                    }
+                </ul>
+            </section>
+        </div>
+        <div className={`active-page ${detailsPageActiveClassName}`}>
+            <header className="app-header">
+                <button className="app-back" onClick={this.showListPage}>Powrót</button> <h1 className="app-title">parkly</h1>
+            </header>
+            <section className="app-body">
+                <p>Parking details</p>
+            </section>
+        </div>
       </div>
     );
   }
