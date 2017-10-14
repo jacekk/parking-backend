@@ -64,7 +64,15 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
             });
     }),
     getParkings: () => new Promise((resolve, reject) => {
-        locationCollection.find()
+        entriesCollection.aggregate([
+            { $sort: { time: -1 } },
+            { $group: {
+                _id: '$name',
+                freeSpots: { $first: '$freeSpots' },
+                id: { $first: '$locationId' }
+            }},
+            { $project: { name: "$_id", _id: 0, freeSpots: 1, id: 1 } }
+        ])
         .toArray((err, data) => {
             if (err) {
                 reject(err);
