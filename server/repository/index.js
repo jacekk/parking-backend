@@ -66,9 +66,10 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
             { $sort: { time: -1 } },
             { $group: { 
                 _id: '$name', 
-                freeSpots: { $first: '$freeSpots' }
+                freeSpots: { $first: '$freeSpots' },
+                id: { $first: '$locationId' }
             }},
-            { $project: { name: "$_id", _id: 0, freeSpots: 1 } }
+            { $project: { name: "$_id", _id: 0, freeSpots: 1, id: 1 } }
         ])
         .toArray((err, data) => {
             if (err) {
