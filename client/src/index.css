@@ -95,6 +95,14 @@ body {
   color: #717171;
 }
 
+.parking-details {
+    padding: 20px;
+}
+
+.parking-chart {
+    margin-top: 20px;
+}
+
 /********************************************************/
 
 .parking-spot {
