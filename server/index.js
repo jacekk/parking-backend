@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const moment = require('moment');
 
 const { getRepository } = require('./repository');
 const { fetchAndParseParkings } = require('./data-fetch/run');
@@ -58,12 +59,7 @@ app.get('/history/:id', async (req, res) => {
         const entries =  await repo.getParkingEntriesByIdAndTime(
             req.params.id,
             {
-                $gte: new Date(
-                  now.getFullYear(),
-                  now.getMonth(),
-                  now.getHours() - 4
-                )
-                   
+                $gte: moment().subtract(4, 'hours').toDate()
             }
         );
 
