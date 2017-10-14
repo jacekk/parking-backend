@@ -3,13 +3,20 @@ const MongoClient = require('mongodb').MongoClient;
 // Connection URL
 const mongodbUrl = 'mongodb://mongodb:27017/parking';
 
-const getConnection = (callback) => {
+const getCollection = (callback) => {
   MongoClient.connect(mongodbUrl, function(err, db) {
-    callback(err, db);
+    const parkingCollection = db.collection('parkingEntries');
+
+    if (err) {
+      callback(err, null);
+      return;
+    }
+
+    callback(null, parkingCollection);
   });
 };
 
 
 module.exports = {
-  getConnection: getConnection
+  getCollection: getCollection
 };

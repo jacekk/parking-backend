@@ -2,13 +2,17 @@ const express = require('express');
 const app = express();
 const repository = require('./repository');
 
-repository.getConnection((err, db) => {
+repository.getCollection((err, collection) => {
   if (err === null) {
     console.log("connected successfully");
+  } else {
+    console.log("DATABASE ERROR!!!!");
   }
 
-  db.close();
-})
+  collection.insert({ test: 'test' }, (err, result) => {
+    console.log('inserted data successfully!!!', result);
+  });
+});
 
 /*
     name: string,
