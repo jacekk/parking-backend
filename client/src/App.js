@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import moment from 'moment';
 
 const getFreeSpotsClassName = (freeSpots) => {
@@ -131,6 +131,9 @@ class App extends Component {
         time: moment(time).fromNow()
       }))
   }
+  getBarChartWidth() {
+      return window.innerWidth - 50;
+  }
   render() {
     const { activeParkingName } = this.state;
     const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
@@ -162,14 +165,21 @@ class App extends Component {
             <header className="app-header">
                 <button className="app-back" onClick={this.showListPage}>Powrót</button> <h1 className="app-title">parkly</h1>
             </header>
-            <section className="app-body">
+            <section className="app-body parking-details">
                 <h3 className="parking-name">{activeParking.name}</h3>
                 <span className="parking-data">
                     <label className="parking-label">Wolne miejsca obecnie</label> <span className={getFreeSpotsClassName(activeParking.freeSpots)}>{activeParking.freeSpots}</span>
                 </span>
-                <BarChart width={150} height={40} data={activeParkingChartData}>
-                    <Bar dataKey='freeSpots' fill='#8884d8' label/>
-                </BarChart>
+                <div className="parking-chart">
+                    <ResponsiveContainer width="100%" height={200}>
+                        <BarChart data={activeParkingChartData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <Bar dataKey='freeSpots' fill='#68abe6' label/>
+                            <XAxis dataKey="time"/>
+                            <YAxis dataKey="freeSpots" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
             </section>
         </div>
       </div>
