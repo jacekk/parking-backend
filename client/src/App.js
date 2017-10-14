@@ -30,8 +30,11 @@ class App extends Component {
 
         this.state = {
             parkings: [],
+            history: [],
+            predictions: [],
             errorMessage: null,
             activeParkingName: null,
+            spinner: false,
         };
 
         this.closeErrorMessage = this.closeErrorMessage.bind(this);
@@ -42,15 +45,33 @@ class App extends Component {
     showListPage(event) {
         event.preventDefault();
         this.setState({
-            activeParkingName: null
+            activeParkingName: null,
+            history: [],
+            predictions: [],
         });
     }
 
     showDetailsPage(event, parkingName) {
         event.preventDefault();
         this.setState({
-            activeParkingName: parkingName
+            activeParkingName: parkingName,
+            spinner: true,
         });
+        Promise.all([
+            this.props.getHistory(parkingName),
+            this.props.getPredictions(parkingName),
+        ]).then(([ history = [], predictions = []]) => {
+            this.setState({
+                history,
+                predictions,
+                spinner: false
+            })
+        }).catch(error => {
+            this.setState({
+                spinner: false
+            });
+            this.setErrorMessage(<div><p><strong>Wystąpił nieoczekiwany błąd.</strong></p><p>Prosimy spróbować później.</p></div>);
+        })
     }
 
     componentDidMount() {
@@ -58,16 +79,19 @@ class App extends Component {
     }
 
     getParkings() {
-        this.props.getParkings().then((parkings = []) => {
+        this.props.getParkings()
+        .then((parkings = []) => {
             this.setState(() => ({
                 parkings
-            }))
+            }));
+
             if (!parkings.length) {
               this.setErrorMessage(<div><p><strong>Brak wyników.</strong></p><p>Prosimy spróbować później.</p></div>);
+              return;
             }
         }).catch(error => {
           this.setErrorMessage(<div><p><strong>Wystąpił nieoczekiwany błąd.</strong></p><p>Prosimy spróbować później.</p></div>);
-        });
+        })
     }
 
   setErrorMessage(errorMessage) {
@@ -139,5 +163,11 @@ class App extends Component {
     );
   }
 }
+
+App.defaultProps = {
+    getParkings: () => Promise.resolve(),
+    getHistory: () => Promise.resolve(),
+    getPredictions: () => Promise.resolve(),
+};
 
 export default App;
