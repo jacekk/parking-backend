@@ -8,7 +8,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 const SERVER_URL = 'http://localhost:4000';
 const PARKINGS_ROUTE = 'parkings';
-const HISTORY_ROUTE = 'mocked/history';
+const HISTORY_ROUTE = 'history';
 const PREDICTIONS_ROUTE = 'mocked/predictions';
 
 const getParkings = () =>
@@ -18,9 +18,9 @@ const getParkings = () =>
         .catch(console.error);
 
 
-const getHistory = (parkingName) =>
+const getHistory = (parkingId) =>
     axios
-        .get(`${SERVER_URL}/${HISTORY_ROUTE}/${parkingName}`)
+        .get(`${SERVER_URL}/${HISTORY_ROUTE}/${parkingId}`)
         .then(resp => resp.data)
         .catch(console.error);
 
