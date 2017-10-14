@@ -5,10 +5,7 @@ const moment = require('moment');
 
 const { getRepository } = require('./repository');
 const { fetchAndParseParkings } = require('./data-fetch/run');
-
-const parkingsMock = require('./mocks/parkings');
-const historyMock = require('./mocks/history');
-const predictionsMock = require('./mocks/predictions');
+const { mapPredictions } = require('./predictions');
 
 const now = new Date();
 
@@ -21,9 +18,8 @@ fetchAndParseParkings().then(({ locations, entries }) => {
       ).then(() => {
           app.listen('4000', err => {
             if (err) {
-                console.log('He ded')
+                console.log('App died')
             }
-
             console.log('Running on 4000');
           })
       })
@@ -90,22 +86,9 @@ app.get('/predictions/:id', async (req, res) => {
             res.status(404).end();
         }
 
-        res.send(entries);
+        res.send(mapPredictions(entries));
     } catch (err) {
         console.log(err)
         res.status(500).end(err);
     }
 });
-
-app.get('/mocked/parkings', async (req, res) => {
-    res.send(parkingsMock);
-});
-
-app.get('/mocked/history/:id?', async (req, res) => {
-    res.send(historyMock);
-});
-
-app.get('/mocked/predictions/:id?', async (req, res) => {
-    res.send(predictionsMock);
-});
-
