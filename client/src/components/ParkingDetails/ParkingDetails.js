@@ -17,6 +17,9 @@ const ParkingDetails = ({
                 <span className="parking-data">
                     <label className="parking-label">Wolne miejsca obecnie</label> <span className={getFreeSpotsClassName(activeParking.freeSpots)}>{activeParking.freeSpots}</span>
                 </span>
+                <span className="parking-data">
+                    <label className="parking-label">Trend</label> <span className="parking-trend">Wzrostowy</span>
+                </span>
                 <div className="parking-chart">
                     <ResponsiveContainer width="100%" height={200}>
                         <BarChart data={activeParkingChartData}>
