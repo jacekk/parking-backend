@@ -61,7 +61,7 @@ class App extends Component {
         });
         Promise.all([
             this.props.getHistory(parkingId),
-            this.props.getPredictions(parkingName),
+            this.props.getPredictions(parkingId),
         ]).then(([ history = [], predictions = []]) => {
             this.setState({
                 history,
@@ -174,7 +174,7 @@ class App extends Component {
                     <ResponsiveContainer width="100%" height={200}>
                         <BarChart data={activeParkingChartData}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <Bar dataKey='freeSpots' fill='#68abe6' label/>
+                            <Bar dataKey='freeSpots' fill='#68abe6'/>
                             <XAxis dataKey="time"/>
                             <YAxis dataKey="freeSpots" />
                         </BarChart>
