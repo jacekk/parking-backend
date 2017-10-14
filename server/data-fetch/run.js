@@ -9,7 +9,7 @@ const fetchError = (err) => {
 
 const appendParsed = (parsed = [], line) => {
     const [time, freeSpots, carsIn, carsOut, location] = line.split(';');
-    
+
     const newEntry = {
         name: location,
         time: new Date(time),
@@ -17,7 +17,7 @@ const appendParsed = (parsed = [], line) => {
         carsIn: +carsIn,
         carsOut: +carsOut,
     };
-    
+
     parsed.push(newEntry);
 }
 
@@ -32,7 +32,7 @@ const fetchSuccess = (lines) => {
         if (line.indexOf('Czas_Rejestracji') > -1) {
             return;
         }
-        
+
         if (!line) {
             return;
         }
@@ -40,11 +40,11 @@ const fetchSuccess = (lines) => {
         appendParsed(parsed, line);
     });
 
-    console.log(parsed)
+    return parsed;
 };
-    
+
 const run = () => {
-    getCSV(C.CSV_FILE_URL, { headers: false })
+    return getCSV(C.CSV_FILE_URL, { headers: false })
         .then(fetchSuccess)
         .catch(fetchError)
     ;
