@@ -14,8 +14,18 @@ const now = new Date();
 fetchAndParseParkings().then(({ locations, entries }) => {
   getRepository()
     .then((repository) => {
-      repository.addParkingLocation(locations);
-      repository.addParkingEntry(entries);
+      Promise.all([
+          repository.addParkingLocation(locations), 
+            repository.addParkingEntry(entries)]
+      ).then(() => {
+          app.listen('4000', err => {
+            if (err) {
+                console.log('He ded')
+            }
+
+            console.log('Running on 4000');
+          })
+      })
     })
     .catch(err => console.log(err));
 });
@@ -24,10 +34,20 @@ app.use(cors());
 
 app.get('/parkings', async (req, res) => {
     const repo = await getRepository();
+    
+    try {
 
-    repo.getParkingEntries()
+        const parkings =  await repo.getParkings();
 
-    res.send(parkingsMock);
+        if (!parkings || parkings.length === 0) {
+            res.status(404).end();
+        }
+
+        res.send(parkings);
+    } catch (err) {
+        res.status(500).end();
+    }
+
 });
 
 app.get('/history/:parkingName', (req, res) => {
@@ -46,6 +66,3 @@ app.get('/mocked/predictions/:id?', async (req, res) => {
     res.send(predictionsMock);
 });
 
-app.listen('4000', () => {
-    console.log('Running on http://localhost:4000');
-});
