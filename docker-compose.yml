@@ -1,0 +1,21 @@
+version: "2"
+services:
+  app:
+    container_name: parking_app
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - 27017:27017
+  mongoclient:
+    image: mongoclient/mongoclient:latest
+    container_name: mongoclient
+    depends_on:
+      - mongodb
+    ports:
+      - 3000:3000

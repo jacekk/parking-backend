@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "mongodb": "^2.2.33"
   }
 }
