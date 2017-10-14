@@ -1,13 +1,14 @@
 #!/usr/bin/env nodejs
-
+const uuid = require('uuid');
 const getCSV = require('get-csv');
 const C = require('./constants');
+
 
 const fetchError = (err) => {
     console.error('Fetch error', err);
 }
 
-const appendParsed = (parsed = [], line) => {
+const parse = (parsedEntries = [], groupedEntriesByLocation = {}, line) => {
     const [time, freeSpots, carsIn, carsOut, location] = line.split(';');
 
     const newEntry = {
@@ -18,14 +19,22 @@ const appendParsed = (parsed = [], line) => {
         carsOut: +carsOut,
     };
 
-    parsed.push(newEntry);
+    if (!groupedEntriesByLocation[location]) {
+      groupedEntriesByLocation[location] = [];
+    }
+
+    parsedEntries.push(newEntry);
+    groupedEntriesByLocation[location].push(newEntry);
 }
 
 const fetchSuccess = (lines) => {
     if (!Array.isArray(lines)) {
         return new Error('Returned "lines" is not an array.');
     }
-    const parsed = [];
+
+    let parsedEntries = [];
+    const groupedEntriesByLocation = {};
+
     Object.keys(lines).forEach((lineIndex) => {
         const line = lines[lineIndex][0];
 
@@ -37,10 +46,29 @@ const fetchSuccess = (lines) => {
             return;
         }
 
-        appendParsed(parsed, line);
+        parse(parsedEntries, groupedEntriesByLocation, line);
     });
 
-    return parsed;
+    const locationIdMap = {};
+    const locations = Object.keys(groupedEntriesByLocation).map(location => {
+      const locationId = uuid.v4();
+      locationIdMap[location] = locationId;
+
+      return {
+        id: locationId,
+        name: location,
+      };
+    });
+
+    parsedEntries = parsedEntries.map(entry => ({
+      locationId: locationIdMap[entry.name],
+      ...entry
+    }));
+
+    return {
+      locations: locations,
+      entries: parsedEntries,
+    };
 };
 
 const run = () => {

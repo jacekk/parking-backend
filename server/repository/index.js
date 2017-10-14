@@ -3,24 +3,37 @@ const MongoClient = require('mongodb').MongoClient;
 // Connection URL
 const mongodbUrl = 'mongodb://mongodb:27017/parking';
 
-const getCollection = new Promise((resolve, reject) => {
+const getCollections = new Promise((resolve, reject) => {
   MongoClient.connect(mongodbUrl, function(err, db) {
+    db.collection('parkingLocations').drop();
     db.collection('parkingEntries').drop();
-    const parkingCollection = db.collection('parkingEntries');
+
+    const locationCollection = db.collection('parkingLocations');
+    const entriesCollection = db.collection('parkingEntries');
 
     if (err) {
       reject(err);
       return;
     }
 
-    resolve(parkingCollection);
+    resolve({ locationCollection, entriesCollection });
   });
 });
 
-const getRepository = () => getCollection.then((collection) => {
+const getRepository = () => getCollections.then(({ locationCollection, entriesCollection }) => {
   return {
+    addParkingLocation: (location) => new Promise((resolve, reject) => {
+      locationCollection.insert(location, (err, result) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve(result);
+      });
+    }),
     addParkingEntry: (parkingData) => new Promise((resolve, reject) => {
-      collection.insert(parkingData, (err, result) => {
+      entriesCollection.insert(parkingData, (err, result) => {
         if (err) {
           reject(err);
           return;
@@ -30,7 +43,7 @@ const getRepository = () => getCollection.then((collection) => {
       });
     }),
     getParkingEntries: () => new Promise((resolve, reject) => {
-      collection.find().toArray((err, data) => {
+      entriesCollection.find().toArray((err, data) => {
         if (err) {
           reject(err);
           return;
@@ -40,7 +53,7 @@ const getRepository = () => getCollection.then((collection) => {
       });
     }),
     getParkingEntriesByNameAndTime: (name, timeOptions) => new Promise((resolve, reject) => {
-      collection.find({ name: name, time: timeOptions }).toArray((err, data) => {
+      entriesCollection.find({ name: name, time: timeOptions }).toArray((err, data) => {
         if (err) {
           reject(err);
           return;
@@ -49,12 +62,13 @@ const getRepository = () => getCollection.then((collection) => {
       });
     }),
     getParkings: () => new Promise((resolve, reject) => {
-        collection.aggregate([
+        entriesCollection.aggregate([
             { $sort: { time: -1 } },
             { $group: { 
                 _id: '$name', 
                 freeSpots: { $first: '$freeSpots' }
             }},
+            { $project: { name: "$_id", _id: 0, freeSpots: 1 } }
         ])
         .toArray((err, data) => {
             if (err) {
