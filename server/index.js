@@ -4,15 +4,24 @@ const cors = require('cors');
 const { getRepository } = require('./repository');
 const { fetchAndParseParkings } = require('./data-fetch/run');
 
-getRepository()
-  .then((repository) => {
-    repository.addParkingEntry(fetchAndParseParkings()).then(() => {
-      repository.getParkingEntries()
-        .then(entries => console.log('entries:', entries));
-    });
-  })
-  .catch(err => console.log(err));
+const now = new Date();
 
+fetchAndParseParkings().then((parkings) => {
+  getRepository()
+    .then((repository) => {
+      repository.addParkingEntry(parkings).then(() => {
+        repository.getParkingEntriesByNameAndTime('Renoma', {
+          $lte: new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getHours() - 4
+          )
+        })
+          .then(entries => console.log('entries:', entries));
+      });
+    })
+    .catch(err => console.log(err));
+});
 
 /*
     name: string,
@@ -34,17 +43,17 @@ const fakeParkings = [
 ];
 
 const fakeHistory = [
-       { 
+       {
          time: '2017-10-13T02:50:01.840Z',
          freeSpots: 791,
          carsIn: 10,
          carsOut: 0 },
-       { 
+       {
          time: '2017-10-13T02:50:01.840Z',
          freeSpots: 731,
          carsIn: 0,
          carsOut: 60 },
-       { 
+       {
          time: '2017-10-13T02:50:01.840Z',
          freeSpots: 791,
          carsIn: 60,
@@ -54,7 +63,7 @@ const fakeHistory = [
 app.use(cors());
 app.get('/parkings', async (req, res) => {
     const repo = await getRepository();
-    
+
     repo.getParkingEntries()
 
     res.send(fakeParkings);

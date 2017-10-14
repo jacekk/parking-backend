@@ -39,13 +39,22 @@ const getRepository = () => getCollection.then((collection) => {
         resolve(data);
       });
     }),
+    getParkingEntriesByNameAndTime: (name, timeOptions) => new Promise((resolve, reject) => {
+      collection.find({ name: name, time: timeOptions }).toArray((err, data) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(data);
+      });
+    }),
     getParkings: () => new Promise((resolve, reject) => {
         collection
             .find({})
             .project({
                 name: 1,
                 freeSpots: 1,
-                
+
             })
     })
   };
