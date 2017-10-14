@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+
 const { getRepository } = require('./repository');
 const { fetchAndParseParkings } = require('./data-fetch/run');
+
+const parkingsMock = require('./mocks/parkings');
+const historyMock = require('./mocks/history');
+const predictionsMock = require('./mocks/predictions');
 
 const now = new Date();
 
@@ -23,54 +28,30 @@ fetchAndParseParkings().then((parkings) => {
     .catch(err => console.log(err));
 });
 
-/*
-    name: string,
-    freeSpots: number
-*/
-const fakeParkings = [
-    {
-        name: 'Renoma',
-        freeSpots: 230,
-    },
-    {
-        name: 'Nowy Targ',
-        freeSpots: 30,
-    },
-    {
-        name: 'Galeria Dominikańska',
-        freeSpots: 0,
-    },
-];
-
-const fakeHistory = [
-       {
-         time: '2017-10-13T02:50:01.840Z',
-         freeSpots: 791,
-         carsIn: 10,
-         carsOut: 0 },
-       {
-         time: '2017-10-13T02:50:01.840Z',
-         freeSpots: 731,
-         carsIn: 0,
-         carsOut: 60 },
-       {
-         time: '2017-10-13T02:50:01.840Z',
-         freeSpots: 791,
-         carsIn: 60,
-         carsOut: 0 },
-]
-
 app.use(cors());
+
 app.get('/parkings', async (req, res) => {
     const repo = await getRepository();
 
     repo.getParkingEntries()
 
-    res.send(fakeParkings);
+    res.send(parkingsMock);
 });
 
 app.get('/history/:parkingName', (req, res) => {
-    res.send(fakeHistory);
+    res.send(historyMock);
+});
+
+app.get('/mocked/parkings', async (req, res) => {
+    res.send(parkingsMock);
+});
+
+app.get('/mocked/history/:id?', async (req, res) => {
+    res.send(historyMock);
+});
+
+app.get('/mocked/predictions/:id?', async (req, res) => {
+    res.send(predictionsMock);
 });
 
 app.listen('4000', () => {
