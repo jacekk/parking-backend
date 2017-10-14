@@ -6,13 +6,7 @@ const { fetchAndParseParkings } = require('./data-fetch/run');
 
 getRepository()
   .then((repository) => {
-    repository.addParkingEntry({
-      name: 'Test name',
-      time: new Date(),
-      freeSpots: 38,
-      carsIn: 12,
-      carsOut: 5,
-    }).then(() => {
+    repository.addParkingEntry(fetchAndParseParkings()).then(() => {
       repository.getParkingEntries()
         .then(entries => console.log('entries:', entries));
     });
@@ -58,7 +52,11 @@ const fakeHistory = [
 ]
 
 app.use(cors());
-app.get('/parkings', (req, res) => {
+app.get('/parkings', async (req, res) => {
+    const repo = await getRepository();
+    
+    repo.getParkingEntries()
+
     res.send(fakeParkings);
 });
 
