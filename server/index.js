@@ -10,14 +10,18 @@ fetchAndParseParkings().then((parkings) => {
   getRepository()
     .then((repository) => {
       repository.addParkingEntry(parkings).then(() => {
-        repository.getParkingEntriesByNameAndTime('Renoma', {
-          $lte: new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getHours() - 4
-          )
-        })
-          .then(entries => console.log('entries:', entries));
+
+app.listen('4000', () => {
+    console.log('Running on http://localhost:4000');
+});
+        // repository.getParkingEntriesByNameAndTime('Renoma', {
+        //   $lte: new Date(
+        //     now.getFullYear(),
+        //     now.getMonth(),
+        //     now.getHours() - 4
+        //   )
+        // })
+        //   .then(entries => console.log('entries:', entries));
       });
     })
     .catch(err => console.log(err));
@@ -63,16 +67,23 @@ const fakeHistory = [
 app.use(cors());
 app.get('/parkings', async (req, res) => {
     const repo = await getRepository();
+    
+    try {
 
-    repo.getParkingEntries()
+        const parkings =  await repo.getParkings();
 
-    res.send(fakeParkings);
+        if (!parkings || parkings.length === 0) {
+            res.status(404).end();
+        }
+
+        res.send(parkings);
+    } catch (err) {
+        res.status(500).end();
+    }
+
 });
 
 app.get('/history/:parkingName', (req, res) => {
     res.send(fakeHistory);
 });
 
-app.listen('4000', () => {
-    console.log('Running on http://localhost:4000');
-});

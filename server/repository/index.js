@@ -49,13 +49,21 @@ const getRepository = () => getCollection.then((collection) => {
       });
     }),
     getParkings: () => new Promise((resolve, reject) => {
-        collection
-            .find({})
-            .project({
-                name: 1,
-                freeSpots: 1,
+        collection.aggregate([
+            { $sort: { time: -1 } },
+            { $group: { 
+                _id: '$name', 
+                freeSpots: { $first: '$freeSpots' }
+            }},
+        ])
+        .toArray((err, data) => {
+            if (err) {
+                reject(err);
+                return;
+            }
 
-            })
+            resolve(data);
+        });
     })
   };
 });
