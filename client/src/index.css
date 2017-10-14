@@ -74,9 +74,18 @@ body {
   border-radius: 3px;
   background: black;
   color: #fff;
-  padding: 10px;
+  padding: 2px 5px;
 }
 
 .parking-spot--good {
-  padding: 2px 5px;
+  background-color: rgb(0, 186, 3);
+}
+.parking-spot--enough {
+  background-color: rgb(232, 163, 0);
+}
+.parking-spot--shortage {
+  background-color: rgb(255, 98, 0);
+}
+.parking-spot--nospace {
+  background-color: rgb(215, 36, 0);
 }
