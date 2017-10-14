@@ -33,7 +33,7 @@ app.get('/parkings', async (req, res) => {
     const repo = await getRepository();
 
     try {
-        const parkings =  await repo.getParkings();
+        const parkings = await repo.getParkings();
 
         if (!parkings || parkings.length === 0) {
             res.status(404).end();
@@ -51,7 +51,7 @@ app.get('/history/:id', async (req, res) => {
 
     try {
         const now = new Date();
-        const entries =  await repo.getParkingEntriesByIdAndTime(
+        const entries = await repo.getParkingEntriesByIdAndTime(
             req.params.id,
             {
                 $gte: moment().subtract(4, 'hours').toDate()
@@ -70,12 +70,20 @@ app.get('/history/:id', async (req, res) => {
 });
 
 app.get('/predictions/:id', async (req, res) => {
+    const parkingId = req.params.id;
     const repo = await getRepository();
 
     try {
         const now = new Date();
-        const entries =  await repo.getParkingEntriesByIdAndTime(
-            req.params.id,
+        const parkings = await repo.getParkings();
+        const parking = parkings.filter(item => item.id === parkingId)[0];
+
+        if (!parking) {
+            return res.status(404).end();
+        }
+
+        const entries = await repo.getParkingEntriesByIdAndTime(
+            parkingId,
             {
                 $gte: moment().subtract(1, 'day').toDate(),
                 $lte: moment().subtract(1, 'day').add(4, 'hours').toDate()
@@ -83,12 +91,12 @@ app.get('/predictions/:id', async (req, res) => {
         );
 
         if (!entries || entries.length === 0) {
-            res.status(404).end();
+            return res.status(404).end();
         }
 
-        res.send(mapPredictions(entries));
+        res.send(mapPredictions(entries, parking.freeSpots));
     } catch (err) {
-        console.log(err)
+        console.log(err);
         res.status(500).end(err);
     }
 });
