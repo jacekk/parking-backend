@@ -41,14 +41,6 @@ app.get('/parkings', (req, res) => {
     res.send(fakeParkings);
 });
 
-repository.getConnection((err, db) => {
-    if (err === null) {
-        console.log('connected successfully');
-    }
-
-    db.close();
-});
-
 app.listen('4000', () => {
     console.log('Running on http://localhost:4000');
 });
