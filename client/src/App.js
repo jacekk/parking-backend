@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import moment from 'moment';
+import ParkingDetails from './components/ParkingDetails'
+import { getFreeSpotsClassName } from './helpers';
 
-const getFreeSpotsClassName = (freeSpots) => {
-  let sufix;
-  if (freeSpots === 0) {
-    sufix = 'nospace';
-  } else if (freeSpots > 0 && freeSpots <= 5) {
-    sufix = 'shortage';
-  } else if (freeSpots > 5 && freeSpots <= 10) {
-    sufix = 'enough';
-  } else if (freeSpots > 10) {
-    sufix = 'good';
-  }
-  return `parking-spot parking-spot--${sufix}`;
-}
 
 const Parking = ({ name, freeSpots, onClick }) =>
     <li className="parkingList-item" onClick={onClick}>
@@ -161,27 +149,12 @@ class App extends Component {
                 </ul>
             </section>
         </div>
-        <div className={`active-page ${detailsPageActiveClassName}`}>
-            <header className="app-header">
-                <button className="app-back" onClick={this.showListPage}>Powrót</button> <h1 className="app-title">parkly</h1>
-            </header>
-            <section className="app-body parking-details">
-                <h3 className="parking-name">{activeParking.name}</h3>
-                <span className="parking-data">
-                    <label className="parking-label">Wolne miejsca obecnie</label> <span className={getFreeSpotsClassName(activeParking.freeSpots)}>{activeParking.freeSpots}</span>
-                </span>
-                <div className="parking-chart">
-                    <ResponsiveContainer width="100%" height={200}>
-                        <BarChart data={activeParkingChartData}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Bar dataKey='freeSpots' fill='#68abe6'/>
-                            <XAxis dataKey="time"/>
-                            <YAxis dataKey="freeSpots" />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
-            </section>
-        </div>
+        <ParkingDetails
+            activeParking={activeParking}
+            activeParkingChartData={activeParkingChartData}
+            detailsPageActiveClassName={detailsPageActiveClassName}
+            goBack={this.showListPage}
+        />
       </div>
     );
   }
