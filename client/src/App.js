@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const getFreePlacesClassName = (freePlaces) => {
+const getFreeSpotsClassName = (freeSpots) => {
   let sufix;
-  if (freePlaces === 0) {
+  if (freeSpots === 0) {
     sufix = 'nospace';
-  } else if (freePlaces > 0 && freePlaces <= 5) {
+  } else if (freeSpots > 0 && freeSpots <= 5) {
     sufix = 'shortage';
-  } else if (freePlaces > 5 && freePlaces <= 10) {
+  } else if (freeSpots > 5 && freeSpots <= 10) {
     sufix = 'enough';
-  } else if (freePlaces > 10) {
+  } else if (freeSpots > 10) {
     sufix = 'good';
   }
   return `parking-spot parking-spot--${sufix}`;
 }
 
-const Parking = ({ name, freePlaces }) =>
+const Parking = ({ name, freeSpots }) =>
     <li className="parkingList-item">
         <h3 className="parking-name">{name}</h3>
         <span className="parking-data">
-          <label className="parking-label">Miejsca</label> <span className={getFreePlacesClassName(freePlaces)}>{freePlaces}</span>
+          <label className="parking-label">Miejsca</label> <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
         </span>
     </li>
 
@@ -86,7 +86,14 @@ class App extends Component {
         { this.renderErrorMessage() }
         <main className="app-body">
         <ul className="parkingList">
-            {this.state.parkings.map(({name, freePlaces}) => <Parking key={name} name={name} freePlaces={freePlaces} />)}
+            {this.state
+                .parkings
+                .map(({ name, freeSpots }) => <Parking
+                    key={name}
+                    name={name}
+                    freeSpots={freeSpots}
+                />)
+            }
         </ul>
         </main>
       </div>

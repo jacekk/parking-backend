@@ -48,6 +48,15 @@ const getRepository = () => getCollection.then((collection) => {
         resolve(data);
       });
     }),
+    getParkings: () => new Promise((resolve, reject) => {
+        collection
+            .find({})
+            .project({
+                name: 1,
+                freeSpots: 1,
+
+            })
+    })
   };
 });
 
