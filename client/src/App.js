@@ -30,8 +30,11 @@ class App extends Component {
 
         this.state = {
             parkings: [],
+            history: [],
+            predictions: [],
             errorMessage: null,
-            activeParking: null,
+            activeParkingName: null,
+            spinner: false,
         };
 
         this.closeErrorMessage = this.closeErrorMessage.bind(this);
@@ -42,15 +45,33 @@ class App extends Component {
     showListPage(event) {
         event.preventDefault();
         this.setState({
-            activeParking: null
+            activeParkingName: null,
+            history: [],
+            predictions: [],
         });
     }
 
     showDetailsPage(event, parkingName) {
         event.preventDefault();
         this.setState({
-            activeParking: parkingName
+            activeParkingName: parkingName,
+            spinner: true,
         });
+        Promise.all([
+            this.props.getHistory(parkingName),
+            this.props.getPredictions(parkingName),
+        ]).then(([ history = [], predictions = []]) => {
+            this.setState({
+                history,
+                predictions,
+                spinner: false
+            })
+        }).catch(error => {
+            this.setState({
+                spinner: false
+            });
+            this.setErrorMessage(<div><p><strong>Wystąpił nieoczekiwany błąd.</strong></p><p>Prosimy spróbować później.</p></div>);
+        })
     }
 
     componentDidMount() {
@@ -58,16 +79,19 @@ class App extends Component {
     }
 
     getParkings() {
-        this.props.getParkings().then((parkings = []) => {
+        this.props.getParkings()
+        .then((parkings = []) => {
             this.setState(() => ({
                 parkings
-            }))
+            }));
+
             if (!parkings.length) {
               this.setErrorMessage(<div><p><strong>Brak wyników.</strong></p><p>Prosimy spróbować później.</p></div>);
+              return;
             }
         }).catch(error => {
           this.setErrorMessage(<div><p><strong>Wystąpił nieoczekiwany błąd.</strong></p><p>Prosimy spróbować później.</p></div>);
-        });
+        })
     }
 
   setErrorMessage(errorMessage) {
@@ -94,13 +118,15 @@ class App extends Component {
     });
   }
 
-  getPageClassName(pageName) {
-
+  getActiveParking() {
+      const { activeParkingName, parkings } = this.state;
+      return parkings.filter(({ name }) => name === activeParkingName)[0] || {};
   }
   render() {
-    const { activeParking } = this.state;
-    const listPageActiveClassName = !activeParking ? 'app-page--visible' : 'app-page--hidden';
-    const detailsPageActiveClassName = activeParking ? 'app-page--visible' : 'app-page--hidden';
+    const { activeParkingName } = this.state;
+    const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
+    const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
+    const activeParking = this.getActiveParking();
     return (
       <div className="app">
         <div className={`active-page ${listPageActiveClassName}`}>
@@ -127,12 +153,21 @@ class App extends Component {
                 <button className="app-back" onClick={this.showListPage}>Powrót</button> <h1 className="app-title">parkly</h1>
             </header>
             <section className="app-body">
-                <p>Parking details</p>
+                <h3 className="parking-name">{activeParking.name}</h3>
+                <span className="parking-data">
+                    <label className="parking-label">Wolne miejsca obecnie</label> <span className={getFreeSpotsClassName(activeParking.freeSpots)}>{activeParking.freeSpots}</span>
+                </span>
             </section>
         </div>
       </div>
     );
   }
 }
+
+App.defaultProps = {
+    getParkings: () => Promise.resolve(),
+    getHistory: () => Promise.resolve(),
+    getPredictions: () => Promise.resolve(),
+};
 
 export default App;
