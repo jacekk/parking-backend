@@ -1,5 +1,14 @@
 const express = require('express');
 const app = express();
+const repository = require('./repository');
+
+repository.getConnection((err, db) => {
+  if (err === null) {
+    console.log("connected successfully");
+  }
+
+  db.close();
+})
 
 /*
     name: string,
