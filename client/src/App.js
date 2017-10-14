@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const Parking = ({ name, freePlaces }) => 
+const Parking = ({ name, freePlaces }) =>
     <li className="parkingList-item">
         <h3 className="parking-name">{name}</h3>
-        Wolnych miejsc: <strong className="parking-spot--good">{freePlaces}</strong>
+        <span className="parking-data">
+          <label className="parking-label">Wolnych miejsc</label> <span className="parking-spot parking-spot--good">{freePlaces}</span>
+        </span>
     </li>
 
 
@@ -28,7 +30,7 @@ class App extends Component {
             }))
         });
     }
-    
+
   render() {
     return (
       <div className="app">
