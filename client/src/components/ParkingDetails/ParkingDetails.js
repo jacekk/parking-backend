@@ -1,5 +1,6 @@
 import React from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Rectangle} from 'recharts';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 
 import { getFreeSpotsClassName, getFreeSpotsColor } from '../../helpers';
 
@@ -7,6 +8,15 @@ const CustomBar = (props) => {
     const fill = getFreeSpotsColor(props.freeSpots);
     return <Rectangle {...props} fill={fill} />
   };
+
+ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+    <GoogleMap
+        defaultZoom={14}
+        defaultCenter={{ lat: props.lat, lng: props.long }}
+    >
+        <Marker position={{ lat: props.lat, lng: props.long }} />
+    </GoogleMap>
+));
 
 const ParkingDetails = ({
     detailsPageActiveClassName,
@@ -36,6 +46,19 @@ const ParkingDetails = ({
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
+                {activeParking && activeParking.coordinates &&
+                    <div className="parking-map">
+                        <MyMapComponent
+                          isMarkerShown
+                          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                          loadingElement={<div style={{ height: `100%` }} />}
+                          containerElement={<div style={{ height: '200px' }} />}
+                          mapElement={<div style={{ height: `100%` }} />}
+                          lat={activeParking.coordinates.lat}
+                          long={activeParking.coordinates.long}
+                        />
+                    </div>
+                }
             </section>
         </div>
 
