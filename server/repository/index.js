@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient, ObjectID } = require('mongodb');
 
 // Connection URL
 const mongodbUrl = 'mongodb://mongodb:27017/parking';
@@ -88,7 +88,7 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
     }),
     getParkingEntriesByIdAndTime: (id, timeOptions) => new Promise((resolve, reject) => {
         entriesCollection
-            .find({ locationId: id, time: timeOptions }, { time: 1, freeSpots: 1, _id: 0 })
+            .find({ locationId: new ObjectID(id), time: timeOptions }, { time: 1, freeSpots: 1, _id: 0 })
             .toArray((err, data) => {
                 if (err) {
                     reject(err);
