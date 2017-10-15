@@ -13,7 +13,7 @@ fetchAndParseParkings().then(({ locations, entries }) => {
   getRepository()
     .then((repository) => {
     //   Promise.all([
-    //         repository.addParkingLocation(locations),
+            // repository.addParkingLocation(locations),
     //         // repository.addParkingEntry(entries)
     //     ]
     //   ).then(() => {

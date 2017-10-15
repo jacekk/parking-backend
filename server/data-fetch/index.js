@@ -4,6 +4,8 @@ const getCSV = require('get-csv');
 const moment = require('moment');
 const C = require('./constants');
 
+const sortEntries = (curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1;
+
 const fetchError = (err) => {
     console.error('Fetch error', err);
 }
@@ -65,13 +67,15 @@ const fetchSuccess = (lines) => {
     //     // locationId: locationIdMap[entry.name],
     //     ...entry
     // }))
-    .sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);
+    .sort(sortEntries );
 
     return {
         locations: locations,
         entries: parsedEntries,
     };
 };
+
+
 
 const fetchAndParseParkings = () => {
     return getCSV(
@@ -89,8 +93,6 @@ const startSynchronizingWithAPI = repo => {
         const { locations, entries } = await fetchAndParseParkings();
         const latestPersistedEntry = await repo.getLatestEntry();
 
-        // await repo.addParkingLocation(locations)
-
         if (
             latestPersistedEntry && entries[0] &&
             moment(latestPersistedEntry.time)
@@ -99,10 +101,23 @@ const startSynchronizingWithAPI = repo => {
                 console.log('############ NOTHING_TO_SYNC ############')
                 return;
             }
+
+        const entriesWithLocationId = await Promise.all(
+            entries.map(async entry => {
+            const location = await repo.findLocationIdByName(entry.name)
             
-            console.log('############ SYNC_START ############')
-            await repo.addParkingEntry(entries)
-            console.log('############ SYNC_FINISH ############')
+            return {
+                ...entry,
+                locationId: location._id
+            }
+        })) || [] ;
+
+
+        entriesWithLocationId.sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);
+            
+        console.log('############ SYNC_START ############')
+        await repo.addParkingEntry(entriesWithLocationId)
+        console.log('############ SYNC_FINISH ############')
                     
     }, 5 * 1000)
 }

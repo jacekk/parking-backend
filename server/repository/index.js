@@ -132,6 +132,17 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
                 resolve(data);
             });
     }),
+    findLocationIdByName: (name) => new Promise((resolve, reject) => {
+        locationCollection
+            .findOne({ name: name }, (err, data) => {
+                if (err) {
+                    reject(err);
+                    console.log('JEBŁEM', err)
+                    return;
+                }
+                resolve(data);
+            });
+    }),
 };
 });
 
