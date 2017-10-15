@@ -5,9 +5,6 @@ const mongodbUrl = 'mongodb://mongodb:27017/parking';
 
 const getCollections = new Promise((resolve, reject) => {
   MongoClient.connect(mongodbUrl, function(err, db) {
-    // db.collection('parkingLocations').drop();
-    // db.collection('parkingEntries').drop();
-
     const locationCollection = db.collection('parkingLocations');
     const entriesCollection = db.collection('parkingEntries');
 
@@ -72,12 +69,10 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
     addParkingEntry: (parkingData) => new Promise((resolve, reject) => {
       entriesCollection.insert(parkingData, (err, result) => {
         if (err) {
-            console.log('err', err)
             reject(err);
             return;
         }
         
-        console.log('RESLUT', result)
         resolve(result);
       });
     }),
@@ -137,11 +132,22 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
             .findOne({ name: name }, (err, data) => {
                 if (err) {
                     reject(err);
-                    console.log('JEBŁEM', err)
                     return;
                 }
                 resolve(data);
             });
+    }),
+    getLocations: () => new Promise((resolve, reject) => {
+        locationCollection
+        .find({})
+        .toArray((err, locations) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            
+            resolve(locations);
+        });
     }),
 };
 });

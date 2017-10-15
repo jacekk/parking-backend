@@ -8,17 +8,13 @@ const { fetchAndParseParkings, startSynchronizingWithAPI } = require('./data-fet
 const { mapPredictions } = require('./predictions');
 
 const now = new Date();
+const SYNC_INTERVAL = 1 * 1000 * 60;
+
 
 fetchAndParseParkings().then(({ locations, entries }) => {
   getRepository()
     .then((repository) => {
-    //   Promise.all([
-            // repository.addParkingLocation(locations),
-    //         // repository.addParkingEntry(entries)
-    //     ]
-    //   ).then(() => {
-
-        startSynchronizingWithAPI(repository);
+        startSynchronizingWithAPI(repository, SYNC_INTERVAL);
 
           app.listen('4000', err => {
             if (err) {

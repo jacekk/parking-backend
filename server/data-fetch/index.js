@@ -63,11 +63,8 @@ const fetchSuccess = (lines) => {
     });
 
     parsedEntries = parsedEntries
-    // .map(entry => ({
-    //     // locationId: locationIdMap[entry.name],
-    //     ...entry
-    // }))
-    .sort(sortEntries );
+
+        .sort(sortEntries );
 
     return {
         locations: locations,
@@ -87,12 +84,20 @@ const fetchAndParseParkings = () => {
     ;
 };
 
-const startSynchronizingWithAPI = repo => {
+const startSynchronizingWithAPI = (repo, interval) => {
     return setInterval(async () => {
         console.log('############ SYNC_INIT ############')
         const { locations, entries } = await fetchAndParseParkings();
         const latestPersistedEntry = await repo.getLatestEntry();
-
+        
+        console.log('############ SYNC_LOCATIONS ############')
+        const persistedLocations = await repo.getLocations();
+        if (persistedLocations.length < locations.length) {
+            console.log('############ SYNC_ADDING_LOCATIONS ############')
+            await repo.addParkingLocation(locations);
+        }
+        console.log('############ SYNC_LOCATIONS_FINISHED ############')
+        
         if (
             latestPersistedEntry && entries[0] &&
             moment(latestPersistedEntry.time)
@@ -119,7 +124,7 @@ const startSynchronizingWithAPI = repo => {
         await repo.addParkingEntry(entriesWithLocationId)
         console.log('############ SYNC_FINISH ############')
                     
-    }, 5 * 1000)
+    }, interval)
 }
 
 module.exports = {
