@@ -2,4 +2,4 @@
 npm install --unsafe-perm --global yarn
 
 yarn install
-yarn run start:dev
+yarn run serve
