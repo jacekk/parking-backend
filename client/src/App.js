@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment';
+import Header from './components/Header'
 import ParkingDetails from './components/ParkingDetails'
 import { getFreeSpotsClassName } from './helpers';
 
@@ -133,9 +134,7 @@ class App extends Component {
     return (
       <div className="app">
         <div className={`active-page ${listPageActiveClassName}`}>
-            <header className="app-header">
-                <h1 className="app-title">parkly</h1>
-            </header>
+            <Header />
             { this.renderErrorMessage() }
             <section className="app-body">
                 <ul className="parkingList">
@@ -155,7 +154,7 @@ class App extends Component {
             activeParking={activeParking}
             activeParkingChartData={activeParkingChartData}
             detailsPageActiveClassName={detailsPageActiveClassName}
-            goBack={this.showListPage}
+            backButtonHandler={this.showListPage}
         />
       </div>
     );

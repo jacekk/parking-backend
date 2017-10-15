@@ -1,6 +1,7 @@
 import React from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Rectangle} from 'recharts';
 import SingleParkingMap from '../SingleParkingMap';
+import Header from '../Header';
 import { getFreeSpotsClassName, getFreeSpotsColor } from '../../helpers';
 
 const CustomBar = (props) => {
@@ -10,14 +11,12 @@ const CustomBar = (props) => {
 
 const ParkingDetails = ({
     detailsPageActiveClassName,
-    goBack,
+    backButtonHandler,
     activeParking,
     activeParkingChartData,
 }) =>
     <div className={`active-page ${detailsPageActiveClassName}`}>
-            <header className="app-header">
-                <button className="app-back" onClick={goBack}>Powrót</button> <h1 className="app-title">parkly</h1>
-            </header>
+            <Header backButtonVisible backButtonHandler={backButtonHandler}/>
             <section className="app-body parking-details">
                 <h3 className="parking-name">{activeParking.name}</h3>
                 <span className="parking-data">
