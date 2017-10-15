@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment';
 import Header from './components/Header'
+import Spinner from './components/Spinner'
 import ParkingDetails from './components/ParkingDetails'
 import { getFreeSpotsClassName } from './helpers';
-
 
 const Parking = ({ name, freeSpots, onClick }) =>
     <li className="parkingList-item" onClick={onClick}>
@@ -13,7 +13,6 @@ const Parking = ({ name, freeSpots, onClick }) =>
           <label className="parking-label">Miejsca</label> <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
         </span>
     </li>
-
 
 class App extends Component {
     constructor(props){
@@ -66,11 +65,18 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.getParkings();
+        this.setState({
+            spinner: true
+        });
+        this.getParkings().then(() => {
+            this.setState({
+                spinner: false
+            });
+        });
     }
 
     getParkings() {
-        this.props.getParkings()
+        return this.props.getParkings()
         .then((parkings = []) => {
             this.setState(() => ({
                 parkings
@@ -135,6 +141,7 @@ class App extends Component {
       <div className="app">
         <div className={`active-page ${listPageActiveClassName}`}>
             <Header />
+            <Spinner className="spinner" visible={this.state.spinner}/>
             { this.renderErrorMessage() }
             <section className="app-body">
                 <ul className="parkingList">
