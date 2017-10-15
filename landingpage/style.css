@@ -101,7 +101,7 @@ h1 > small {
 
 @media only screen and (max-width: 900px) {
     .top {
-        height: 40vh;
+        height: 50vh;
     }
 
     .action-container {
@@ -114,5 +114,22 @@ h1 > small {
 
     .top .phone {
         display: none;
+    }
+
+    .call-to-action {
+        font-size: 1.3em;
+    }
+
+    .secondary-section {
+        padding: 5vh 5vw;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
+    .slogan {
+        width: auto;
+        font-size: 1em;
+        padding: 0.5em 1.4em;
     }
 }
