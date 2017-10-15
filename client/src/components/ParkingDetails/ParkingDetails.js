@@ -4,6 +4,8 @@ import SingleParkingMap from '../SingleParkingMap';
 import Header from '../Header';
 import { getFreeSpotsClassName, getFreeSpotsColor } from '../../helpers';
 
+const GOOGLE_API_KEY = 'AIzaSyAJc0tOv428FoJYWwwHQcCnfLHVn6E4U18';
+
 const CustomBar = (props) => {
     const fill = getFreeSpotsColor(props.freeSpots, props.isFuture);
     return <Rectangle {...props} fill={fill} />
@@ -39,7 +41,7 @@ const ParkingDetails = ({
                     <div className="parking-map">
                         <SingleParkingMap
                           isMarkerShown
-                          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
                           loadingElement={<div style={{ height: `100%` }} />}
                           containerElement={<div style={{ height: '200px' }} />}
                           mapElement={<div style={{ height: `100%` }} />}
