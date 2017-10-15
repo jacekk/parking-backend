@@ -84,11 +84,7 @@ const fetchAndParseParkings = () => {
     ;
 };
 
-const synchronize = async (repo) => {
-    console.log('############ SYNC_INIT ############')
-    const { locations, entries } = await fetchAndParseParkings();
-    const latestPersistedEntry = await repo.getLatestEntry();
-    
+const syncLocations = async (repo, locations) => {
     console.log('############ SYNC_LOCATIONS ############')
     const persistedLocations = await repo.getLocations();
     if (persistedLocations.length < locations.length) {
@@ -96,18 +92,35 @@ const synchronize = async (repo) => {
         await repo.addParkingLocation(locations);
     }
     console.log('############ SYNC_LOCATIONS_FINISHED ############')
+}
+
+const synchronize = async (repo) => {
+    console.log('############ SYNC_INIT ############')
+    const { locations, entries } = await fetchAndParseParkings();
+    const latestPersistedEntry = await repo.getLatestEntry(entries[0].time);
+     
+    await syncLocations(repo, locations);
+
+    let entriesToInsert = [];
+    let shouldSync = false; 
+
+    if (!latestPersistedEntry) {
+        entriesToInsert = entries;
+        shouldSync = true;
+    } else {
+        entriesToInsert = entries
+            .filter(entry => moment(latestPersistedEntry.time)
+                            .isBefore(entry.time ));
+        shouldSync = entriesToInsert.length > 0;
+    }  
     
-    if (
-        latestPersistedEntry && entries[0] &&
-        moment(latestPersistedEntry.time)
-            .isSameOrAfter(entries[0].time)
-        ) {
+    if (!shouldSync) {
             console.log('############ NOTHING_TO_SYNC ############')
             return;
         }
 
     const entriesWithLocationId = await Promise.all(
-        entries.map(async entry => {
+        entriesToInsert.map(async entry => {
         const location = await repo.findLocationIdByName(entry.name)
         
         return {

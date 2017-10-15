@@ -8,7 +8,7 @@ const { fetchAndParseParkings, startSynchronizingWithAPI } = require('./data-fet
 const { mapPredictions } = require('./predictions');
 
 const now = new Date();
-const SYNC_INTERVAL = 1 * 1000 * 60;
+const SYNC_INTERVAL = 1 * 1000 * 60 ;
 
 
 fetchAndParseParkings().then(({ locations, entries }) => {

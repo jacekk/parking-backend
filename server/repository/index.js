@@ -10,9 +10,6 @@ const getCollections = new Promise((resolve, reject) => {
             return reject(err);
         }
 
-        db.collection('parkingLocations').drop();
-        db.collection('parkingEntries').drop();
-
         const locationCollection = db.collection('parkingLocations');
         const entriesCollection = db.collection('parkingEntries');
 
@@ -121,14 +118,21 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
         });
     }),
     getLatestEntry: () => new Promise((resolve, reject) => {
-        entriesCollection
-            .findOne({}, {}, { sort: [['time', 'desc']] }, (err, data) => {
+        entriesCollection.find({}).sort({ "time": -1 }).limit(1).toArray((err, data) => {
                 if (err) {
                     reject(err);
                     return;
                 }
-                resolve(data);
-            });
+
+                resolve(data[0])
+        })
+            // .findOne({}, {}, { sort: [['time', 'desc']] }, (err, data) => {
+            //     if (err) {
+            //         reject(err);
+            //         return;
+            //     }
+            //     resolve(data);
+            // });
     }),
     findLocationIdByName: (name) => new Promise((resolve, reject) => {
         locationCollection
