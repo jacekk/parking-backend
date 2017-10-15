@@ -180,10 +180,12 @@ class App extends Component {
   getTrend() {
         const { history } = this.state;
 
-        const data = history.map(({ freeSpots, time }) => ([
-            moment(time).unix(),
-            freeSpots,
-        ]));
+        const data = history
+            .filter((_, index) => index >= history.length - 5)
+            .map(({ freeSpots, time }) => ([
+                moment(time).unix(),
+                freeSpots,
+            ]));
         const linearRegression = regression.linear(data);
         const coefficient = linearRegression.equation[0];
 
