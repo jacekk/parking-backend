@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "serve": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node migrations.js",
+    "serve:dev": "nodemon index.js",
     "serve:prod": "pm2 start ecosystem.config.js --env production"
   },
   "dependencies": {

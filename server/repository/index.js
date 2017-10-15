@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient, ObjectID } = require('mongodb');
 
 // Connection URL
 const mongoHost = process.env.NODE_ENV === 'production' ? 'localhost' : 'mongodb';
@@ -72,10 +72,10 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
     addParkingEntry: (parkingData) => new Promise((resolve, reject) => {
       entriesCollection.insert(parkingData, (err, result) => {
         if (err) {
-          reject(err);
-          return;
+            reject(err);
+            return;
         }
-
+        
         resolve(result);
       });
     }),
@@ -91,7 +91,7 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
     }),
     getParkingEntriesByIdAndTime: (id, timeOptions) => new Promise((resolve, reject) => {
         entriesCollection
-            .find({ locationId: id, time: timeOptions }, { time: 1, freeSpots: 1, _id: 0 })
+            .find({ locationId: new ObjectID(id), time: timeOptions }, { time: 1, freeSpots: 1, _id: 0 })
             .toArray((err, data) => {
                 if (err) {
                     reject(err);
@@ -115,12 +115,44 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
                 reject(err);
                 return;
             }
-
+            
             const parkingsWithCoordinates = addCoordinates(parkings);
             resolve(parkingsWithCoordinates);
         });
     }),
-  };
+    getLatestEntry: () => new Promise((resolve, reject) => {
+        entriesCollection
+            .findOne({}, {}, { sort: [['time', 'desc']] }, (err, data) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(data);
+            });
+    }),
+    findLocationIdByName: (name) => new Promise((resolve, reject) => {
+        locationCollection
+            .findOne({ name: name }, (err, data) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(data);
+            });
+    }),
+    getLocations: () => new Promise((resolve, reject) => {
+        locationCollection
+        .find({})
+        .toArray((err, locations) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            
+            resolve(locations);
+        });
+    }),
+};
 });
 
 

@@ -127,6 +127,16 @@ body {
   background-color: rgb(215, 36, 0);
 }
 
+.user-distance-label {
+    margin-left: 10px;
+}
+.user-distance {
+    border-radius: 3px;
+    background: #f55;
+    color: #fff;
+    padding: 2px 5px;
+}
+
 .error {
   background: rgb(232, 136, 2);
   color: #000;
