@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { get, isEqual } from 'lodash';
 
 class UserDistanceToSpot extends Component {
     constructor(props) {
@@ -6,14 +7,31 @@ class UserDistanceToSpot extends Component {
         this.state = {
             distanceText: null,
             isLoading: true,
+            spotId: null,
+            userCoordinatesLoading: true,
         };
     }
     componentDidMount() {
+        this.fetchDistance();
+    }
+
+    fetchDistance() {
+        const {
+            userCoordinates,
+            spotCoordinates,
+            userCoordinatesLoading,
+            spotId,
+        } = this.props;
+        this.setState({
+            spotId: spotId,
+            isLoading: false,
+            distanceText: null,
+            userCoordinatesLoading: userCoordinatesLoading,
+        });
         if (!window.google || !window.google.maps) {
             return;
         }
-        const { userCoordinates, spotCoordinates, userCoordinatesLoading } = this.props;
-        if (userCoordinatesLoading) {
+        if (userCoordinatesLoading || !spotCoordinates) {
             return;
         }
         // const directionsService = new window.google.maps.DirectionsService;
@@ -33,21 +51,29 @@ class UserDistanceToSpot extends Component {
                 isLoading: false,
             });
             if (status === 'OK') {
-                const distanceText = response.rows[0].elements[0].distance.text;
-                this.setState({ distanceText });
+                const distanceText = get(response, 'rows.0.elements.0.distance.text');
+                if (distanceText && distanceText.length) {
+                    this.setState({ distanceText });
+                }
             } else {
-                console.error('matrix request failed due to ' + status);
+                console.error('Matrix Service failed with status: ' + status);
             }
         });
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            isEqual(this.props.spotId, prevProps.spotId) &&
+            isEqual(this.state.userCoordinatesLoading, prevState.userCoordinatesLoading)
+        ) {
+            return;
+        }
+        this.fetchDistance();
     }
     render() {
         if (this.state.isLoading) {
             return 'loading...';
         }
-        if (!this.state.distanceText) {
-            return '-';
-        }
-        return this.state.distanceText;
+        return this.state.distanceText || '-';
     }
 }
 

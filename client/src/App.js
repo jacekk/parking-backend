@@ -10,6 +10,7 @@ import UserDistanceToSpot from './components/UserDistanceToSpot';
 import { getFreeSpotsClassName } from './helpers';
 window.moment = moment;
 const Parking = ({
+    id,
     name,
     freeSpots,
     onClick,
@@ -27,6 +28,7 @@ const Parking = ({
             <label className="user-distance-label">Dystans</label>
             <span className="user-distance">
                 <UserDistanceToSpot
+                    spotId={id}
                     userCoordinatesLoading={userCoordinatesLoading}
                     spotCoordinates={spotCoordinates}
                     userCoordinates={userCoordinates}
@@ -158,7 +160,6 @@ class App extends Component {
   }
   getActiveParkingChartData() {
     const { history, predictions } = this.state;
-    const lastHistoryItem = history[history.length - 1];
     const historyChartData = history.map(({ freeSpots, time }, index) => ({
         freeSpots,
         time: moment(time).subtract({'hours': 2}).fromNow(),
@@ -229,6 +230,7 @@ class App extends Component {
             backButtonHandler={this.showListPage}
             nowIndex={this.state.history.length - 1}
             userPosition={this.state.coords}
+            userPositionLoading={this.state.coordsLoading}
         />
       </div>
     );
