@@ -178,8 +178,6 @@ class App extends Component {
     const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const activeParking = this.getActiveParking();
     const activeParkingChartData = this.getActiveParkingChartData();
-    console.log(activeParkingChartData)
-    console.log(moment().format());
     return (
       <div className="app">
         <div className={`active-page ${listPageActiveClassName}`}>
