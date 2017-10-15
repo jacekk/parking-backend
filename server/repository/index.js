@@ -5,8 +5,8 @@ const mongodbUrl = 'mongodb://mongodb:27017/parking';
 
 const getCollections = new Promise((resolve, reject) => {
   MongoClient.connect(mongodbUrl, function(err, db) {
-    db.collection('parkingLocations').drop();
-    db.collection('parkingEntries').drop();
+    // db.collection('parkingLocations').drop();
+    // db.collection('parkingEntries').drop();
 
     const locationCollection = db.collection('parkingLocations');
     const entriesCollection = db.collection('parkingEntries');
@@ -72,10 +72,12 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
     addParkingEntry: (parkingData) => new Promise((resolve, reject) => {
       entriesCollection.insert(parkingData, (err, result) => {
         if (err) {
-          reject(err);
-          return;
+            console.log('err', err)
+            reject(err);
+            return;
         }
-
+        
+        console.log('RESLUT', result)
         resolve(result);
       });
     }),
@@ -115,12 +117,22 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
                 reject(err);
                 return;
             }
-
+            
             const parkingsWithCoordinates = addCoordinates(parkings);
             resolve(parkingsWithCoordinates);
         });
     }),
-  };
+    getLatestEntry: () => new Promise((resolve, reject) => {
+        entriesCollection
+            .findOne({}, {}, { sort: [['time', 'desc']] }, (err, data) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(data);
+            });
+    }),
+};
 });
 
 

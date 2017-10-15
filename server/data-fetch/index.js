@@ -1,6 +1,7 @@
 #!/usr/bin/env nodejs
 const uuid = require('uuid');
 const getCSV = require('get-csv');
+const moment = require('moment');
 const C = require('./constants');
 
 const fetchError = (err) => {
@@ -54,15 +55,17 @@ const fetchSuccess = (lines) => {
         locationIdMap[location] = locationId;
 
         return {
-            id: locationId,
+            // id: locationId,
             name: location,
         };
     });
 
-    parsedEntries = parsedEntries.map(entry => ({
-        locationId: locationIdMap[entry.name],
-        ...entry
-    }));
+    parsedEntries = parsedEntries
+    // .map(entry => ({
+    //     // locationId: locationIdMap[entry.name],
+    //     ...entry
+    // }))
+    .sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);
 
     return {
         locations: locations,
@@ -70,7 +73,7 @@ const fetchSuccess = (lines) => {
     };
 };
 
-const run = () => {
+const fetchAndParseParkings = () => {
     return getCSV(
             C.CSV_FILE_URL,
             { headers: false, encoding: 'utf8' }
@@ -80,6 +83,31 @@ const run = () => {
     ;
 };
 
+const startSynchronizingWithAPI = repo => {
+    return setInterval(async () => {
+        console.log('############ SYNC_INIT ############')
+        const { locations, entries } = await fetchAndParseParkings();
+        const latestPersistedEntry = await repo.getLatestEntry();
+
+        // await repo.addParkingLocation(locations)
+
+        if (
+            latestPersistedEntry && entries[0] &&
+            moment(latestPersistedEntry.time)
+                .isSameOrAfter(entries[0].time)
+            ) {
+                console.log('############ NOTHING_TO_SYNC ############')
+                return;
+            }
+            
+            console.log('############ SYNC_START ############')
+            await repo.addParkingEntry(entries)
+            console.log('############ SYNC_FINISH ############')
+                    
+    }, 5 * 1000)
+}
+
 module.exports = {
-    fetchAndParseParkings: run,
+    fetchAndParseParkings,
+    startSynchronizingWithAPI
 }

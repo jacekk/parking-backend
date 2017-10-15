@@ -4,7 +4,7 @@ const cors = require('cors');
 const moment = require('moment');
 
 const { getRepository } = require('./repository');
-const { fetchAndParseParkings } = require('./data-fetch/run');
+const { fetchAndParseParkings, startSynchronizingWithAPI } = require('./data-fetch');
 const { mapPredictions } = require('./predictions');
 
 const now = new Date();
@@ -12,10 +12,14 @@ const now = new Date();
 fetchAndParseParkings().then(({ locations, entries }) => {
   getRepository()
     .then((repository) => {
-      Promise.all([
-            repository.addParkingLocation(locations),
-            repository.addParkingEntry(entries)]
-      ).then(() => {
+    //   Promise.all([
+    //         repository.addParkingLocation(locations),
+    //         // repository.addParkingEntry(entries)
+    //     ]
+    //   ).then(() => {
+
+        startSynchronizingWithAPI(repository);
+
           app.listen('4000', err => {
             if (err) {
                 console.log('App died')
@@ -23,7 +27,7 @@ fetchAndParseParkings().then(({ locations, entries }) => {
             console.log('Running on 4000');
           })
       })
-    })
+    // })
     .catch(err => console.log(err));
 });
 
