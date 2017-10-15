@@ -5,8 +5,8 @@ import regression from 'regression';
 import Header from './components/Header'
 import Spinner from './components/Spinner'
 import ParkingDetails from './components/ParkingDetails'
+import UserDistanceToSpot from './components/UserDistanceToSpot';
 import { getFreeSpotsClassName } from './helpers';
-import { getUserDistanceToSpot } from './geo';
 
 const Parking = ({
     name,
@@ -21,13 +21,15 @@ const Parking = ({
         <span className="parking-data">
             <label className="parking-label">Miejsca</label>
             <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
+        </span>
+        <span className="parking-data">
             <label className="user-distance-label">Dystans</label>
             <span className="user-distance">
-                {
-                    userCoordinatesLoading && window.google ?
-                    <Spinner visible /> :
-                    getUserDistanceToSpot(spotCoordinates, userCoordinates)
-                }
+                <UserDistanceToSpot
+                    userCoordinatesLoading={userCoordinatesLoading}
+                    spotCoordinates={spotCoordinates}
+                    userCoordinates={userCoordinates}
+                />
             </span>
         </span>
     </li>
@@ -154,13 +156,21 @@ class App extends Component {
       return parkings.filter(({ name }) => name === activeParkingName)[0] || {};
   }
   getActiveParkingChartData() {
-      const { history, predictions } = this.state;
-      const lastHistoryItem = history[history.length - 1];
-      return history.concat(predictions).map(({ freeSpots, time }) => ({
+    const { history, predictions } = this.state;
+    const lastHistoryItem = history[history.length - 1];
+    const historyChartData = history.map(({ freeSpots, time }, index) => ({
         freeSpots,
         time: moment(time).fromNow(),
-        isFuture: lastHistoryItem && moment(time).isAfter(lastHistoryItem.time),
-      }))
+        isNow: index === history.length - 1,
+        isFuture: false,
+    }));
+    const predictionsChartData = predictions.map(({ freeSpots, time }, index) => ({
+        freeSpots,
+        time: moment(time).fromNow(),
+        isFuture: true,
+        isNow: false
+    }));
+    return historyChartData.concat(predictionsChartData);
   }
   getBarChartWidth() {
       return window.innerWidth - 50;
@@ -216,6 +226,8 @@ class App extends Component {
             detailsPageActiveClassName={detailsPageActiveClassName}
             trend={this.getTrend()}
             backButtonHandler={this.showListPage}
+            nowIndex={this.state.history.length - 1}
+            userPosition={this.state.coords}
         />
       </div>
     );

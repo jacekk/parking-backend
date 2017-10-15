@@ -67,16 +67,12 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 10px 20px;
-  border: 1px solid transparent;
-  border-width: 1px 0 1px 0;
   transition: all .175s ease-out;
   cursor: pointer;
 }
 
 .parkingList-item:hover {
     background-color: #f0f0f0;
-    box-shadow: 0 0 35px 0px rgba(0, 0, 0, 0.13);
-    border-color: #e0e0e0;
 }
 
 /********************************************************/
@@ -94,6 +90,7 @@ body {
 
 .parking-label {
   color: #717171;
+  margin-right: 5px;
 }
 
 .parking-details {
@@ -129,6 +126,7 @@ body {
 
 .user-distance-label {
     margin-left: 10px;
+    margin-right: 5px;
 }
 .user-distance {
     border-radius: 3px;
@@ -166,4 +164,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+button {
+    margin: 12px 8px;
+    padding: 0 15px;
+    border-radius: 3px;
+    font-size: .6em;
+    text-transform: uppercase;
+    transition: background 0.2s ease-in-out;
+    border: 2px solid #bdbdbd;
+    color: #989898;
+    background: #fff;
+    font-weight: bold;
+}
+
+button:hover {
+    border-color: rgb(60, 60, 60);
+    color: rgb(47, 47, 47);
 }
