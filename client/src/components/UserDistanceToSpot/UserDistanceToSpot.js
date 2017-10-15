@@ -6,9 +6,8 @@ class UserDistanceToSpot extends Component {
         super(props);
         this.state = {
             distanceText: null,
-            isLoading: true,
+            isLoading: false,
             spotId: null,
-            userCoordinatesLoading: true,
         };
     }
     componentDidMount() {
@@ -20,20 +19,16 @@ class UserDistanceToSpot extends Component {
             userCoordinates,
             spotCoordinates,
             userCoordinatesLoading,
-            spotId,
         } = this.props;
-        this.setState({
-            spotId: spotId,
-            isLoading: false,
-            distanceText: null,
-            userCoordinatesLoading: userCoordinatesLoading,
-        });
+
         if (!window.google || !window.google.maps) {
             return;
         }
+
         if (userCoordinatesLoading || !spotCoordinates) {
             return;
         }
+
         // const directionsService = new window.google.maps.DirectionsService;
         const matrixService = new window.google.maps.DistanceMatrixService();
         // const directionsDisplay = new window.google.maps.DirectionsRenderer;
@@ -42,37 +37,44 @@ class UserDistanceToSpot extends Component {
         const destination = new window.google.maps.LatLng(
             spotCoordinates.lat, spotCoordinates.long);
 
-        matrixService.getDistanceMatrix({
-            origins: [origin],
-            destinations: [destination],
-            travelMode: 'DRIVING'
-        }, (response, status) => {
-            this.setState({
-                isLoading: false,
-            });
-            if (status === 'OK') {
-                const distanceText = get(response, 'rows.0.elements.0.distance.text');
-                if (distanceText && distanceText.length) {
-                    this.setState({ distanceText });
+        this.setState({
+            isLoading: true
+        }, () => {
+            matrixService.getDistanceMatrix({
+                origins: [origin],
+                destinations: [destination],
+                travelMode: 'DRIVING'
+            }, (response, status) => {
+                this.setState({
+                    isLoading: false,
+                });
+                if (status === 'OK') {
+                    const distanceText = get(response, 'rows.0.elements.0.distance.text');
+                    if (distanceText && distanceText.length) {
+                        this.setState({ distanceText });
+                    }
+                } else {
+                    console.error('Matrix Service failed with status: ' + status);
                 }
-            } else {
-                console.error('Matrix Service failed with status: ' + status);
-            }
+            });
         });
     }
     componentDidUpdate(prevProps, prevState) {
+
         if (
-            isEqual(this.props.spotId, prevProps.spotId) &&
-            isEqual(this.state.userCoordinatesLoading, prevState.userCoordinatesLoading)
+            isEqual(this.props.spotId, prevProps.spotId)
+            && (this.state.isLoading || this.state.distanceText)
         ) {
             return;
         }
         this.fetchDistance();
     }
+
     render() {
-        if (this.state.isLoading) {
+        if (this.state.isLoading || this.props.userCoordinatesLoading) {
             return 'loading...';
         }
+
         return this.state.distanceText || '-';
     }
 }
