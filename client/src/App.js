@@ -4,8 +4,8 @@ import moment from 'moment';
 import Header from './components/Header'
 import Spinner from './components/Spinner'
 import ParkingDetails from './components/ParkingDetails'
+import UserDistanceToSpot from './components/UserDistanceToSpot';
 import { getFreeSpotsClassName } from './helpers';
-import { getUserDistanceToSpot } from './geo';
 
 const Parking = ({
     name,
@@ -22,11 +22,11 @@ const Parking = ({
             <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
             <label className="user-distance-label">Dystans</label>
             <span className="user-distance">
-                {
-                    userCoordinatesLoading && window.google ?
-                    <Spinner visible /> :
-                    getUserDistanceToSpot(spotCoordinates, userCoordinates)
-                }
+                <UserDistanceToSpot
+                    userCoordinatesLoading={userCoordinatesLoading}
+                    spotCoordinates={spotCoordinates}
+                    userCoordinates={userCoordinates}
+                />
             </span>
         </span>
     </li>
