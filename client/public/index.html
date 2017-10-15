@@ -21,6 +21,18 @@
     -->
     <link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet">
     <title>React App</title>
+    <script>
+        var GOOGLE_API_KEY = 'AIzaSyAJc0tOv428FoJYWwwHQcCnfLHVn6E4U18';
+        var GOOGLE_MAP_URL = [
+            'https://maps.googleapis.com/maps/api/js?key=',
+            GOOGLE_API_KEY,
+            '&v=3.exp&libraries=geometry,drawing,places'
+        ].join('');
+
+        var googleMapsScript = document.createElement('script');
+        googleMapsScript.setAttribute('src', GOOGLE_MAP_URL);
+        document.head.appendChild(googleMapsScript);
+    </script>
   </head>
   <body>
     <noscript>

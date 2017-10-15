@@ -23,7 +23,7 @@ const Parking = ({
             <label className="user-distance-label">Dystans</label>
             <span className="user-distance">
                 {
-                    userCoordinatesLoading && false ?
+                    userCoordinatesLoading && window.google ?
                     <Spinner visible /> :
                     getUserDistanceToSpot(spotCoordinates, userCoordinates)
                 }
