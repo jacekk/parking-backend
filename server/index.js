@@ -75,7 +75,7 @@ app.get('/predictions/:id', async (req, res) => {
     try {
         const now = new Date();
         const parkings = await repo.getParkings();
-        const parking = parkings.filter(item => item.id === parkingId)[0];
+        const parking = parkings.filter(item => item.id.toString() === parkingId.toString())[0];
 
         if (!parking) {
             return res.status(404).end();

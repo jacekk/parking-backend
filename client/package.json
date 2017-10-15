@@ -2,7 +2,7 @@
   "name": "parkly",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://parkly.jacek-k.net",
+  "homepage": "http://parkly.pl",
   "dependencies": {
     "axios": "^0.16.2",
     "chart.js": "^2.7.0",
