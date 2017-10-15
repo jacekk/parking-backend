@@ -1,14 +1,38 @@
 import React from 'react';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import LocationMarker from './LocationMarker';
 
-const SingleParkingMap = withScriptjs(withGoogleMap((props) =>
-  <GoogleMap
-      defaultZoom={14}
-      defaultCenter={{ lat: props.lat, lng: props.long }}
-  >
-      <Marker position={{ lat: props.lat, lng: props.long }} />
-  </GoogleMap>
-));
+const updateMap = (map, { lat, long, userPosition }) => {
+    if (!map) {
+        return;
+    }
+
+    const Maps = google.maps; // eslint-disable-line no-undef
+
+    if (userPosition) {
+        const bounds = new Maps.LatLngBounds();
+        bounds.extend(new Maps.LatLng(lat, long));
+        bounds.extend(new Maps.LatLng(userPosition.lat, userPosition.long));
+        map.fitBounds(bounds);
+    }
+};
+
+const SingleParkingMap = withGoogleMap((props) => {
+    const { lat, long, userPosition } = props;
+
+    return (
+        <GoogleMap
+            ref={map => updateMap(map, props)}
+            defaultZoom={14}
+            defaultCenter={{ lat: lat, lng: long }}
+        >
+            <Marker position={{ lat: lat, lng: long }} />
+            { userPosition &&
+                <LocationMarker {...userPosition} />
+            }
+        </GoogleMap>
+    );
+});
 
 
 export default SingleParkingMap;

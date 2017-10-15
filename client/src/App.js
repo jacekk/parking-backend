@@ -4,13 +4,30 @@ import moment from 'moment';
 import Header from './components/Header'
 import Spinner from './components/Spinner'
 import ParkingDetails from './components/ParkingDetails'
+import UserDistanceToSpot from './components/UserDistanceToSpot';
 import { getFreeSpotsClassName } from './helpers';
 
-const Parking = ({ name, freeSpots, onClick }) =>
+const Parking = ({
+    name,
+    freeSpots,
+    onClick,
+    spotCoordinates,
+    userCoordinates,
+    userCoordinatesLoading
+}) =>
     <li className="parkingList-item" onClick={onClick}>
         <h3 className="parking-name">{name}</h3>
         <span className="parking-data">
-          <label className="parking-label">Miejsca</label> <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
+            <label className="parking-label">Miejsca</label>
+            <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
+            <label className="user-distance-label">Dystans</label>
+            <span className="user-distance">
+                <UserDistanceToSpot
+                    userCoordinatesLoading={userCoordinatesLoading}
+                    spotCoordinates={spotCoordinates}
+                    userCoordinates={userCoordinates}
+                />
+            </span>
         </span>
     </li>
 
@@ -25,11 +42,21 @@ class App extends Component {
             errorMessage: null,
             activeParkingName: null,
             spinner: false,
+            coordsLoading: true,
+            coords: null,
         };
 
         this.closeErrorMessage = this.closeErrorMessage.bind(this);
         this.showListPage = this.showListPage.bind(this);
         this.showDetailsPage = this.showDetailsPage.bind(this);
+        this.updateUserPosition = this.updateUserPosition.bind(this);
+    }
+
+    updateUserPosition(position) {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+
+        this.setState({ coordsLoading: false, coords: { lat, long } });
     }
 
     showListPage(event) {
@@ -65,9 +92,15 @@ class App extends Component {
     }
 
     componentDidMount() {
+        if (navigator && navigator.geolocation) {
+            this.setState({ coordsLoading: true });
+            navigator.geolocation.getCurrentPosition(this.updateUserPosition);
+        }
+
         this.setState({
             spinner: true
         });
+
         this.getParkings().then(() => {
             this.setState({
                 spinner: false
@@ -140,7 +173,7 @@ class App extends Component {
       return window.innerWidth - 50;
   }
   render() {
-    const { activeParkingName } = this.state;
+    const { activeParkingName, coords, coordsLoading } = this.state;
     const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const activeParking = this.getActiveParking();
@@ -157,9 +190,12 @@ class App extends Component {
                 <ul className="parkingList">
                     {this.state
                         .parkings
-                        .map(({ name, freeSpots, id }) => <Parking
+                        .map(({ name, freeSpots, coordinates, id }) => <Parking
                             key={id}
                             name={name}
+                            spotCoordinates={coordinates}
+                            userCoordinates={coords}
+                            userCoordinatesLoading={coordsLoading}
                             freeSpots={freeSpots}
                             onClick={event => this.showDetailsPage(event, name, id)}
                         />)
@@ -173,6 +209,7 @@ class App extends Component {
             detailsPageActiveClassName={detailsPageActiveClassName}
             backButtonHandler={this.showListPage}
             nowIndex={this.state.history.length - 1}
+            userPosition={this.state.coords}
         />
       </div>
     );

@@ -18,6 +18,7 @@ const ParkingDetails = ({
     activeParking,
     activeParkingChartData,
     nowIndex,
+    userPosition,
 }) => {
     const CustomLabel = (props) => {
         if (props.index !== nowIndex) {
@@ -54,13 +55,12 @@ const ParkingDetails = ({
                 {activeParking && activeParking.coordinates &&
                     <div className="parking-map">
                         <SingleParkingMap
-                          isMarkerShown
-                          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                           loadingElement={<div style={{ height: `100%` }} />}
                           containerElement={<div style={{ height: '200px' }} />}
                           mapElement={<div style={{ height: `100%` }} />}
                           lat={activeParking.coordinates.lat}
                           long={activeParking.coordinates.long}
+                          userPosition={userPosition}
                         />
                     </div>
                 }
