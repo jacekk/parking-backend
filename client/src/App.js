@@ -20,6 +20,8 @@ const Parking = ({
         <span className="parking-data">
             <label className="parking-label">Miejsca</label>
             <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
+        </span>
+        <span className="parking-data">
             <label className="user-distance-label">Dystans</label>
             <span className="user-distance">
                 <UserDistanceToSpot
