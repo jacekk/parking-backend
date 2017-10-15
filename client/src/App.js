@@ -5,12 +5,29 @@ import Header from './components/Header'
 import Spinner from './components/Spinner'
 import ParkingDetails from './components/ParkingDetails'
 import { getFreeSpotsClassName } from './helpers';
+import { getUserDistanceToSpot } from './geo';
 
-const Parking = ({ name, freeSpots, onClick }) =>
+const Parking = ({
+    name,
+    freeSpots,
+    onClick,
+    spotCoordinates,
+    userCoordinates,
+    userCoordinatesLoading
+}) =>
     <li className="parkingList-item" onClick={onClick}>
         <h3 className="parking-name">{name}</h3>
         <span className="parking-data">
-          <label className="parking-label">Miejsca</label> <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
+            <label className="parking-label">Miejsca</label>
+            <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
+            <label className="user-distance-label">Dystans</label>
+            <span className="user-distance">
+                {
+                    userCoordinatesLoading && false ?
+                    <Spinner visible /> :
+                    getUserDistanceToSpot(spotCoordinates, userCoordinates)
+                }
+            </span>
         </span>
     </li>
 
@@ -148,7 +165,7 @@ class App extends Component {
       return window.innerWidth - 50;
   }
   render() {
-    const { activeParkingName } = this.state;
+    const { activeParkingName, coords, coordsLoading } = this.state;
     const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const activeParking = this.getActiveParking();
@@ -163,9 +180,12 @@ class App extends Component {
                 <ul className="parkingList">
                     {this.state
                         .parkings
-                        .map(({ name, freeSpots, id }) => <Parking
+                        .map(({ name, freeSpots, coordinates, id }) => <Parking
                             key={id}
                             name={name}
+                            spotCoordinates={coordinates}
+                            userCoordinates={coords}
+                            userCoordinatesLoading={coordsLoading}
                             freeSpots={freeSpots}
                             onClick={event => this.showDetailsPage(event, name, id)}
                         />)
