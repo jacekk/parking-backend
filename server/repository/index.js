@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
-const mongodbUrl = 'mongodb://mongodb:27017/parking';
+const mongodbUrl = 'mongodb://mongodb:27017/parkly';
 
 const getCollections = new Promise((resolve, reject) => {
   MongoClient.connect(mongodbUrl, function(err, db) {
