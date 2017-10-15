@@ -89,6 +89,7 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
     getParkingEntriesByIdAndTime: (id, timeOptions) => new Promise((resolve, reject) => {
         entriesCollection
             .find({ locationId: new ObjectID(id), time: timeOptions }, { time: 1, freeSpots: 1, _id: 0 })
+            .sort({ time: 1 })
             .toArray((err, data) => {
                 if (err) {
                     reject(err);
