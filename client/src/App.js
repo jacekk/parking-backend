@@ -120,13 +120,21 @@ class App extends Component {
       return parkings.filter(({ name }) => name === activeParkingName)[0] || {};
   }
   getActiveParkingChartData() {
-      const { history, predictions } = this.state;
-      const lastHistoryItem = history[history.length - 1];
-      return history.concat(predictions).map(({ freeSpots, time }) => ({
+    const { history, predictions } = this.state;
+    const lastHistoryItem = history[history.length - 1];
+    const historyChartData = history.map(({ freeSpots, time }, index) => ({
         freeSpots,
         time: moment(time).fromNow(),
-        isFuture: lastHistoryItem && moment(time).isAfter(lastHistoryItem.time),
-      }))
+        isNow: index === history.length - 1,
+        isFuture: false,
+    }));
+    const predictionsChartData = predictions.map(({ freeSpots, time }, index) => ({
+        freeSpots,
+        time: moment(time).fromNow(),
+        isFuture: true,
+        isNow: false
+    }));
+    return historyChartData.concat(predictionsChartData);
   }
   getBarChartWidth() {
       return window.innerWidth - 50;
@@ -137,6 +145,8 @@ class App extends Component {
     const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const activeParking = this.getActiveParking();
     const activeParkingChartData = this.getActiveParkingChartData();
+    console.log(activeParkingChartData)
+    console.log(moment().format());
     return (
       <div className="app">
         <div className={`active-page ${listPageActiveClassName}`}>
@@ -162,6 +172,7 @@ class App extends Component {
             activeParkingChartData={activeParkingChartData}
             detailsPageActiveClassName={detailsPageActiveClassName}
             backButtonHandler={this.showListPage}
+            nowIndex={this.state.history.length - 1}
         />
       </div>
     );

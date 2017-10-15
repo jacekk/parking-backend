@@ -24,3 +24,17 @@ export const getFreeSpotsColor = (freeSpots, isFuture) => {
         return `rgba(0, 186, 3, ${alpha})`;
     }
 }
+
+
+export const getFreeSpotsColorBorder = (freeSpots, isFuture) => {
+    const alpha = isFuture ? .5 : 1;
+    if (freeSpots === 0) {
+        return `rgba(149, 25, 0, ${alpha})`;
+    } else if (freeSpots > 0 && freeSpots <= 5) {
+        return `rgba(178, 68, 0, ${alpha})`;
+    } else if (freeSpots > 5 && freeSpots <= 10) {
+        return `rgba(154, 108, 0, ${alpha})`;
+    } else if (freeSpots > 10) {
+        return `rgba(0, 130, 0, ${alpha})`;
+    }
+}
