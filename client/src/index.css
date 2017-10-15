@@ -88,6 +88,7 @@ body {
   margin-right: 20px;
 }
 
+.user-distance-label,
 .parking-label {
   color: #717171;
   margin-right: 5px;
@@ -103,6 +104,7 @@ body {
 
 /********************************************************/
 
+.user-distance,
 .parking-trend,
 .parking-spot {
   border-radius: 3px;
@@ -124,15 +126,8 @@ body {
   background-color: rgb(215, 36, 0);
 }
 
-.user-distance-label {
-    margin-left: 10px;
-    margin-right: 5px;
-}
 .user-distance {
-    border-radius: 3px;
     background: #f55;
-    color: #fff;
-    padding: 2px 5px;
 }
 
 .error {
@@ -183,4 +178,11 @@ button {
 button:hover {
     border-color: rgb(60, 60, 60);
     color: rgb(47, 47, 47);
+}
+
+@media only screen and (max-width: 500px) {
+    .parking-details .parking-data {
+        display: block;
+        padding: 6px 0px;
+    }
 }

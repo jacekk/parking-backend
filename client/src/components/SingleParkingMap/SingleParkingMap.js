@@ -25,6 +25,7 @@ const SingleParkingMap = withGoogleMap((props) => {
             ref={map => updateMap(map, props)}
             defaultZoom={14}
             defaultCenter={{ lat: lat, lng: long }}
+            containerElement={<div style={{ height: `400px` }} />}
         >
             <Marker position={{ lat: lat, lng: long }} />
             { userPosition &&

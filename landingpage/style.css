@@ -1,0 +1,118 @@
+html {
+    font-family: 'Overpass', sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.top {
+    background: url(background.jpg) no-repeat 50% 50%;
+    background-size: cover;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    background: #efac00;
+    margin: 0;
+    font-size: 5.2em;
+    width: fit-content;
+    padding: 0 0.5em 0 10vw;
+}
+
+.slogan {
+    padding: 0.5em 1.4em 0.5em 10vw;
+    margin: 0;
+    color: #efac00;
+    width: fit-content;
+    background: #000;
+    font-size: 1.3em;
+}
+
+h1 > small {
+    font-size: 12px;
+}
+
+.call-to-action {
+    font-size: 1.9em;
+    color: #000;
+    background: #efac00;
+    border-radius: 0.3em;
+    padding: 0.6em 1em;
+    border: 0;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.top-wrapper {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: column;
+}
+
+.action-container {
+    margin-left: 10vw;
+    width: 45vw;
+    text-align: center;
+    padding: 3vh 0;
+}
+
+.action-text {
+    color: #fff;
+    text-shadow: 0 0 2px #000;
+    font-size: 1.1em;
+}
+
+.action-container div {
+    position: relative;
+    z-index: 2;
+}
+
+.top .phone {
+    position: absolute;
+    top: 4vh;
+    right: calc(25vw - 30vw / 2);
+    max-width: 30vw;
+    max-height: 90vh;
+    z-index: 1;
+}
+
+.second-action-container {
+    display: none;
+    text-align: center;
+}
+
+.secondary-section {
+    padding: 5vh 10vw 10vh 10vw;
+}
+
+.secondary-section .phone {
+    margin-top: 5vh;
+}
+
+.supported-cities {
+    background: #eee;
+    border-top: 1px #ccc;
+}
+
+@media only screen and (max-width: 900px) {
+    .top {
+        height: 40vh;
+    }
+
+    .action-container {
+        display: none;
+    }
+
+    .second-action-container {
+        display: block;
+    }
+
+    .top .phone {
+        display: none;
+    }
+}

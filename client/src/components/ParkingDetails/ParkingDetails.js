@@ -47,6 +47,8 @@ const ParkingDetails = ({
                 <span className="parking-data">
                     <label className="parking-label">Trend</label>
                     <span className="parking-trend">{trend}</span>
+                </span>
+                <span className="parking-data">
                     <label className="user-distance-label">Dystans</label>
                     <span className="user-distance">
                         {<UserDistanceToSpot
