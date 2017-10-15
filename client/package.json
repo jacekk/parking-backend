@@ -2,7 +2,7 @@
   "name": "parkly",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://parkly.pl",
+  "homepage": "https://parkly.pl",
   "dependencies": {
     "axios": "^0.16.2",
     "chart.js": "^2.7.0",
@@ -19,7 +19,7 @@
     "regression": "^2.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "build:prod": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test --env=jsdom",
