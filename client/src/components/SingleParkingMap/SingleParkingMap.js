@@ -1,5 +1,5 @@
 import React from 'react';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import LocationMarker from './LocationMarker';
 
 const updateMap = (map, { lat, long, userPosition }) => {
@@ -17,7 +17,7 @@ const updateMap = (map, { lat, long, userPosition }) => {
     }
 };
 
-const SingleParkingMap = withScriptjs(withGoogleMap((props) => {
+const SingleParkingMap = withGoogleMap((props) => {
     const { lat, long, userPosition } = props;
 
     return (
@@ -32,7 +32,7 @@ const SingleParkingMap = withScriptjs(withGoogleMap((props) => {
             }
         </GoogleMap>
     );
-}));
+});
 
 
 export default SingleParkingMap;

@@ -39,7 +39,6 @@ const ParkingDetails = ({
                 {activeParking && activeParking.coordinates &&
                     <div className="parking-map">
                         <SingleParkingMap
-                          googleMapURL={window.GOOGLE_MAP_URL}
                           loadingElement={<div style={{ height: `100%` }} />}
                           containerElement={<div style={{ height: '200px' }} />}
                           mapElement={<div style={{ height: `100%` }} />}
