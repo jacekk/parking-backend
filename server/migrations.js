@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
-const mongodbUrl = 'mongodb://localhost:27017/parking';
+const mongodbUrl = 'mongodb://localhost:27017/parkly';
 
 MongoClient.connect(mongodbUrl, function(err, db) {
     if (err) {
