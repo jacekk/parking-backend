@@ -38,7 +38,8 @@ class UserDistanceToSpot extends Component {
             spotCoordinates.lat, spotCoordinates.long);
 
         this.setState({
-            isLoading: true
+            isLoading: true,
+            distanceText: null,
         }, () => {
             matrixService.getDistanceMatrix({
                 origins: [origin],
