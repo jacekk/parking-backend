@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment';
+import regression from 'regression';
 import Header from './components/Header'
 import Spinner from './components/Spinner'
 import ParkingDetails from './components/ParkingDetails'
@@ -164,6 +165,19 @@ class App extends Component {
   getBarChartWidth() {
       return window.innerWidth - 50;
   }
+  getTrend() {
+
+        const { history } = this.state;
+        console.log('historia', history)
+        
+        const data = history.map(({ freeSpots, time }) => ([
+            moment(time).unix(),
+            freeSpots,
+        ]));
+        const linearRegression = regression.linear(data);
+    
+        return linearRegression.equation[0] >= 0 ? "Wzrostowy" : "Spadkowy";
+    }
   render() {
     const { activeParkingName, coords, coordsLoading } = this.state;
     const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
@@ -197,6 +211,7 @@ class App extends Component {
             activeParking={activeParking}
             activeParkingChartData={activeParkingChartData}
             detailsPageActiveClassName={detailsPageActiveClassName}
+            trend={this.getTrend()}
             backButtonHandler={this.showListPage}
         />
       </div>

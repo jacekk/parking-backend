@@ -4,6 +4,8 @@ import SingleParkingMap from '../SingleParkingMap';
 import Header from '../Header';
 import { getFreeSpotsClassName, getFreeSpotsColor } from '../../helpers';
 
+
+
 const CustomBar = (props) => {
     const fill = getFreeSpotsColor(props.freeSpots, props.isFuture);
     return <Rectangle {...props} fill={fill} />
@@ -14,6 +16,7 @@ const ParkingDetails = ({
     backButtonHandler,
     activeParking,
     activeParkingChartData,
+    trend
 }) =>
     <div className={`active-page ${detailsPageActiveClassName}`}>
             <Header backButtonVisible backButtonHandler={backButtonHandler}/>
@@ -23,7 +26,7 @@ const ParkingDetails = ({
                     <label className="parking-label">Wolne miejsca obecnie</label> <span className={getFreeSpotsClassName(activeParking.freeSpots)}>{activeParking.freeSpots}</span>
                 </span>
                 <span className="parking-data">
-                    <label className="parking-label">Trend</label> <span className="parking-trend">Wzrostowy</span>
+                    <label className="parking-label">Trend</label> <span className="parking-trend">{trend}</span>
                 </span>
                 <div className="parking-chart">
                     <ResponsiveContainer width="100%" height={200}>
