@@ -8,6 +8,7 @@ class UserDistanceToSpot extends Component {
             distanceText: null,
             isLoading: true,
             spotId: null,
+            userCoordinatesLoading: true,
         };
     }
     componentDidMount() {
@@ -15,12 +16,18 @@ class UserDistanceToSpot extends Component {
     }
 
     fetchDistance() {
+        const {
+            userCoordinates,
+            spotCoordinates,
+            userCoordinatesLoading,
+            spotId,
+        } = this.props;
         this.setState({
-            spotId: this.props.spotId,
+            spotId: spotId,
             isLoading: false,
             distanceText: null,
+            userCoordinatesLoading: userCoordinatesLoading,
         });
-        const { userCoordinates, spotCoordinates, userCoordinatesLoading } = this.props;
         if (!window.google || !window.google.maps) {
             return;
         }
@@ -54,10 +61,13 @@ class UserDistanceToSpot extends Component {
         });
     }
     componentDidUpdate(prevProps, prevState) {
-        if (isEqual(this.props, prevProps)) {
+        if (
+            isEqual(this.props.spotId, prevProps.spotId) &&
+            isEqual(this.state.userCoordinatesLoading, prevState.userCoordinatesLoading)
+        ) {
             return;
         }
-        // this.fetchDistance();
+        this.fetchDistance();
     }
     render() {
         if (this.state.isLoading) {
