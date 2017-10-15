@@ -2,7 +2,7 @@
   "name": "parkly",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://parkly.pl",
+  "homepage": "https://parkly.pl/app",
   "dependencies": {
     "axios": "^0.16.2",
     "chart.js": "^2.7.0",
@@ -21,7 +21,7 @@
   "scripts": {
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
-    "build:prod": "rm -r static && NODE_ENV=production react-scripts build && mkdir -p static/app && cp -r build/* static/app && cp ../landingpage/* static",
+    "build:prod": "rm -r -f static && NODE_ENV=production react-scripts build && mkdir -p static/app && cp -r build/* static/app && cp ../landingpage/* static",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
