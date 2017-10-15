@@ -84,47 +84,52 @@ const fetchAndParseParkings = () => {
     ;
 };
 
-const startSynchronizingWithAPI = (repo, interval) => {
-    return setInterval(async () => {
-        console.log('############ SYNC_INIT ############')
-        const { locations, entries } = await fetchAndParseParkings();
-        const latestPersistedEntry = await repo.getLatestEntry();
-        
-        console.log('############ SYNC_LOCATIONS ############')
-        const persistedLocations = await repo.getLocations();
-        if (persistedLocations.length < locations.length) {
-            console.log('############ SYNC_ADDING_LOCATIONS ############')
-            await repo.addParkingLocation(locations);
+const synchronize = async (repo) => {
+    console.log('############ SYNC_INIT ############')
+    const { locations, entries } = await fetchAndParseParkings();
+    const latestPersistedEntry = await repo.getLatestEntry();
+    
+    console.log('############ SYNC_LOCATIONS ############')
+    const persistedLocations = await repo.getLocations();
+    if (persistedLocations.length < locations.length) {
+        console.log('############ SYNC_ADDING_LOCATIONS ############')
+        await repo.addParkingLocation(locations);
+    }
+    console.log('############ SYNC_LOCATIONS_FINISHED ############')
+    
+    if (
+        latestPersistedEntry && entries[0] &&
+        moment(latestPersistedEntry.time)
+            .isSameOrAfter(entries[0].time)
+        ) {
+            console.log('############ NOTHING_TO_SYNC ############')
+            return;
         }
-        console.log('############ SYNC_LOCATIONS_FINISHED ############')
+
+    const entriesWithLocationId = await Promise.all(
+        entries.map(async entry => {
+        const location = await repo.findLocationIdByName(entry.name)
         
-        if (
-            latestPersistedEntry && entries[0] &&
-            moment(latestPersistedEntry.time)
-                .isSameOrAfter(entries[0].time)
-            ) {
-                console.log('############ NOTHING_TO_SYNC ############')
-                return;
-            }
-
-        const entriesWithLocationId = await Promise.all(
-            entries.map(async entry => {
-            const location = await repo.findLocationIdByName(entry.name)
-            
-            return {
-                ...entry,
-                locationId: location._id
-            }
-        })) || [] ;
+        return {
+            ...entry,
+            locationId: location._id
+        }
+    })) || [] ;
 
 
-        entriesWithLocationId.sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);
-            
-        console.log('############ SYNC_START ############')
-        await repo.addParkingEntry(entriesWithLocationId)
-        console.log('############ SYNC_FINISH ############')
-                    
-    }, interval)
+    entriesWithLocationId.sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);
+        
+    console.log('############ SYNC_START ############')
+    await repo.addParkingEntry(entriesWithLocationId)
+    console.log('############ SYNC_FINISH ############')
+                
+}
+
+const startSynchronizingWithAPI = (repo, interval) => {
+    synchronize(repo)
+        .then(() => console.log('Startup synchronization complete'));
+
+    return setInterval(() => synchronize(repo), interval)
 }
 
 module.exports = {
