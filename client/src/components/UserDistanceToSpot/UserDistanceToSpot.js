@@ -81,22 +81,3 @@ class UserDistanceToSpot extends Component {
 }
 
 export default UserDistanceToSpot;
-
-
-/*
-    // const directionsService = new window.google.maps.DirectionsService;
-    // const directionsDisplay = new window.google.maps.DirectionsRenderer;/*
-    directionsService.route({
-        origin,
-        destination,
-        travelMode: 'DRIVING'
-    }, (response, status) => {
-        if (status === 'OK') {
-            // directionsDisplay.setDirections(response);
-            console.log('route response', response);
-            // console.log(directionsDisplay.setDirections(response));
-        } else {
-            console.error('Directions request failed due to ' + status);
-        }
-    });
-*/
