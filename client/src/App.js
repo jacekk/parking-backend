@@ -166,17 +166,20 @@ class App extends Component {
       return window.innerWidth - 50;
   }
   getTrend() {
-
         const { history } = this.state;
-        console.log('historia', history)
         
         const data = history.map(({ freeSpots, time }) => ([
             moment(time).unix(),
             freeSpots,
         ]));
         const linearRegression = regression.linear(data);
-    
-        return linearRegression.equation[0] >= 0 ? "Wzrostowy" : "Spadkowy";
+        const coefficient = linearRegression.equation[0];
+        
+        if (coefficient === 0) {
+            return "Stały"
+        }
+
+        return coefficient > 0 ? "Wzrostowy" : "Spadkowy";
     }
   render() {
     const { activeParkingName, coords, coordsLoading } = this.state;
