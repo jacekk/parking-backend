@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment';
+import 'moment-timezone';
 import regression from 'regression';
 import Header from './components/Header'
 import Spinner from './components/Spinner'
 import ParkingDetails from './components/ParkingDetails'
 import UserDistanceToSpot from './components/UserDistanceToSpot';
 import { getFreeSpotsClassName } from './helpers';
-
+window.moment = moment;
 const Parking = ({
     name,
     freeSpots,
@@ -160,13 +161,13 @@ class App extends Component {
     const lastHistoryItem = history[history.length - 1];
     const historyChartData = history.map(({ freeSpots, time }, index) => ({
         freeSpots,
-        time: moment(time).fromNow(),
+        time: moment(time).subtract({'hours': 2}).fromNow(),
         isNow: index === history.length - 1,
         isFuture: false,
     }));
     const predictionsChartData = predictions.map(({ freeSpots, time }, index) => ({
         freeSpots,
-        time: moment(time).fromNow(),
+        time: moment(time).subtract({'hours': 2}).fromNow(),
         isFuture: true,
         isNow: false
     }));
@@ -177,14 +178,14 @@ class App extends Component {
   }
   getTrend() {
         const { history } = this.state;
-        
+
         const data = history.map(({ freeSpots, time }) => ([
             moment(time).unix(),
             freeSpots,
         ]));
         const linearRegression = regression.linear(data);
         const coefficient = linearRegression.equation[0];
-        
+
         if (coefficient === 0) {
             return "Stały"
         }
