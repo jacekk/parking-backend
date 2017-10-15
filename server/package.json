@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "serve": "nodemon index.js"
+    "serve": "nodemon index.js",
+    "serve:prod": "pm2 start ecosystem.config.js --env production"
   },
   "dependencies": {
     "cors": "^2.8.4",
