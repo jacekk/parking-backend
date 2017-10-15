@@ -5,7 +5,6 @@ import Header from './components/Header'
 import ParkingDetails from './components/ParkingDetails'
 import { getFreeSpotsClassName } from './helpers';
 
-
 const Parking = ({ name, freeSpots, onClick }) =>
     <li className="parkingList-item" onClick={onClick}>
         <h3 className="parking-name">{name}</h3>
@@ -26,11 +25,21 @@ class App extends Component {
             errorMessage: null,
             activeParkingName: null,
             spinner: false,
+            coordsLoading: true,
+            coords: null,
         };
 
         this.closeErrorMessage = this.closeErrorMessage.bind(this);
         this.showListPage = this.showListPage.bind(this);
         this.showDetailsPage = this.showDetailsPage.bind(this);
+        this.updateUserPosition = this.updateUserPosition.bind(this);
+    }
+
+    updateUserPosition(position) {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+
+        this.setState({ coordsLoading: false, coords: { lat, long } });
     }
 
     showListPage(event) {
@@ -66,6 +75,11 @@ class App extends Component {
     }
 
     componentDidMount() {
+        if (navigator && navigator.geolocation) {
+            this.setState({ coordsLoading: true });
+            navigator.geolocation.getCurrentPosition(this.updateUserPosition);
+        }
+
         this.getParkings();
     }
 
