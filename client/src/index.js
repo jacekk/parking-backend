@@ -6,7 +6,9 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const SERVER_URL = 'http://localhost:4000';
+const SERVER_URL = process.env.NODE_ENV === 'production' ?
+    'http://parkly.jacek-k.net:4444' :
+    'http://localhost:4000';
 const PARKINGS_ROUTE = 'parkings';
 const HISTORY_ROUTE = 'history';
 const PREDICTIONS_ROUTE = 'predictions';
