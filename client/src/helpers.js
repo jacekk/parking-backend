@@ -13,13 +13,14 @@ export const getFreeSpotsClassName = (freeSpots) => {
 }
 
 export const getFreeSpotsColor = (freeSpots, isFuture) => {
+    const alpha = isFuture ? .5 : 1;
     if (freeSpots === 0) {
-        return isFuture ? 'gray' : 'rgb(215, 36, 0)';
+        return `rgba(215, 36, 0, ${alpha})`;
     } else if (freeSpots > 0 && freeSpots <= 5) {
-        return isFuture ? 'gray' : 'rgb(255, 98, 0)';
+        return `rgba(255, 98, 0, ${alpha})`;
     } else if (freeSpots > 5 && freeSpots <= 10) {
-        return isFuture ? 'gray' : 'rgb(232, 163, 0)';
+        return `rgba(232, 163, 0, ${alpha})`;
     } else if (freeSpots > 10) {
-        return isFuture ? 'gray' : 'rgb(0, 186, 3)';
+        return `rgba(0, 186, 3, ${alpha})`;
     }
 }
