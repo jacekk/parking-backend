@@ -1,33 +1,22 @@
 import React from 'react';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Rectangle} from 'recharts';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
-
+import SingleParkingMap from '../SingleParkingMap';
+import Header from '../Header';
 import { getFreeSpotsClassName, getFreeSpotsColor } from '../../helpers';
 
 const CustomBar = (props) => {
-    const fill = getFreeSpotsColor(props.freeSpots);
+    const fill = getFreeSpotsColor(props.freeSpots, props.isFuture);
     return <Rectangle {...props} fill={fill} />
-  };
-
- const MyMapComponent = withScriptjs(withGoogleMap((props) =>
-    <GoogleMap
-        defaultZoom={14}
-        defaultCenter={{ lat: props.lat, lng: props.long }}
-    >
-        <Marker position={{ lat: props.lat, lng: props.long }} />
-    </GoogleMap>
-));
+};
 
 const ParkingDetails = ({
     detailsPageActiveClassName,
-    goBack,
+    backButtonHandler,
     activeParking,
     activeParkingChartData,
 }) =>
     <div className={`active-page ${detailsPageActiveClassName}`}>
-            <header className="app-header">
-                <button className="app-back" onClick={goBack}>Powrót</button> <h1 className="app-title">parkly</h1>
-            </header>
+            <Header backButtonVisible backButtonHandler={backButtonHandler}/>
             <section className="app-body parking-details">
                 <h3 className="parking-name">{activeParking.name}</h3>
                 <span className="parking-data">
@@ -48,7 +37,7 @@ const ParkingDetails = ({
                 </div>
                 {activeParking && activeParking.coordinates &&
                     <div className="parking-map">
-                        <MyMapComponent
+                        <SingleParkingMap
                           isMarkerShown
                           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                           loadingElement={<div style={{ height: `100%` }} />}

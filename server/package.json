@@ -1,17 +1,15 @@
 {
-  "name": "parking-backend",
-  "version": "1.0.0",
-  "description": "",
+  "name": "parkly-api",
+  "version": "0.1.0",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "node migrations.js"
+    "migrate": "node migrations.js",
+    "serve:dev": "nodemon index.js",
+    "serve:prod": "pm2 start ecosystem.config.js --env production"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {},
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.2",

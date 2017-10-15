@@ -1,20 +1,23 @@
 const { MongoClient, ObjectID } = require('mongodb');
 
 // Connection URL
-const mongodbUrl = 'mongodb://mongodb:27017/parking';
+const mongoHost = process.env.NODE_ENV === 'production' ? 'localhost' : 'mongodb';
+const mongodbUrl = `mongodb://${mongoHost}:27017/parkly`;
 
 const getCollections = new Promise((resolve, reject) => {
-  MongoClient.connect(mongodbUrl, function(err, db) {
-    const locationCollection = db.collection('parkingLocations');
-    const entriesCollection = db.collection('parkingEntries');
+    MongoClient.connect(mongodbUrl, function(err, db) {
+        if (err) {
+            return reject(err);
+        }
 
-    if (err) {
-      reject(err);
-      return;
-    }
+        db.collection('parkingLocations').drop();
+        db.collection('parkingEntries').drop();
 
-    resolve({ locationCollection, entriesCollection });
-  });
+        const locationCollection = db.collection('parkingLocations');
+        const entriesCollection = db.collection('parkingEntries');
+
+        resolve({ locationCollection, entriesCollection });
+    });
 });
 
 const addCoordinates = (parkings) => {
@@ -154,5 +157,5 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
 
 
 module.exports = {
-  getRepository: getRepository
+    getRepository: getRepository
 };

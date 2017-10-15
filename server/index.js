@@ -23,7 +23,6 @@ fetchAndParseParkings().then(({ locations, entries }) => {
             console.log('Running on 4000');
           })
       })
-    // })
     .catch(err => console.log(err));
 });
 
