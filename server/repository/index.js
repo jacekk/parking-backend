@@ -72,7 +72,7 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
             reject(err);
             return;
         }
-        
+
         resolve(result);
       });
     }),
@@ -113,27 +113,25 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
                 reject(err);
                 return;
             }
-            
+
             const parkingsWithCoordinates = addCoordinates(parkings);
             resolve(parkingsWithCoordinates);
         });
     }),
     getLatestEntry: () => new Promise((resolve, reject) => {
-        entriesCollection.find({}).sort({ "time": -1 }).limit(1).toArray((err, data) => {
+        entriesCollection
+            .find({})
+            .sort({ time: -1 })
+            .limit(1)
+            .toArray((err, data) => {
                 if (err) {
                     reject(err);
                     return;
                 }
 
-                resolve(data[0])
-        })
-            // .findOne({}, {}, { sort: [['time', 'desc']] }, (err, data) => {
-            //     if (err) {
-            //         reject(err);
-            //         return;
-            //     }
-            //     resolve(data);
-            // });
+                resolve(data[0]);
+            })
+        ;
     }),
     findLocationIdByName: (name) => new Promise((resolve, reject) => {
         locationCollection
@@ -153,7 +151,7 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
                 reject(err);
                 return;
             }
-            
+
             resolve(locations);
         });
     }),

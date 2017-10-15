@@ -7,23 +7,20 @@ const { getRepository } = require('./repository');
 const { fetchAndParseParkings, startSynchronizingWithAPI } = require('./data-fetch');
 const { mapPredictions } = require('./predictions');
 
-const now = new Date();
-const SYNC_INTERVAL = 1 * 1000 * 60 ;
-
+const SYNC_INTERVAL = 1 * 60 * 1e3; // 1 min;
 
 fetchAndParseParkings().then(({ locations, entries }) => {
   getRepository()
-    .then((repository) => {
+    .then(repository => {
         startSynchronizingWithAPI(repository, SYNC_INTERVAL);
-
-          app.listen('4000', err => {
+        app.listen('4000', err => {
             if (err) {
-                console.log('App died')
+                return console.log('App died');
             }
-            console.log('Running on 4000');
-          })
-      })
-    .catch(err => console.log(err));
+            console.log('App running on 4000');
+        });
+    })
+    .catch(err => console.error(err));
 });
 
 app.use(cors());
@@ -49,7 +46,6 @@ app.get('/history/:id', async (req, res) => {
     const repo = await getRepository();
 
     try {
-        const now = new Date();
         const entries = await repo.getParkingEntriesByIdAndTime(
             req.params.id,
             {
@@ -73,9 +69,10 @@ app.get('/predictions/:id', async (req, res) => {
     const repo = await getRepository();
 
     try {
-        const now = new Date();
         const parkings = await repo.getParkings();
-        const parking = parkings.filter(item => item.id.toString() === parkingId.toString())[0];
+        const parking = parkings.filter(item =>
+            item.id.toString() === parkingId.toString()
+        )[0];
 
         if (!parking) {
             return res.status(404).end();

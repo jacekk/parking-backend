@@ -2,27 +2,30 @@
 const uuid = require('uuid');
 const getCSV = require('get-csv');
 const moment = require('moment');
-const C = require('./constants');
+
+const { CSV_FILE_URL, WRO_OPEN_DATA_TZ } = require('./constants');
 
 const sortEntries = (curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1;
 
-const fetchError = (err) => {
-    console.error('Fetch error', err);
-}
+const normalizeCsvDate = (src) => [
+    src.split('.')[0],
+    WRO_OPEN_DATA_TZ,
+].join('');
 
 const parse = (parsedEntries = [], groupedEntriesByLocation = {}, line) => {
     const [time, freeSpots, carsIn, carsOut, location] = line.split(';');
+    const parsedTime = moment(normalizeCsvDate(time)).toDate();
 
     const newEntry = {
         name: location,
-        time: new Date(time),
+        time: parsedTime,
         freeSpots: +freeSpots,
         carsIn: +carsIn,
         carsOut: +carsOut,
     };
 
     if (!groupedEntriesByLocation[location]) {
-      groupedEntriesByLocation[location] = [];
+        groupedEntriesByLocation[location] = [];
     }
 
     parsedEntries.push(newEntry);
@@ -43,7 +46,6 @@ const fetchSuccess = (lines) => {
         if (line.indexOf('Czas_Rejestracji') > -1) {
             return;
         }
-
         if (!line) {
             return;
         }
@@ -56,10 +58,7 @@ const fetchSuccess = (lines) => {
         const locationId = uuid.v4();
         locationIdMap[location] = locationId;
 
-        return {
-            // id: locationId,
-            name: location,
-        };
+        return { name: location };
     });
 
     parsedEntries = parsedEntries
@@ -76,67 +75,76 @@ const fetchSuccess = (lines) => {
 
 const fetchAndParseParkings = () => {
     return getCSV(
-            C.CSV_FILE_URL,
+            CSV_FILE_URL,
             { headers: false, encoding: 'utf8' }
         )
         .then(fetchSuccess)
-        .catch(fetchError)
+        .catch(err => console.error('Fetch error', err))
     ;
 };
 
 const syncLocations = async (repo, locations) => {
-    console.log('############ SYNC_LOCATIONS ############')
     const persistedLocations = await repo.getLocations();
-    if (persistedLocations.length < locations.length) {
+    console.log(
+        '############ SYNC_LOCATIONS ############',
+        'all:',
+        locations.length,
+        '| persisted:',
+        persistedLocations.length,
+        '############'
+    );
+    const newLength = locations.length - persistedLocations.length;
+    if (newLength > 0) {
         console.log('############ SYNC_ADDING_LOCATIONS ############')
         await repo.addParkingLocation(locations);
     }
-    console.log('############ SYNC_LOCATIONS_FINISHED ############')
+    console.log('############ SYNC_LOCATIONS_FINISHED ############ added:', newLength)
 }
 
 const synchronize = async (repo) => {
     console.log('############ SYNC_INIT ############')
     const { locations, entries } = await fetchAndParseParkings();
-    const latestPersistedEntry = await repo.getLatestEntry(entries[0].time);
-     
+    const latestPersistedEntry = await repo.getLatestEntry();
+
     await syncLocations(repo, locations);
 
     let entriesToInsert = [];
-    let shouldSync = false; 
+    let shouldSync = false;
 
     if (!latestPersistedEntry) {
         entriesToInsert = entries;
         shouldSync = true;
     } else {
         entriesToInsert = entries
-            .filter(entry => moment(latestPersistedEntry.time)
-                            .isBefore(entry.time ));
+            .filter(entry =>
+                moment(latestPersistedEntry.time).isBefore(entry.time)
+            );
         shouldSync = entriesToInsert.length > 0;
-    }  
-    
+    }
+
     if (!shouldSync) {
-            console.log('############ NOTHING_TO_SYNC ############')
-            return;
-        }
+        console.log('############ SYNC_ENTRIES_NOTHING ############')
+        return;
+    }
 
     const entriesWithLocationId = await Promise.all(
         entriesToInsert.map(async entry => {
-        const location = await repo.findLocationIdByName(entry.name)
-        
-        return {
-            ...entry,
-            locationId: location._id
-        }
-    })) || [] ;
+            const location = await repo.findLocationIdByName(entry.name);
+
+            return {
+                ...entry,
+                locationId: location._id
+            }
+        })
+    ) || [] ;
 
 
     entriesWithLocationId.sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);
-        
-    console.log('############ SYNC_START ############')
-    await repo.addParkingEntry(entriesWithLocationId)
-    console.log('############ SYNC_FINISH ############')
-                
-}
+
+    console.log('############ SYNC_ENTRIES_START ############');
+    await repo.addParkingEntry(entriesWithLocationId);
+    console.log('############ SYNC_ENTRIES_FINISH ############ added:', entriesWithLocationId.length);
+};
 
 const startSynchronizingWithAPI = (repo, interval) => {
     synchronize(repo)
