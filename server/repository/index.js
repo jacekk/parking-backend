@@ -20,6 +20,43 @@ const getCollections = new Promise((resolve, reject) => {
   });
 });
 
+const addCoordinates = (parkings) => {
+  return parkings.map((parking) => {
+    const newData = Object.assign({}, parking);
+
+    switch(parking.name) {
+      case 'Renoma':
+          newData.coordinates = {
+            lat: 51.1036327,
+            long: 17.0293532,
+          };
+        break;
+      case 'Narodowe Forum Muzyki':
+        newData.coordinates = {
+          lat: 51.1078935,
+          long: 17.0241357,
+        };
+        break;
+      case 'Parking Hala Stulecia':
+        newData.coordinates = {
+          lat: 51.1063,
+          long: 17.0776538,
+        };
+        break;
+      case 'ul. Św. Antoniego':
+        newData.coordinates = {
+          lat: 51.0973204,
+          long: 17.0319734,
+        };
+        break;
+      default:
+        break;
+    }
+
+    return newData;
+  });
+};
+
 const getRepository = () => getCollections.then(({ locationCollection, entriesCollection }) => {
   return {
     addParkingLocation: (location) => new Promise((resolve, reject) => {
@@ -73,13 +110,14 @@ const getRepository = () => getCollections.then(({ locationCollection, entriesCo
             }},
             { $project: { name: "$_id", _id: 0, freeSpots: 1, id: 1 } }
         ])
-        .toArray((err, data) => {
+        .toArray((err, parkings) => {
             if (err) {
                 reject(err);
                 return;
             }
 
-            resolve(data);
+            const parkingsWithCoordinates = addCoordinates(parkings);
+            resolve(parkingsWithCoordinates);
         });
     }),
   };

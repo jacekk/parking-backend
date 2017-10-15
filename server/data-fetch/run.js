@@ -35,7 +35,7 @@ const fetchSuccess = (lines) => {
     const groupedEntriesByLocation = {};
 
     Object.keys(lines).forEach((lineIndex) => {
-        const line = lines[lineIndex][0];
+        const line = lines[lineIndex].replace('�', 'Ś'); // @todo fix that somehow
 
         if (line.indexOf('Czas_Rejestracji') > -1) {
             return;
@@ -71,7 +71,10 @@ const fetchSuccess = (lines) => {
 };
 
 const run = () => {
-    return getCSV(C.CSV_FILE_URL, { headers: false })
+    return getCSV(
+            C.CSV_FILE_URL,
+            { headers: false, encoding: 'utf8' }
+        )
         .then(fetchSuccess)
         .catch(fetchError)
     ;
