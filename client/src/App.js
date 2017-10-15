@@ -168,7 +168,7 @@ class App extends Component {
     }));
     const predictionsChartData = predictions.map(({ freeSpots, time }, index) => ({
         freeSpots,
-        time: moment(time).subtract({'hours': 2}).fromNow(),
+        time: moment(time).fromNow(),
         isFuture: true,
         isNow: false
     }));
