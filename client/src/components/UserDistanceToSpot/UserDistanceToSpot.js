@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { get, isEqual } from 'lodash';
 
 class UserDistanceToSpot extends Component {
     constructor(props) {
@@ -6,14 +7,24 @@ class UserDistanceToSpot extends Component {
         this.state = {
             distanceText: null,
             isLoading: true,
+            spotId: null,
         };
     }
     componentDidMount() {
+        this.fetchDistance();
+    }
+
+    fetchDistance() {
+        this.setState({
+            spotId: this.props.spotId,
+            isLoading: false,
+            distanceText: null,
+        });
+        const { userCoordinates, spotCoordinates, userCoordinatesLoading } = this.props;
         if (!window.google || !window.google.maps) {
             return;
         }
-        const { userCoordinates, spotCoordinates, userCoordinatesLoading } = this.props;
-        if (userCoordinatesLoading) {
+        if (userCoordinatesLoading || !spotCoordinates) {
             return;
         }
         // const directionsService = new window.google.maps.DirectionsService;
@@ -33,21 +44,26 @@ class UserDistanceToSpot extends Component {
                 isLoading: false,
             });
             if (status === 'OK') {
-                const distanceText = response.rows[0].elements[0].distance.text;
-                this.setState({ distanceText });
+                const distanceText = get(response, 'rows.0.elements.0.distance.text');
+                if (distanceText && distanceText.length) {
+                    this.setState({ distanceText });
+                }
             } else {
-                console.error('matrix request failed due to ' + status);
+                console.error('Matrix Service failed with status: ' + status);
             }
         });
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (isEqual(this.props, prevProps)) {
+            return;
+        }
+        // this.fetchDistance();
     }
     render() {
         if (this.state.isLoading) {
             return 'loading...';
         }
-        if (!this.state.distanceText) {
-            return '-';
-        }
-        return this.state.distanceText;
+        return this.state.distanceText || '-';
     }
 }
 
