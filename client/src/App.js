@@ -178,6 +178,7 @@ class App extends Component {
             activeParkingChartData={activeParkingChartData}
             detailsPageActiveClassName={detailsPageActiveClassName}
             backButtonHandler={this.showListPage}
+            userPosition={this.state.coords}
         />
       </div>
     );
