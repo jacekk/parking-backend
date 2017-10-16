@@ -9,7 +9,8 @@ import registerServiceWorker from './registerServiceWorker';
 const SERVER_URL = process.env.NODE_ENV === 'production' ?
     'https://parkly.pl:4445' :
     'http://localhost:4000';
-const PARKINGS_ROUTE = 'parkings';
+
+const PARKINGS_ROUTE = 'locations';
 const HISTORY_ROUTE = 'history';
 const PREDICTIONS_ROUTE = 'predictions';
 
