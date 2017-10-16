@@ -41,7 +41,8 @@ const fetchSuccess = (lines) => {
     const groupedEntriesByLocation = {};
 
     Object.keys(lines).forEach((lineIndex) => {
-        const line = lines[lineIndex].replace('�', 'Ś'); // @todo fix that somehow
+        // Impossible to fix that char even with 'node-unidecode' package. Any cmobination of encoding does NOT work.
+        const line = lines[lineIndex].replace('�', 'ś');
 
         if (line.indexOf('Czas_Rejestracji') > -1) {
             return;
