@@ -3,14 +3,13 @@ const uuid = require('uuid');
 const getCSV = require('get-csv');
 const moment = require('moment');
 
+const { syncLogger } = require('../utils/loggers');
 const { CSV_FILE_URL, WRO_OPEN_DATA_TZ } = require('./constants');
 
-const sortEntries = (curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1;
+const sortEntries = (curr, next) =>
+    moment(curr.time).isBefore(next.time) ? 1 : -1;
 
-const normalizeCsvDate = (src) => [
-    src.split('.')[0],
-    WRO_OPEN_DATA_TZ,
-].join('');
+const normalizeCsvDate = src => [src.split('.')[0], WRO_OPEN_DATA_TZ].join('');
 
 const parse = (parsedEntries = [], groupedEntriesByLocation = {}, line) => {
     const [time, freeSpots, carsIn, carsOut, location] = line.split(';');
@@ -30,9 +29,9 @@ const parse = (parsedEntries = [], groupedEntriesByLocation = {}, line) => {
 
     parsedEntries.push(newEntry);
     groupedEntriesByLocation[location].push(newEntry);
-}
+};
 
-const fetchSuccess = (lines) => {
+const fetchSuccess = lines => {
     if (!Array.isArray(lines)) {
         return new Error('Returned "lines" is not an array.');
     }
@@ -40,7 +39,7 @@ const fetchSuccess = (lines) => {
     let parsedEntries = [];
     const groupedEntriesByLocation = {};
 
-    Object.keys(lines).forEach((lineIndex) => {
+    Object.keys(lines).forEach(lineIndex => {
         // Impossible to fix that char even with 'node-unidecode' package. Any cmobination of encoding does NOT work.
         const line = lines[lineIndex].replace('�', 'ś');
 
@@ -71,35 +70,31 @@ const fetchSuccess = (lines) => {
 };
 
 const fetchAndParseParkings = () => {
-    return getCSV(
-            CSV_FILE_URL,
-            { headers: false, encoding: 'utf8' }
-        )
+    return getCSV(CSV_FILE_URL, { headers: false, encoding: 'utf8' })
         .then(fetchSuccess)
-        .catch(err => console.error('Fetch error', err))
-    ;
+        .catch(err => console.error('Fetch error', err));
 };
 
 const syncLocations = async (repo, locations) => {
     const persistedLocations = await repo.getLocations();
-    console.log(
-        '############ SYNC_LOCATIONS ############',
-        'all:',
+    syncLogger.info(
+        'SYNC_LOCATIONS, incoming: %d | persisted: %d',
         locations.length,
-        '| persisted:',
         persistedLocations.length,
-        '############'
     );
     const newLength = locations.length - persistedLocations.length;
     if (newLength > 0) {
-        console.log('############ SYNC_ADDING_LOCATIONS ############')
+        syncLogger.info('SYNC_ADDING_LOCATIONS');
         await repo.addParkingLocation(locations);
     }
-    console.log('############ SYNC_LOCATIONS_FINISHED ############ added:', newLength)
-}
+    syncLogger.info(
+        'SYNC_LOCATIONS_FINISHED added:',
+        newLength,
+    );
+};
 
-const synchronize = async (repo) => {
-    console.log('############ SYNC_INIT ############')
+const synchronize = async repo => {
+    syncLogger.info('SYNC_INIT');
     const { locations, entries } = await fetchAndParseParkings();
     const latestPersistedEntry = await repo.getLatestEntry();
 
@@ -112,45 +107,50 @@ const synchronize = async (repo) => {
         entriesToInsert = entries;
         shouldSync = true;
     } else {
-        entriesToInsert = entries
-            .filter(entry =>
-                moment(latestPersistedEntry.time).isBefore(entry.time)
-            );
+        entriesToInsert = entries.filter(entry =>
+            moment(latestPersistedEntry.time).isBefore(entry.time),
+        );
         shouldSync = entriesToInsert.length > 0;
     }
 
     if (!shouldSync) {
-        console.log('############ SYNC_ENTRIES_NOTHING ############')
+        syncLogger.info('SYNC_ENTRIES_NOTHING');
         return;
     }
 
-    const entriesWithLocationId = await Promise.all(
-        entriesToInsert.map(async entry => {
-            const location = await repo.findLocationIdByName(entry.name);
+    const entriesWithLocationId =
+        (await Promise.all(
+            entriesToInsert.map(async entry => {
+                const location = await repo.findLocationIdByName(entry.name);
 
-            return {
-                ...entry,
-                locationId: location._id,
-            }
-        })
-    ) || [];
+                return {
+                    ...entry,
+                    locationId: location._id,
+                };
+            }),
+        )) || [];
 
+    entriesWithLocationId.sort(
+        (curr, next) => (moment(curr.time).isBefore(next.time) ? 1 : -1),
+    );
 
-    entriesWithLocationId.sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);
-
-    console.log('############ SYNC_ENTRIES_START ############');
+    syncLogger.info('SYNC_ENTRIES_START');
     await repo.addParkingEntry(entriesWithLocationId);
-    console.log('############ SYNC_ENTRIES_FINISH ############ added:', entriesWithLocationId.length);
+    syncLogger.info(
+        'SYNC_ENTRIES_FINISH added:',
+        entriesWithLocationId.length,
+    );
 };
 
 const startSynchronizingWithAPI = (repo, interval) => {
-    synchronize(repo)
-        .then(() => console.log('Startup synchronization complete'));
+    synchronize(repo).then(() =>
+        syncLogger.info('Startup synchronization complete'),
+    );
 
-    return setInterval(() => synchronize(repo), interval)
-}
+    return setInterval(() => synchronize(repo), interval);
+};
 
 module.exports = {
     fetchAndParseParkings,
-    startSynchronizingWithAPI
-}
+    startSynchronizingWithAPI,
+};

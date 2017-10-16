@@ -1,0 +1,348 @@
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"0":"a","1":"l","2":"l","3":":","level":"info","message":"############ SYNC_LOCATIONS ############"}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+{"message":"Startup synchronization complete","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"0":"a","1":"l","2":"l","3":":","level":"info","message":"############ SYNC_LOCATIONS ############"}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+{"message":"Startup synchronization complete","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"0":"a","1":"l","2":"l","3":":","level":"info","message":"############ SYNC_LOCATIONS ############"}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+{"message":"Startup synchronization complete","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"0":"a","1":"l","2":"l","3":":","level":"info","message":"############ SYNC_LOCATIONS ############"}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"0":"a","1":"l","2":"l","3":":","level":"info","message":"############ SYNC_LOCATIONS ############"}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"0":"a","1":"l","2":"l","3":":","level":"info","message":"############ SYNC_LOCATIONS ############"}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"level":"info","message":"############ SYNC_LOCATIONS ############, incoming: %d | persisted: %d","splat":[4,4]}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+{"message":"Startup synchronization complete","level":"info"}
+{"message":"############ SYNC_INIT ############","level":"info"}
+{"level":"info","message":"############ SYNC_LOCATIONS ############, incoming: %d | persisted: %d","splat":[4,4]}
+{"level":"info","message":"############ SYNC_LOCATIONS_FINISHED ############ added:"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"info"}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+info: Startup synchronization complete {}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+info: ############ SYNC_INIT ############ {}
+info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4 {}
+info: ############ SYNC_LOCATIONS_FINISHED ############ added: {}
+info: ############ SYNC_ENTRIES_NOTHING ############ {}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:30:08.212Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:30:08.650Z","@fields":{"level":"\u001b[32minfo\u001b[39m","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:30:08.650Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:30:08.653Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:30:08.653Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"message":"############ SYNC_INIT ############","level":"\u001b[32minfo\u001b[39m","timestamp":"2017-10-16T18:30:35.911Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","splat":[4,4],"timestamp":"2017-10-16T18:30:36.367Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"############ SYNC_LOCATIONS_FINISHED ############ added:","timestamp":"2017-10-16T18:30:36.368Z"}
+{"message":"############ SYNC_ENTRIES_NOTHING ############","level":"\u001b[32minfo\u001b[39m","timestamp":"2017-10-16T18:30:36.371Z"}
+{"message":"Startup synchronization complete","level":"\u001b[32minfo\u001b[39m","timestamp":"2017-10-16T18:30:36.371Z"}
+undefined
+undefined
+undefined
+undefined
+undefined
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:31:13.316Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:31:14.033Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:31:14.033Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:31:14.036Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:31:14.036Z","@fields":{"level":"info"}}
+{ message: '############ SYNC_INIT ############',
+  level: 'info',
+  timestamp: '2017-10-16T18:32:30.059Z',
+  [Symbol(level)]: 'info' }
+{ level: 'info',
+  message: '############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4',
+  splat: [ 4, 4 ],
+  timestamp: '2017-10-16T18:32:30.725Z',
+  [Symbol(level)]: 'info' }
+{ level: 'info',
+  message: '############ SYNC_LOCATIONS_FINISHED ############ added:',
+  timestamp: '2017-10-16T18:32:30.726Z',
+  [Symbol(level)]: 'info' }
+{ message: '############ SYNC_ENTRIES_NOTHING ############',
+  level: 'info',
+  timestamp: '2017-10-16T18:32:30.731Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Startup synchronization complete',
+  level: 'info',
+  timestamp: '2017-10-16T18:32:30.731Z',
+  [Symbol(level)]: 'info' }
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:33:07.377Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:33:08.049Z","@fields":{"level":"\u001b[32minfo\u001b[39m","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:33:08.050Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:33:08.053Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:33:08.053Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:34:07.383Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:34:08.528Z","@fields":{"level":"\u001b[32minfo\u001b[39m","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:34:08.528Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:34:08.532Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{ level: '\u001b[32minfo\u001b[39m',
+  [Symbol(level)]: 'info',
+  [Symbol(message)]: '{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:34:17.367Z","@fields":{"level":"\\u001b[32minfo\\u001b[39m"}}' }
+{ level: '\u001b[32minfo\u001b[39m',
+  splat: [ 4, 4 ],
+  [Symbol(level)]: 'info',
+  [Symbol(message)]: '{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:34:17.804Z","@fields":{"level":"\\u001b[32minfo\\u001b[39m","splat":[4,4]}}' }
+{ level: '\u001b[32minfo\u001b[39m',
+  [Symbol(level)]: 'info',
+  [Symbol(message)]: '{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:34:17.805Z","@fields":{"level":"\\u001b[32minfo\\u001b[39m"}}' }
+{ level: '\u001b[32minfo\u001b[39m',
+  [Symbol(level)]: 'info',
+  [Symbol(message)]: '{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:34:17.808Z","@fields":{"level":"\\u001b[32minfo\\u001b[39m"}}' }
+{ level: '\u001b[32minfo\u001b[39m',
+  [Symbol(level)]: 'info',
+  [Symbol(message)]: '{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:34:17.808Z","@fields":{"level":"\\u001b[32minfo\\u001b[39m"}}' }
+{"level":"\u001b[32minfo\u001b[39m"}
+{"level":"\u001b[32minfo\u001b[39m","splat":[4,4]}
+{"level":"\u001b[32minfo\u001b[39m"}
+{"level":"\u001b[32minfo\u001b[39m"}
+{"level":"\u001b[32minfo\u001b[39m"}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:35:10.039Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:35:10.469Z","@fields":{"level":"\u001b[32minfo\u001b[39m","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:35:10.469Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:35:10.472Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:35:10.472Z","@fields":{"level":"\u001b[32minfo\u001b[39m"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:35:30.367Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:35:30.817Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:35:30.817Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:35:30.820Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:35:30.820Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:35:46.781Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:35:47.209Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:35:47.209Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:35:47.212Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:35:47.212Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:36:11.522Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:36:12.088Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:36:12.090Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:36:12.095Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:36:12.095Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:37:11.531Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:37:13.714Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:37:14.110Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:37:14.110Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:37:14.113Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:37:14.113Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:37:31.826Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:37:32.215Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:37:32.216Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:37:32.219Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:37:32.219Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:37:38.006Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:37:38.605Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:37:38.606Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:37:38.608Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:37:38.609Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:37:54.927Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:37:55.457Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:37:55.459Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:37:55.463Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:37:55.463Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:38:26.363Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:38:33.335Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:38:33.764Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:38:33.765Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:38:33.770Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:38:33.770Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:39:05.949Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:39:06.373Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:39:06.374Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:39:06.376Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:39:06.377Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_INIT ############","@timestamp":"2017-10-16T18:40:05.955Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:40:06.596Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:40:06.597Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:40:06.600Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:40:09.654Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:40:10.080Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:40:10.080Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:40:10.083Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:40:10.084Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:41:09.660Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:41:10.130Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:41:10.130Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:41:10.135Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:41:45.389Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:43:03.388Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:43:03.779Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:43:03.780Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:43:03.784Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:43:03.784Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:43:50.243Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:43:50.691Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:43:50.691Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:43:50.694Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:43:50.694Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:43:56.292Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:43:56.655Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:43:56.656Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:43:56.659Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:43:56.659Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:44:56.298Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:44:58.076Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:44:58.077Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:44:58.081Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:45:20.905Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:45:21.411Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:45:21.412Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:45:21.415Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:45:21.416Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:46:17.934Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:46:18.354Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:46:18.355Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:46:18.359Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:46:18.359Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:46:32.945Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:46:33.312Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:46:33.313Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:46:33.316Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:46:33.316Z","@fields":{"level":"info"}}
+{"@message":"SYNC_INIT","@timestamp":"2017-10-16T18:46:54.415Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4","@timestamp":"2017-10-16T18:46:55.298Z","@fields":{"level":"info","splat":[4,4]}}
+{"@message":"############ SYNC_LOCATIONS_FINISHED ############ added:","@timestamp":"2017-10-16T18:46:55.299Z","@fields":{"level":"info"}}
+{"@message":"############ SYNC_ENTRIES_NOTHING ############","@timestamp":"2017-10-16T18:46:55.302Z","@fields":{"level":"info"}}
+{"@message":"Startup synchronization complete","@timestamp":"2017-10-16T18:46:55.302Z","@fields":{"level":"info"}}
+undefined
+undefined
+undefined
+undefined
+undefined
+2017-10-16T18:48:35.393Z [32minfo[39m: SYNC_INIT
+2017-10-16T18:48:35.859Z [32minfo[39m: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:48:35.859Z [32minfo[39m: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:48:35.862Z [32minfo[39m: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:48:35.862Z [32minfo[39m: Startup synchronization complete
+2017-10-16T18:49:14.897Z info: SYNC_INIT
+2017-10-16T18:49:15.329Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:49:15.330Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:49:15.333Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:49:15.333Z info: Startup synchronization complete
+2017-10-16T18:49:32.468Z info: SYNC_INIT
+2017-10-16T18:49:32.944Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:49:32.944Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:49:32.946Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:49:32.946Z info: Startup synchronization complete
+2017-10-16T18:49:40.662Z info: SYNC_INIT
+2017-10-16T18:49:41.136Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:49:41.136Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:49:41.140Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:49:41.141Z info: Startup synchronization complete
+2017-10-16T18:50:28.288Z info: SYNC_INIT
+2017-10-16T18:50:28.658Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:50:28.659Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:50:28.662Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:50:28.662Z info: Startup synchronization complete
+2017-10-16T18:51:10.195Z info: SYNC_INIT
+2017-10-16T18:51:10.621Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:51:10.621Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:51:10.624Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:51:10.624Z info: Startup synchronization complete
+2017-10-16T18:51:32.939Z info: SYNC_INIT
+2017-10-16T18:51:35.170Z info: SYNC_INIT
+2017-10-16T18:51:36.594Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:51:36.594Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:51:36.597Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:51:36.597Z info: Startup synchronization complete
+2017-10-16T18:52:05.522Z info: SYNC_INIT
+2017-10-16T18:52:06.142Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:52:06.143Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:52:06.146Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:52:06.146Z info: Startup synchronization complete
+2017-10-16T18:52:08.846Z info: SYNC_INIT
+2017-10-16T18:52:09.295Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:52:09.296Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:52:09.302Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:52:09.302Z info: Startup synchronization complete
+2017-10-16T18:52:15.067Z info: SYNC_INIT
+2017-10-16T18:52:15.830Z info: ############ SYNC_LOCATIONS ############, incoming: 4 | persisted: 4
+2017-10-16T18:52:15.831Z info: ############ SYNC_LOCATIONS_FINISHED ############ added:
+2017-10-16T18:52:15.834Z info: ############ SYNC_ENTRIES_NOTHING ############
+2017-10-16T18:52:15.834Z info: Startup synchronization complete
+2017-10-16T18:52:51.420Z info: SYNC_INIT
+2017-10-16T18:52:52.404Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:52:52.404Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:52:52.410Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:52:52.411Z info: Startup synchronization complete
+2017-10-16T18:53:51.432Z info: SYNC_INIT
+2017-10-16T18:53:51.878Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:53:51.878Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:53:51.882Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:54:25.177Z info: SYNC_INIT
+2017-10-16T18:54:25.687Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:54:25.687Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:54:25.690Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:54:25.690Z info: Startup synchronization complete
+2017-10-16T18:54:29.437Z info: SYNC_INIT
+2017-10-16T18:54:30.874Z info: SYNC_INIT
+2017-10-16T18:54:31.777Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:54:31.777Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:54:31.780Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:54:31.780Z info: Startup synchronization complete
+2017-10-16T18:55:30.883Z info: SYNC_INIT
+2017-10-16T18:55:31.356Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:55:31.357Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:55:31.361Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:55:47.420Z info: SYNC_INIT
+2017-10-16T18:55:48.981Z info: SYNC_INIT
+2017-10-16T18:55:49.474Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:55:49.475Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:55:49.477Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:55:49.478Z info: Startup synchronization complete
+2017-10-16T18:56:48.987Z info: SYNC_INIT
+2017-10-16T18:56:49.467Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:56:49.468Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:56:49.471Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:57:32.916Z info: SYNC_INIT
+2017-10-16T18:57:36.391Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 4
+2017-10-16T18:57:36.392Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:57:36.395Z info: SYNC_ENTRIES_NOTHING
+2017-10-16T18:57:36.395Z info: Startup synchronization complete
+2017-10-16T18:58:32.923Z info: SYNC_INIT
+2017-10-16T18:58:33.374Z info: SYNC_LOCATIONS, incoming: 4 | persisted: 0
+2017-10-16T18:58:33.374Z info: SYNC_ADDING_LOCATIONS
+2017-10-16T18:58:33.392Z info: SYNC_LOCATIONS_FINISHED added:
+2017-10-16T18:59:32.931Z info: SYNC_INIT
