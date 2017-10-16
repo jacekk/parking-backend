@@ -7,7 +7,7 @@ const mongodbUrl = 'mongodb://localhost:27017/parkly';
 MongoClient.connect(mongodbUrl, function(connectErr, db) {
     if (connectErr) {
         console.error('Migration status: HE DED', connectErr);
-        dbDropLogger.error('DB connection error');
+        // dbDropLogger.error('DB connection error');
         process.exit(1);
     }
 
@@ -17,24 +17,24 @@ MongoClient.connect(mongodbUrl, function(connectErr, db) {
             .drop()
             .then(d => {
                 console.log('parkingLocations', d);
-                dbDropLogger.info('parkingLocations dropped');
+                // dbDropLogger.info('parkingLocations dropped');
             }),
         db
             .collection('parkingEntries')
             .drop()
             .then(d => {
                 console.log('parkingEntries', d);
-                dbDropLogger.info('parkingEntries dropped');
+                // dbDropLogger.info('parkingEntries dropped');
             }),
     ])
         .then(() => {
             console.log('Migration status: ITS FINE BOI');
-            dbDropLogger.info('Migration status: ITS FINE BOI');
+            // dbDropLogger.info('Migration status: ITS FINE BOI');
             process.exit(0);
         })
         .catch(promiseErr => {
             console.error('Migration status: KAPUT', promiseErr);
-            dbDropLogger.error('Migration status: KAPUT');
+            // dbDropLogger.error('Migration status: KAPUT');
             process.exit(1);
         });
 });

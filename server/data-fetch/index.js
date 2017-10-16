@@ -87,10 +87,7 @@ const syncLocations = async (repo, locations) => {
         syncLogger.info('SYNC_ADDING_LOCATIONS');
         await repo.addParkingLocation(locations);
     }
-    syncLogger.info(
-        'SYNC_LOCATIONS_FINISHED added:',
-        newLength,
-    );
+    syncLogger.info('SYNC_LOCATIONS_FINISHED added:', newLength);
 };
 
 const synchronize = async repo => {
@@ -118,8 +115,7 @@ const synchronize = async repo => {
         return;
     }
 
-    const entriesWithLocationId =
-        (await Promise.all(
+    const entriesWithLocationId = await Promise.all(
             entriesToInsert.map(async entry => {
                 const location = await repo.findLocationIdByName(entry.name);
 
@@ -128,7 +124,7 @@ const synchronize = async repo => {
                     locationId: location._id,
                 };
             }),
-        )) || [];
+        ) || [];
 
     entriesWithLocationId.sort(
         (curr, next) => (moment(curr.time).isBefore(next.time) ? 1 : -1),
@@ -136,10 +132,7 @@ const synchronize = async repo => {
 
     syncLogger.info('SYNC_ENTRIES_START');
     await repo.addParkingEntry(entriesWithLocationId);
-    syncLogger.info(
-        'SYNC_ENTRIES_FINISH added:',
-        entriesWithLocationId.length,
-    );
+    syncLogger.info('SYNC_ENTRIES_FINISH added:', entriesWithLocationId.length);
 };
 
 const startSynchronizingWithAPI = (repo, interval) => {
