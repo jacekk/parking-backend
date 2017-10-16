@@ -62,17 +62,13 @@ const fetchSuccess = (lines) => {
         return { name: location };
     });
 
-    parsedEntries = parsedEntries
-
-        .sort(sortEntries );
+    parsedEntries = parsedEntries.sort(sortEntries);
 
     return {
         locations: locations,
         entries: parsedEntries,
     };
 };
-
-
 
 const fetchAndParseParkings = () => {
     return getCSV(
@@ -134,10 +130,10 @@ const synchronize = async (repo) => {
 
             return {
                 ...entry,
-                locationId: location._id
+                locationId: location._id,
             }
         })
-    ) || [] ;
+    ) || [];
 
 
     entriesWithLocationId.sort((curr, next) => moment(curr.time).isBefore(next.time) ? 1 : -1);

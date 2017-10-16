@@ -40,7 +40,7 @@ const addCoordinates = (parkings) => {
           long: 17.0776538,
         };
         break;
-      case 'ul. Św. Antoniego':
+      case 'ul. św. Antoniego':
         newData.coordinates = {
           lat: 51.0973204,
           long: 17.0319734,
