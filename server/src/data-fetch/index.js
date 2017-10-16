@@ -1,10 +1,9 @@
-#!/usr/bin/env nodejs
 const uuid = require('uuid');
 const getCSV = require('get-csv');
 const moment = require('moment');
 
 const { syncLogger } = require('../utils/loggers');
-const { CSV_FILE_URL, WRO_OPEN_DATA_TZ } = require('./constants');
+const { CSV_FILE_URL, WRO_OPEN_DATA_TZ } = require('../constants');
 
 const sortEntries = (curr, next) =>
     moment(curr.time).isBefore(next.time) ? 1 : -1;

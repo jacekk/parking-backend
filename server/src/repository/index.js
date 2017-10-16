@@ -1,12 +1,9 @@
 const { MongoClient, ObjectID } = require('mongodb');
 
-// Connection URL
-const mongoHost =
-    process.env.NODE_ENV === 'production' ? 'localhost' : 'mongodb';
-const mongodbUrl = `mongodb://${mongoHost}:27017/parkly`;
+const { MONGODB_URL } = require('../constants');
 
 const getCollections = async () => {
-    const db = await MongoClient.connect(mongodbUrl);
+    const db = await MongoClient.connect(MONGODB_URL);
 
     const locationCollection = db.collection('parkingLocations');
     const entriesCollection = db.collection('parkingEntries');
