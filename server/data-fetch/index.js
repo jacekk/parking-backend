@@ -87,7 +87,7 @@ const syncLocations = async (repo, locations) => {
         syncLogger.info('SYNC_ADDING_LOCATIONS');
         await repo.addParkingLocation(locations);
     }
-    syncLogger.info('SYNC_LOCATIONS_FINISHED added:', newLength);
+    syncLogger.info('SYNC_LOCATIONS_FINISHED added: %d', newLength);
 };
 
 const synchronize = async repo => {
@@ -132,7 +132,7 @@ const synchronize = async repo => {
 
     syncLogger.info('SYNC_ENTRIES_START');
     await repo.addParkingEntry(entriesWithLocationId);
-    syncLogger.info('SYNC_ENTRIES_FINISH added:', entriesWithLocationId.length);
+    syncLogger.info('SYNC_ENTRIES_FINISH added: %d', entriesWithLocationId.length);
 };
 
 const startSynchronizingWithAPI = (repo, interval) => {
