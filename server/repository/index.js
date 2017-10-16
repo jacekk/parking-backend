@@ -69,7 +69,7 @@ const getRepository = async () => {
 
             return latestEntry;
         },
-        async findLocationIdByName() {
+        async findLocationIdByName(name) {
             return await locationCollection.findOne({ name: name });
         },
         async getLocations() {
