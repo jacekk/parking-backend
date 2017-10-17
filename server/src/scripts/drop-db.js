@@ -1,9 +1,9 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const { MONGODB_LOCAL_URL } = require('../constants');
+const { MONGODB_URL } = require('../constants');
 const { dbDropLogger } = require('../utils/loggers');
 
-MongoClient.connect(MONGODB_LOCAL_URL, function(connectErr, db) {
+MongoClient.connect(MONGODB_URL, function(connectErr, db) {
     if (connectErr) {
         console.error('Migration status: HE DED', connectErr);
         // dbDropLogger.error('DB connection error');
