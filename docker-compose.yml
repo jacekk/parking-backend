@@ -6,6 +6,7 @@ services:
       context: ./server
     volumes:
       - ./server:/server
+      - ./backups:/backups
     depends_on:
       - mongodb
     ports:

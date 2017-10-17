@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const MongoClient = require('mongodb').MongoClient;
 
 const { MONGODB_URL } = require('../constants');

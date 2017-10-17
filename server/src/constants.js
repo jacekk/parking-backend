@@ -1,5 +1,6 @@
 const mongoHost = process.env.NODE_ENV === 'production' ? 'localhost' : 'mongodb';
 
+exports.API_PORT = 4000;
 exports.MONGODB_URL = `mongodb://${mongoHost}:27017/parkly`;
 
 exports.CSV_FILE_URL = 'https://www.wroclaw.pl/open-data/opendata/its/parkingi/parkingi.csv';

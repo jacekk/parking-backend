@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "db:backup": "echo \"@todo backup script\" && exit 1",
+    "db:backup": "./src/scripts/backup-db.sh",
     "db:drop": "node ./src/scripts/drop-db.js",
     "db:drop:prod": "echo \"DO BACKUP FIRST\" # NODE_ENV=production node ./src/scripts/drop-db.js",
     "serve:dev": "nodemon index.js",
