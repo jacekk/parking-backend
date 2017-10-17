@@ -1,0 +1,26 @@
+.card {
+    padding: 20px;
+    box-sizing: border-box;
+    width: calc(50vw - 30px);
+    height: calc(50vw - 30px);
+    margin-bottom: 20px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+    color: #000;
+    background: #efac00;
+}
+
+.card-value {
+    font-size: 15vw;
+    line-height: 15vw;
+    text-align: center;
+    width: 100%;
+}
+
+.card-label {
+    font-size: 4vw;
+    text-align: center;
+}

@@ -1,9 +1,13 @@
 import React from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Rectangle} from 'recharts';
+import {BarChart, Bar, ResponsiveContainer, Rectangle} from 'recharts';
 import SingleParkingMap from '../SingleParkingMap';
 import UserDistanceToSpot from '../UserDistanceToSpot';
 import Header from '../Header';
-import { getFreeSpotsClassName, getFreeSpotsColor, getFreeSpotsColorBorder } from '../../helpers';
+import Cards from '../Cards';
+import Card from '../Card';
+import './ParkingDetails.css';
+
+import { getFreeSpotsColor, getFreeSpotsColorBorder } from '../../helpers';
 
 const CustomBar = (props) => {
     const fill = props.isNow ? getFreeSpotsColorBorder(props.freeSpots, props.isFuture) : getFreeSpotsColor(props.freeSpots, props.isFuture);
@@ -39,41 +43,37 @@ const ParkingDetails = ({
             <Header backButtonVisible backButtonHandler={backButtonHandler}/>
             <section className="app-body parking-details">
                 <h3 className="parking-name">{activeParking.name}</h3>
-                <span className="parking-data">
-                    <label className="parking-label">Wolne miejsca obecnie</label>
-                    <span className={getFreeSpotsClassName(activeParking.freeSpots)}>           {activeParking.freeSpots}
-                    </span>
-                </span>
-                <span className="parking-data">
-                    <label className="parking-label">Trend</label>
-                    <span className="parking-trend">{trend}</span>
-                </span>
-                <span className="parking-data">
-                    <label className="user-distance-label">Dystans</label>
-                    <span className="user-distance">
-                        {<UserDistanceToSpot
+                <Cards>
+                    <Card label="Wolne miejsca obecnie">
+                        {activeParking.freeSpots}
+                    </Card>
+
+                    <Card label="Trend">
+                        {trend}
+                    </Card>
+
+                    <Card label="Dystans">
+                        <UserDistanceToSpot
                             spotId={activeParking.id}
                             userCoordinatesLoading={userPositionLoading}
                             spotCoordinates={activeParking.coordinates}
                             userCoordinates={userPosition}
-                        />}
-                    </span>
-                </span>
-                <div className="parking-chart">
-                    <ResponsiveContainer width="100%" height={200}>
-                        <BarChart data={activeParkingChartData} barCategoryGap={1}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Bar dataKey='freeSpots' shape={CustomBar} label={CustomLabel}/>
-                            <XAxis dataKey="time"/>
-                            <YAxis dataKey="freeSpots" />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
+                        />
+                    </Card>
+
+                    <Card>
+                        <ResponsiveContainer width="100%" height={200}>
+                            <BarChart data={activeParkingChartData} barCategoryGap={1}>
+                                <Bar dataKey='freeSpots' shape={CustomBar} label={CustomLabel}/>
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Card>
+                </Cards>
                 {activeParking && activeParking.coordinates &&
                     <div className="parking-map">
                         <SingleParkingMap
                           loadingElement={<div style={{ height: `100%` }} />}
-                          containerElement={<div style={{ height: '200px' }} />}
+                          containerElement={<div style={{ height: '400px' }} />}
                           mapElement={<div style={{ height: `100%` }} />}
                           lat={activeParking.coordinates.lat}
                           long={activeParking.coordinates.long}
