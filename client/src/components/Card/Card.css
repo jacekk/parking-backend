@@ -24,3 +24,21 @@
     font-size: 4vw;
     text-align: center;
 }
+
+
+@media only screen and (min-width: 870px) {
+    .parking-details .card {
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    .card-value {
+        font-size: 60px;
+        line-height: 60px;
+    }
+
+    .card-label {
+        font-size: 15px;
+        line-height: 15px;
+    }
+}

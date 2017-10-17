@@ -9,8 +9,12 @@ import './ParkingDetails.css';
 
 import { getFreeSpotsColor, getFreeSpotsColorBorder } from '../../helpers';
 
+const FUTURE_COLOR = '#a94700';
+const PAST_COLOR = '#000';
+
 const CustomBar = (props) => {
-    const fill = props.isNow ? getFreeSpotsColorBorder(props.freeSpots, props.isFuture) : getFreeSpotsColor(props.freeSpots, props.isFuture);
+    // const fill = props.isNow ? getFreeSpotsColorBorder(props.freeSpots, props.isFuture) : getFreeSpotsColor(props.freeSpots, props.isFuture);
+    const fill = props.isNow || !props.isFuture ? PAST_COLOR : FUTURE_COLOR;
     return <Rectangle
         {...props}
         fill={fill}
@@ -62,8 +66,8 @@ const ParkingDetails = ({
                     </Card>
 
                     <Card>
-                        <ResponsiveContainer width="100%" height={200}>
-                            <BarChart data={activeParkingChartData} barCategoryGap={1}>
+                        <ResponsiveContainer width="100%" height={160}>
+                            <BarChart data={activeParkingChartData} margin={{ top: 25, right: 5, bottom: 5, left: 5 }}>
                                 <Bar dataKey='freeSpots' shape={CustomBar} label={CustomLabel}/>
                             </BarChart>
                         </ResponsiveContainer>
