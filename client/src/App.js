@@ -3,39 +3,10 @@ import './App.css';
 import moment from 'moment';
 import 'moment-timezone';
 import regression from 'regression';
-import Header from './components/Header'
-import Spinner from './components/Spinner'
-import ParkingDetails from './components/ParkingDetails'
-import UserDistanceToSpot from './components/UserDistanceToSpot';
-import { getFreeSpotsClassName } from './helpers';
-window.moment = moment;
-const Parking = ({
-    id,
-    name,
-    freeSpots,
-    onClick,
-    spotCoordinates,
-    userCoordinates,
-    userCoordinatesLoading
-}) =>
-    <li className="parkingList-item" onClick={onClick}>
-        <h3 className="parking-name">{name}</h3>
-        <span className="parking-data">
-            <label className="parking-label">Miejsca</label>
-            <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
-        </span>
-        <span className="parking-data">
-            <label className="user-distance-label">Dystans</label>
-            <span className="user-distance">
-                <UserDistanceToSpot
-                    spotId={id}
-                    userCoordinatesLoading={userCoordinatesLoading}
-                    spotCoordinates={spotCoordinates}
-                    userCoordinates={userCoordinates}
-                />
-            </span>
-        </span>
-    </li>
+import Header from './components/Header';
+import Spinner from './components/Spinner';
+import ParkingDetails from './components/ParkingDetails';
+import ParkingListItem from './components/ParkingListItem';
 
 class App extends Component {
     constructor(props){
@@ -211,7 +182,7 @@ class App extends Component {
                 <ul className="parkingList">
                     {this.state
                         .parkings
-                        .map(({ name, freeSpots, coordinates, id }) => <Parking
+                        .map(({ name, freeSpots, coordinates, id }) => <ParkingListItem
                             key={id}
                             name={name}
                             spotCoordinates={coordinates}
