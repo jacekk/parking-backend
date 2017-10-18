@@ -43,7 +43,7 @@ const ParkingDetails = ({
     };
     return (
         <div className={`active-page ${detailsPageActiveClassName}`}>
-            <Header backButtonVisible backButtonHandler={backButtonHandler}/>
+            <Header isBackButtonVisible backButtonHandler={backButtonHandler}/>
             <section className="app-body parking-details">
                 <h3 className="parking-name">{activeParking.name}</h3>
                 <Cards>

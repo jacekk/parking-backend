@@ -18,6 +18,7 @@
     color: #efac00;
     border-color: #efac00;
     background: #000;
+    cursor: pointer;
 }
 
 .header-backButton:hover {
