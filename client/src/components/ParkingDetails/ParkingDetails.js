@@ -1,23 +1,22 @@
 import React from 'react';
 import {BarChart, Bar, ResponsiveContainer, Rectangle} from 'recharts';
+
 import SingleParkingMap from '../SingleParkingMap';
 import UserDistanceToSpot from '../UserDistanceToSpot';
 import Header from '../Header';
 import Cards from '../Cards';
 import Card from '../Card';
-import './ParkingDetails.css';
-
 import { getFreeSpotsColor, getFreeSpotsColorBorder } from '../../helpers';
+
+import './ParkingDetails.css';
 
 const FUTURE_COLOR = '#a94700';
 const PAST_COLOR = '#000';
 
 const CustomBar = (props) => {
     const fill = props.isNow || !props.isFuture ? PAST_COLOR : FUTURE_COLOR;
-    return <Rectangle
-        {...props}
-        fill={fill}
-    />;
+
+    return <Rectangle {...props} fill={fill} />;
 };
 
 const ParkingDetails = ({
@@ -34,10 +33,22 @@ const ParkingDetails = ({
         if (props.index !== nowIndex) {
             return null;
         }
-        const fill = props.isNow ? getFreeSpotsColorBorder(props.freeSpots, props.isFuture) : getFreeSpotsColor(props.freeSpots, props.isFuture);
+
+        const fill = props.isNow ?
+            getFreeSpotsColorBorder(props.freeSpots, props.isFuture) :
+            getFreeSpotsColor(props.freeSpots, props.isFuture);
+
         return (
             <g>
-                <text {...props} x={props.x + props.width / 2} y={props.y - 10} fontFamily="Overpass" textAnchor="middle" fontSize="14" fill={fill}>{props.value}</text>
+                <text
+                    {...props}
+                    x={props.x + props.width / 2}
+                    y={props.y - 10}
+                    fontFamily="Overpass" textAnchor="middle" fontSize="14"
+                    fill={fill}
+                >
+                    {props.value}
+                </text>
             </g>
         );
     };
@@ -57,7 +68,6 @@ const ParkingDetails = ({
 
                     <Card label="Dystans">
                         <UserDistanceToSpot
-                            spotId={activeParking.id}
                             userCoordinatesLoading={userPositionLoading}
                             spotCoordinates={activeParking.coordinates}
                             userCoordinates={userPosition}

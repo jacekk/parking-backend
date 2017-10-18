@@ -10,6 +10,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "moment-timezone": "^0.5.13",
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-chartjs": "^0.8.0",
     "react-chartjs-2": "^2.6.4",

@@ -5,7 +5,6 @@ import { getFreeSpotsClassName } from '../../helpers';
 import './ParkingListItem.css';
 
 const ParkingListItem = ({
-    id,
     name,
     freeSpots,
     onClick,
@@ -23,7 +22,6 @@ const ParkingListItem = ({
             <label className="user-distance-label">Dystans</label>
             <span className="user-distance">
                 <UserDistanceToSpot
-                    spotId={id}
                     userCoordinatesLoading={userCoordinatesLoading}
                     spotCoordinates={spotCoordinates}
                     userCoordinates={userCoordinates}
