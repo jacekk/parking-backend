@@ -13,7 +13,6 @@ const FUTURE_COLOR = '#a94700';
 const PAST_COLOR = '#000';
 
 const CustomBar = (props) => {
-    // const fill = props.isNow ? getFreeSpotsColorBorder(props.freeSpots, props.isFuture) : getFreeSpotsColor(props.freeSpots, props.isFuture);
     const fill = props.isNow || !props.isFuture ? PAST_COLOR : FUTURE_COLOR;
     return <Rectangle
         {...props}
