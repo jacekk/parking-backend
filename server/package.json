@@ -4,9 +4,9 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "db:backup": "echo \"@todo backup script\" && exit 1",
+    "db:backup": "./src/scripts/backup-db.sh",
     "db:drop": "node ./src/scripts/drop-db.js",
-    "db:drop:prod": "echo \"DO BACKUP FIRST\" # NODE_ENV=production node ./src/scripts/drop-db.js",
+    "db:drop:prod": "yarn run db:backup && NODE_ENV=production node ./src/scripts/drop-db.js",
     "serve:dev": "nodemon index.js",
     "serve:prod": "pm2 start ecosystem.config.js --env production",
     "start": "node index.js",

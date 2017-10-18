@@ -1,5 +1,6 @@
 #!/bin/bash
-npm install --unsafe-perm --global yarn
+
+cd /server
 
 yarn install
 yarn run serve:dev
