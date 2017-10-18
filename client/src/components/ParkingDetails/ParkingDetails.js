@@ -27,6 +27,7 @@ const ParkingDetails = ({
     trend,
     nowIndex,
     userPosition,
+    userPositionDenied,
     userPositionLoading,
 }) => {
     const CustomLabel = (props) => {
@@ -61,19 +62,18 @@ const ParkingDetails = ({
                     <Card label="Wolne miejsca obecnie">
                         {activeParking.freeSpots}
                     </Card>
-
                     <Card label="Trend">
                         {trend}
                     </Card>
-
-                    <Card label="Dystans">
-                        <UserDistanceToSpot
-                            userCoordinatesLoading={userPositionLoading}
-                            spotCoordinates={activeParking.coordinates}
-                            userCoordinates={userPosition}
-                        />
-                    </Card>
-
+                    { !userPositionDenied &&
+                        <Card label="Dystans">
+                            <UserDistanceToSpot
+                                spotCoordinates={activeParking.coordinates}
+                                userCoordinates={userPosition}
+                                userCoordinatesLoading={userPositionLoading}
+                            />
+                        </Card>
+                    }
                     <Card>
                         <ResponsiveContainer width="100%" height={160}>
                             <BarChart data={activeParkingChartData} margin={{ top: 25, right: 5, bottom: 5, left: 5 }}>

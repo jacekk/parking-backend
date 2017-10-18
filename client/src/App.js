@@ -19,25 +19,27 @@ class App extends Component {
             errorMessage: null,
             activeParkingName: null,
             spinner: false,
-            coordsLoading: true,
-            coords: null,
+            userCoordsLoading: true,
+            userCoordsDenied: false,
+            userCoords: null,
         };
 
         this.closeErrorMessage = this.closeErrorMessage.bind(this);
         this.showListPage = this.showListPage.bind(this);
         this.showDetailsPage = this.showDetailsPage.bind(this);
         this.updateUserPosition = this.updateUserPosition.bind(this);
+        this.disableUserPosition = this.disableUserPosition.bind(this);
     }
 
     updateUserPosition(position) {
         const lat = position.coords.latitude;
         const long = position.coords.longitude;
 
-        this.setState({ coordsLoading: false, coords: { lat, long } });
+        this.setState({ userCoordsLoading: false, userCoords: { lat, long } });
     }
 
-    showListPage(event) {
-        event.preventDefault();
+    showListPage(ev) {
+        ev.preventDefault();
         this.setState({
             activeParkingName: null,
             history: [],
@@ -45,8 +47,8 @@ class App extends Component {
         });
     }
 
-    showDetailsPage(event, parkingName, parkingId) {
-        event.preventDefault();
+    showDetailsPage(ev, parkingName, parkingId) {
+        ev.preventDefault();
         this.setState({
             activeParkingName: parkingName,
             spinner: true,
@@ -64,14 +66,23 @@ class App extends Component {
             this.setState({
                 spinner: false
             });
-            this.setErrorMessage(<div><p><strong>Wystąpił nieoczekiwany błąd.</strong></p><p>Prosimy spróbować później.</p></div>);
+            this.setErrorMessage(
+                <div>
+                    <p><strong>Wystąpił nieoczekiwany błąd.</strong></p>
+                    <p>Prosimy spróbować później.</p>
+                </div>
+            );
         })
     }
 
     componentDidMount() {
         if (navigator && navigator.geolocation) {
-            this.setState({ coordsLoading: true });
-            navigator.geolocation.getCurrentPosition(this.updateUserPosition);
+            this.setState({ userCoordinatesLoading: true });
+            navigator.geolocation.getCurrentPosition(
+                this.updateUserPosition,
+                this.disableUserPosition,
+                { timeout: 10e3 }
+            );
         }
 
         this.setState({
@@ -85,6 +96,10 @@ class App extends Component {
         });
     }
 
+    disableUserPosition(errorCode) {
+        this.setState({ userCoordsDenied: true });
+    }
+
     getParkings() {
         return this.props.getParkings()
         .then((parkings = []) => {
@@ -92,38 +107,47 @@ class App extends Component {
                 parkings
             }));
 
-            if (!parkings.length) {
-              this.setErrorMessage(<div><p><strong>Brak wyników.</strong></p><p>Prosimy spróbować później.</p></div>);
-              return;
+            if (parkings.length) {
+                return;
             }
+            this.setErrorMessage(
+                <div>
+                    <p><strong>Brak wyników.</strong></p>
+                    <p>Prosimy spróbować później.</p>
+                </div>
+            );
         }).catch(error => {
-          this.setErrorMessage(<div><p><strong>Wystąpił nieoczekiwany błąd.</strong></p><p>Prosimy spróbować później.</p></div>);
+            this.setErrorMessage(
+                <div>
+                    <p><strong>Wystąpił nieoczekiwany błąd.</strong></p>
+                    <p>Prosimy spróbować później.</p>
+                </div>
+            );
+            throw error;
         })
     }
 
-  setErrorMessage(errorMessage) {
-    this.setState({
-      errorMessage
-    });
-  }
-
-  renderErrorMessage() {
-    const { errorMessage } = this.state;
-    if (!errorMessage) {
-      return null;
+    setErrorMessage(errorMessage) {
+        this.setState({ errorMessage });
     }
-    return (
-      <div className="error" onClick={this.closeErrorMessage}>
-        { errorMessage }
-      </div>
-    );
-  }
 
-  closeErrorMessage() {
-    this.setState({
-      errorMessage: null
-    });
-  }
+    renderErrorMessage() {
+        const { errorMessage } = this.state;
+        if (!errorMessage) {
+            return null;
+        }
+        return (
+            <div className="error" onClick={this.closeErrorMessage}>
+                { errorMessage }
+            </div>
+        );
+    }
+
+    closeErrorMessage() {
+        this.setState({
+            errorMessage: null
+        });
+    }
 
   getActiveParking() {
       const { activeParkingName, parkings } = this.state;
@@ -148,7 +172,7 @@ class App extends Component {
   getBarChartWidth() {
       return window.innerWidth - 50;
   }
-  getTrend() {
+    getTrend() {
         const { history } = this.state;
 
         const data = history
@@ -166,12 +190,14 @@ class App extends Component {
 
         return coefficient > 0 ? "Wzrostowy" : "Spadkowy";
     }
+
   render() {
-    const { activeParkingName, coords, coordsLoading } = this.state;
+    const { activeParkingName, userCoords, userCoordsLoading, userCoordsDenied } = this.state;
     const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
     const activeParking = this.getActiveParking();
     const activeParkingChartData = this.getActiveParkingChartData();
+
     return (
       <div className="app">
         <div className={`active-page ${listPageActiveClassName}`}>
@@ -186,10 +212,11 @@ class App extends Component {
                             key={id}
                             name={name}
                             spotCoordinates={coordinates}
-                            userCoordinates={coords}
-                            userCoordinatesLoading={coordsLoading}
+                            userCoordinates={userCoords}
+                            userCoordinatesDenied={userCoordsDenied}
+                            userCoordinatesLoading={userCoordsLoading}
                             freeSpots={freeSpots}
-                            onClick={event => this.showDetailsPage(event, name, id)}
+                            onClick={ev => this.showDetailsPage(ev, name, id)}
                         />)
                     }
                 </ul>
@@ -202,8 +229,9 @@ class App extends Component {
             trend={this.getTrend()}
             backButtonHandler={this.showListPage}
             nowIndex={this.state.history.length - 1}
-            userPosition={this.state.coords}
-            userPositionLoading={this.state.coordsLoading}
+            userPosition={this.state.userCoords}
+            userPositionDenied={this.state.userCoordsDenied}
+            userPositionLoading={this.state.userCoordsLoading}
         />
       </div>
     );

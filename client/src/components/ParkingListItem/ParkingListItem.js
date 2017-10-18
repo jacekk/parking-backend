@@ -10,7 +10,8 @@ const ParkingListItem = ({
     onClick,
     spotCoordinates,
     userCoordinates,
-    userCoordinatesLoading
+    userCoordinatesDenied,
+    userCoordinatesLoading,
 }) => (
     <li className="parkingList-item" onClick={onClick}>
         <h3 className="parking-name">{name}</h3>
@@ -18,16 +19,18 @@ const ParkingListItem = ({
             <label className="parking-label">Miejsca</label>
             <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
         </span>
-        <span className="parking-data">
-            <label className="user-distance-label">Dystans</label>
-            <span className="user-distance">
-                <UserDistanceToSpot
-                    userCoordinatesLoading={userCoordinatesLoading}
-                    spotCoordinates={spotCoordinates}
-                    userCoordinates={userCoordinates}
-                />
+        { !userCoordinatesDenied &&
+            <span className="parking-data">
+                <label className="user-distance-label">Dystans</label>
+                <span className="user-distance">
+                    <UserDistanceToSpot
+                        spotCoordinates={spotCoordinates}
+                        userCoordinates={userCoordinates}
+                        userCoordinatesLoading={userCoordinatesLoading}
+                    />
+                </span>
             </span>
-        </span>
+        }
     </li>
 );
 
