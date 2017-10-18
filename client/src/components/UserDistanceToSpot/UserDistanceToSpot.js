@@ -8,7 +8,6 @@ class UserDistanceToSpot extends Component {
         this.state = {
             distanceText: null,
             isLoading: false,
-            spotCoords: null,
         };
         this.onDistanceFetched = this.onDistanceFetched.bind(this);
     }
