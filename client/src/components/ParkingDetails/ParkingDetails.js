@@ -57,7 +57,7 @@ const ParkingDetails = ({
 
     return [
         <Header isBackButtonVisible backButtonHandler={backButtonHandler}/>,
-        <section className="app-body parkingDetails">
+        <section className="parkingDetails">
             <h3 className="parkingDetails-name">{activeParking.name}</h3>
             <Cards>
                 <Card label="Wolne miejsca obecnie" className={freeSpotsClassName}>

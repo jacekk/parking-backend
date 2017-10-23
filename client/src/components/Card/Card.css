@@ -1,8 +1,8 @@
 .card {
     padding: 20px;
     box-sizing: border-box;
-    width: calc(50vw - 40px);
-    height: calc(50vw - 40px);
+    width: 220px;
+    height: 220px;
     margin-bottom: 20px;
     min-height: 100px;
     display: flex;
@@ -14,18 +14,22 @@
 }
 
 .card-value {
-    font-size: 15vw;
-    line-height: 15vw;
+    font-size: 20px;
+    line-height: 20px;
     text-align: center;
     width: 100%;
 }
 
 .card-label {
-    font-size: 4vw;
+    font-size: 20px;
     text-align: center;
 }
 
-@media only screen and (min-width: 470px) {
+@media only screen and (min-width: 500px) {
+    .card {
+        width: calc(50vw - 40px);
+        height: calc(50vw - 40px);
+    }
     .card-value {
         font-size: 10vw;
         line-height: 10vw;

@@ -1,23 +1,16 @@
-.app, .app-page {
+.app {
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .app-page {
     background: #fff;
-}
-
-.app-body {
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow-y: scroll;
-    position: absolute;
+    min-width: 500px;
+    padding-top: 60px;
 }
 
 .app-page--hidden {

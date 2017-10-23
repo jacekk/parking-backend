@@ -232,18 +232,18 @@ class App extends Component {
 
         return (
             <div className="app">
-                <div className={`active-page ${listPageActiveClassName}`}>
+                <div className={`app-page ${listPageActiveClassName}`}>
                     <Header />
                     <Spinner className="spinner" visible={this.state.spinner}/>
                     { this.renderErrorMessage() }
-                    <section className="app-body">
+                    <section>
                         <ParkingList
                             items={this.state.parkings.map(this.mapStateParkingToListItem)}
                             ItemComponent={ParkingListItem}
                         />
                     </section>
                 </div>
-                <div className={`active-page ${detailsPageActiveClassName}`}>
+                <div className={`app-page ${detailsPageActiveClassName}`}>
                     <ParkingDetails
                         activeParking={activeParking}
                         activeParkingChartData={activeParkingChartData}
