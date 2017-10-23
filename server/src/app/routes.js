@@ -56,11 +56,12 @@ const getLocationPredictions = async (req, res) => {
             return res.status(404).end();
         }
 
+        const eightDaysBeforeNow = moment().subtract(7, 'days').subtract(1, 'day');
         const entries = await repo.getParkingEntriesByIdAndTime(
             parkingId,
             {
-                $gte: moment().subtract(1, 'day').toDate(),
-                $lte: moment().subtract(1, 'day').add(4, 'hours').toDate()
+                $gte: eightDaysBeforeNow.toDate(),
+                $lte: moment(eightDaysBeforeNow).add(4, 'hours').toDate()
             }
         );
 
