@@ -7,6 +7,8 @@ import Header from './components/Header';
 import Spinner from './components/Spinner';
 import ParkingDetails from './components/ParkingDetails';
 import ParkingListItem from './components/ParkingListItem';
+import ParkingList from './components/ParkingList';
+import ErrorMessage from './components/ErrorMessage';
 
 class App extends Component {
     constructor(props){
@@ -29,6 +31,7 @@ class App extends Component {
         this.showDetailsPage = this.showDetailsPage.bind(this);
         this.updateUserPosition = this.updateUserPosition.bind(this);
         this.disableUserPosition = this.disableUserPosition.bind(this);
+        this.mapStateParkingToListItem = this.mapStateParkingToListItem.bind(this);
     }
 
     updateUserPosition(position) {
@@ -137,9 +140,9 @@ class App extends Component {
             return null;
         }
         return (
-            <div className="error" onClick={this.closeErrorMessage}>
+            <ErrorMessage onClick={this.closeErrorMessage}>
                 { errorMessage }
-            </div>
+            </ErrorMessage>
         );
     }
 
@@ -149,29 +152,32 @@ class App extends Component {
         });
     }
 
-  getActiveParking() {
-      const { activeParkingName, parkings } = this.state;
-      return parkings.filter(({ name }) => name === activeParkingName)[0] || {};
-  }
-  getActiveParkingChartData() {
-    const { history, predictions } = this.state;
-    const historyChartData = history.map(({ freeSpots, time }, index) => ({
-        freeSpots,
-        time: moment(time).subtract({'hours': 2}).fromNow(),
-        isNow: index === history.length - 1,
-        isFuture: false,
-    }));
-    const predictionsChartData = predictions.map(({ freeSpots, time }, index) => ({
-        freeSpots,
-        time: moment(time).fromNow(),
-        isFuture: true,
-        isNow: false
-    }));
-    return historyChartData.concat(predictionsChartData);
-  }
-  getBarChartWidth() {
-      return window.innerWidth - 50;
-  }
+    getActiveParking() {
+        const { activeParkingName, parkings } = this.state;
+        return parkings.filter(({ name }) => name === activeParkingName)[0] || {};
+    }
+
+    getActiveParkingChartData() {
+        const { history, predictions } = this.state;
+        const historyChartData = history.map(({ freeSpots, time }, index) => ({
+            freeSpots,
+            time: moment(time).subtract({'hours': 2}).fromNow(),
+            isNow: index === history.length - 1,
+            isFuture: false,
+        }));
+        const predictionsChartData = predictions.map(({ freeSpots, time }, index) => ({
+            freeSpots,
+            time: moment(time).fromNow(),
+            isFuture: true,
+            isNow: false
+        }));
+        return historyChartData.concat(predictionsChartData);
+    }
+
+    getBarChartWidth() {
+        return window.innerWidth - 50;
+    }
+
     getTrend() {
         const { history } = this.state;
 
@@ -191,51 +197,55 @@ class App extends Component {
         return coefficient > 0 ? "Wzrostowy" : "Spadkowy";
     }
 
-  render() {
-    const { activeParkingName, userCoords, userCoordsLoading, userCoordsDenied } = this.state;
-    const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
-    const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
-    const activeParking = this.getActiveParking();
-    const activeParkingChartData = this.getActiveParkingChartData();
+    mapStateParkingToListItem({ name, freeSpots, coordinates, id }) {
+        const { userCoords, userCoordsLoading, userCoordsDenied } = this.state;
+        return {
+            key: id,
+            name: name,
+            spotCoordinates: coordinates,
+            userCoordinates: userCoords,
+            userCoordinatesDenied: userCoordsDenied,
+            userCoordinatesLoading: userCoordsLoading,
+            freeSpots: freeSpots,
+            onClick: ev => this.showDetailsPage(ev, name, id),
+        };
+    }
 
-    return (
-      <div className="app">
-        <div className={`active-page ${listPageActiveClassName}`}>
-            <Header />
-            <Spinner className="spinner" visible={this.state.spinner}/>
-            { this.renderErrorMessage() }
-            <section className="app-body">
-                <ul className="parkingList">
-                    {this.state
-                        .parkings
-                        .map(({ name, freeSpots, coordinates, id }) => <ParkingListItem
-                            key={id}
-                            name={name}
-                            spotCoordinates={coordinates}
-                            userCoordinates={userCoords}
-                            userCoordinatesDenied={userCoordsDenied}
-                            userCoordinatesLoading={userCoordsLoading}
-                            freeSpots={freeSpots}
-                            onClick={ev => this.showDetailsPage(ev, name, id)}
-                        />)
-                    }
-                </ul>
-            </section>
-        </div>
-        <ParkingDetails
-            activeParking={activeParking}
-            activeParkingChartData={activeParkingChartData}
-            detailsPageActiveClassName={detailsPageActiveClassName}
-            trend={this.getTrend()}
-            backButtonHandler={this.showListPage}
-            nowIndex={this.state.history.length - 1}
-            userPosition={this.state.userCoords}
-            userPositionDenied={this.state.userCoordsDenied}
-            userPositionLoading={this.state.userCoordsLoading}
-        />
-      </div>
-    );
-  }
+    render() {
+        const { activeParkingName } = this.state;
+        const listPageActiveClassName = !activeParkingName ? 'app-page--visible' : 'app-page--hidden';
+        const detailsPageActiveClassName = activeParkingName ? 'app-page--visible' : 'app-page--hidden';
+        const activeParking = this.getActiveParking();
+        const activeParkingChartData = this.getActiveParkingChartData();
+
+        return (
+            <div className="app">
+                <div className={`active-page ${listPageActiveClassName}`}>
+                    <Header />
+                    <Spinner className="spinner" visible={this.state.spinner}/>
+                    { this.renderErrorMessage() }
+                    <section className="app-body">
+                        <ParkingList
+                            items={this.state.parkings.map(this.mapStateParkingToListItem)}
+                            ItemComponent={ParkingListItem}
+                        />
+                    </section>
+                </div>
+                <div className={`active-page ${detailsPageActiveClassName}`}>
+                    <ParkingDetails
+                        activeParking={activeParking}
+                        activeParkingChartData={activeParkingChartData}
+                        trend={this.getTrend()}
+                        backButtonHandler={this.showListPage}
+                        nowIndex={this.state.history.length - 1}
+                        userPosition={this.state.userCoords}
+                        userPositionDenied={this.state.userCoordsDenied}
+                        userPositionLoading={this.state.userCoordsLoading}
+                    />
+                </div>
+            </div>
+        );
+    }
 }
 
 App.defaultProps = {

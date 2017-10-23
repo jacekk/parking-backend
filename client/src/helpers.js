@@ -1,4 +1,4 @@
-export const getFreeSpotsClassName = (freeSpots) => {
+export const getFreeSpotsStateName = (freeSpots) => {
     let sufix;
     if (freeSpots === 0) {
         sufix = 'nospace';
@@ -9,7 +9,7 @@ export const getFreeSpotsClassName = (freeSpots) => {
     } else if (freeSpots > 10) {
         sufix = 'good';
     }
-    return `parking-spot parking-spot--${sufix}`;
+    return sufix;
 }
 
 export const getFreeSpotsColor = (freeSpots, isFuture) => {

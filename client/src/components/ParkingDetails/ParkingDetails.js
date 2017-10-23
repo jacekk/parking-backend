@@ -6,7 +6,7 @@ import UserDistanceToSpot from '../UserDistanceToSpot';
 import Header from '../Header';
 import Cards from '../Cards';
 import Card from '../Card';
-import { getFreeSpotsColor, getFreeSpotsColorBorder } from '../../helpers';
+import { getFreeSpotsColor, getFreeSpotsColorBorder, getFreeSpotsStateName } from '../../helpers';
 
 import './ParkingDetails.css';
 
@@ -20,7 +20,6 @@ const CustomBar = (props) => {
 };
 
 const ParkingDetails = ({
-    detailsPageActiveClassName,
     backButtonHandler,
     activeParking,
     activeParkingChartData,
@@ -53,50 +52,51 @@ const ParkingDetails = ({
             </g>
         );
     };
-    return (
-        <div className={`active-page ${detailsPageActiveClassName}`}>
-            <Header isBackButtonVisible backButtonHandler={backButtonHandler}/>
-            <section className="app-body parking-details">
-                <h3 className="parking-name">{activeParking.name}</h3>
-                <Cards>
-                    <Card label="Wolne miejsca obecnie">
-                        {activeParking.freeSpots}
-                    </Card>
-                    <Card label="Trend">
-                        {trend}
-                    </Card>
-                    { !userPositionDenied &&
-                        <Card label="Dystans">
-                            <UserDistanceToSpot
-                                spotCoordinates={activeParking.coordinates}
-                                userCoordinates={userPosition}
-                                userCoordinatesLoading={userPositionLoading}
-                            />
-                        </Card>
-                    }
-                    <Card>
-                        <ResponsiveContainer width="100%" height={160}>
-                            <BarChart data={activeParkingChartData} margin={{ top: 25, right: 5, bottom: 5, left: 5 }}>
-                                <Bar dataKey='freeSpots' shape={CustomBar} label={CustomLabel}/>
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </Card>
-                </Cards>
-                {activeParking && activeParking.coordinates &&
-                    <div className="parking-map">
-                        <SingleParkingMap
-                          loadingElement={<div style={{ height: `100%` }} />}
-                          containerElement={<div style={{ height: '400px' }} />}
-                          mapElement={<div style={{ height: `100%` }} />}
-                          lat={activeParking.coordinates.lat}
-                          long={activeParking.coordinates.long}
-                          userPosition={userPosition}
+
+    const freeSpotsClassName = `parkingDetails-spot--${getFreeSpotsStateName(activeParking.freeSpots)}`;
+
+    return [
+        <Header isBackButtonVisible backButtonHandler={backButtonHandler}/>,
+        <section className="app-body parkingDetails">
+            <h3 className="parkingDetails-name">{activeParking.name}</h3>
+            <Cards>
+                <Card label="Wolne miejsca obecnie" className={freeSpotsClassName}>
+                    {activeParking.freeSpots}
+                </Card>
+                <Card label="Trend">
+                    {trend}
+                </Card>
+                { !userPositionDenied &&
+                    <Card label="Dystans">
+                        <UserDistanceToSpot
+                            spotCoordinates={activeParking.coordinates}
+                            userCoordinates={userPosition}
+                            userCoordinatesLoading={userPositionLoading}
                         />
-                    </div>
+                    </Card>
                 }
-            </section>
-        </div>
-    );
+                <Card>
+                    <ResponsiveContainer width="100%" height={160}>
+                        <BarChart data={activeParkingChartData} margin={{ top: 25, right: 5, bottom: 5, left: 5 }}>
+                            <Bar dataKey='freeSpots' shape={CustomBar} label={CustomLabel}/>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </Card>
+            </Cards>
+            {activeParking && activeParking.coordinates &&
+                <div className="parking-map">
+                    <SingleParkingMap
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div style={{ height: '400px' }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                        lat={activeParking.coordinates.lat}
+                        long={activeParking.coordinates.long}
+                        userPosition={userPosition}
+                    />
+                </div>
+            }
+        </section>
+    ];
 };
 
 

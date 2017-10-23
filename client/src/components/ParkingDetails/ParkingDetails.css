@@ -1,5 +1,25 @@
-.parking-details .parking-name {
+
+.parkingDetails {
+    padding: 20px;
+}
+
+.parkingDetails-name {
+    margin: 0;
+    font-weight: bold;
     font-size: 4em;
     line-height: 1em;
     margin-bottom: 20px;
+}
+
+.parkingDetails .parkingDetails-spot--good {
+    background-color: rgb(0, 186, 3);
+}
+.parkingDetails .parkingDetails-spot--enough {
+    background-color: rgb(232, 163, 0);
+}
+.parkingDetails .parkingDetails-spot--shortage {
+    background-color: rgb(255, 98, 0);
+}
+.parkingDetails .parkingDetails-spot--nospace {
+    background-color: rgb(215, 36, 0);
 }

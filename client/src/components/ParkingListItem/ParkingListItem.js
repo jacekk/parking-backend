@@ -1,6 +1,6 @@
 import React from 'react';
 import UserDistanceToSpot from '../UserDistanceToSpot';
-import { getFreeSpotsClassName } from '../../helpers';
+import { getFreeSpotsStateName } from '../../helpers';
 
 import './ParkingListItem.css';
 
@@ -13,16 +13,16 @@ const ParkingListItem = ({
     userCoordinatesDenied,
     userCoordinatesLoading,
 }) => (
-    <li className="parkingList-item" onClick={onClick}>
-        <h3 className="parking-name">{name}</h3>
-        <span className="parking-data">
-            <label className="parking-label">Miejsca</label>
-            <span className={getFreeSpotsClassName(freeSpots)}>{freeSpots}</span>
+    <li className="parkingListItem" onClick={onClick}>
+        <h3 className="parkingListItem-name">{name}</h3>
+        <span className="parkingListItem-data">
+            <label className="parkingListItem-label">Miejsca</label>
+            <span className={`parkingListItem-spot parkingListItem-spot--${getFreeSpotsStateName(freeSpots)}`}>{freeSpots}</span>
         </span>
         { !userCoordinatesDenied &&
-            <span className="parking-data">
-                <label className="user-distance-label">Dystans</label>
-                <span className="user-distance">
+            <span className="parkingListItem-data">
+                <label className="parkingListItem-label">Dystans</label>
+                <span className="parkingListItem-distance">
                     <UserDistanceToSpot
                         spotCoordinates={spotCoordinates}
                         userCoordinates={userCoordinates}
