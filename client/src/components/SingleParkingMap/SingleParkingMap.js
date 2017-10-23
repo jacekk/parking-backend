@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withGoogleMap, GoogleMap, Marker, DirectionsRenderer } from 'react-google-maps';
 import LocationMarker from './LocationMarker';
 import { isEqual } from 'lodash';
@@ -24,25 +25,27 @@ class SingleParkingMap extends React.Component {
         if (!map) {
             return;
         }
-        const { lat, long, userPosition } = this.props;
+        const { lat, long } = this.props;
+        const { userCoords } = this.context;
 
-        if (userPosition) {
+        if (userCoords) {
             const bounds = new window.google.maps.LatLngBounds();
             bounds.extend(new window.google.maps.LatLng(lat, long));
-            bounds.extend(new window.google.maps.LatLng(userPosition.lat, userPosition.long));
+            bounds.extend(new window.google.maps.LatLng(userCoords.lat, userCoords.long));
             map.fitBounds(bounds);
         }
     }
 
     updateDirections() {
-        const { lat, long, userPosition } = this.props;
+        const { lat, long } = this.props;
+        const { userCoords } = this.context;
 
-        if (!lat || !long || !userPosition) {
+        if (!lat || !long || !userCoords) {
             return;
         }
 
         const directionsService = new window.google.maps.DirectionsService();
-        const origin = new window.google.maps.LatLng(userPosition.lat, userPosition.long);
+        const origin = new window.google.maps.LatLng(userCoords.lat, userCoords.long);
         const destination = new window.google.maps.LatLng(lat, long);
 
         this.directionsLoading = true;
@@ -62,7 +65,8 @@ class SingleParkingMap extends React.Component {
     }
 
     render() {
-        const { lat, long, userPosition } = this.props;
+        const { lat, long } = this.props;
+        const { userCoords } = this.context;
 
         return (
             <GoogleMap
@@ -71,8 +75,8 @@ class SingleParkingMap extends React.Component {
                 defaultCenter={{ lat: lat, lng: long }}
             >
                 <Marker position={{ lat: lat, lng: long }} />
-                { userPosition &&
-                    <LocationMarker {...userPosition} />
+                { userCoords &&
+                    <LocationMarker {...userCoords} />
                 }
                 {this.state.directions && <DirectionsRenderer directions={this.state.directions} />}
             </GoogleMap>
@@ -80,5 +84,8 @@ class SingleParkingMap extends React.Component {
     }
 }
 
+SingleParkingMap.contextTypes = {
+    userCoords: PropTypes.shape({}),
+};
 
 export default withGoogleMap(SingleParkingMap);

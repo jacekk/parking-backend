@@ -13,26 +13,32 @@ class UserDistanceToSpot extends Component {
     }
 
     componentDidMount() {
-        this.fetchDistance();
+        this.setState({
+            userCoords: this.context.userCoords,
+        }, () => {
+            this.fetchDistance();
+        });
     }
 
     fetchDistance() {
-        const { spotCoordinates, userCoordinates, userCoordinatesLoading } = this.props;
+        const { spotCoordinates } = this.props;
+        const { userCoords } = this.context;
 
-        if (!window.google || !window.google.maps) {
+        if (!userCoords || !spotCoordinates) {
             return;
         }
-        if (userCoordinatesLoading || !spotCoordinates) {
+        if (!window.google || !window.google.maps) {
             return;
         }
 
         const matrixService = new window.google.maps.DistanceMatrixService();
-        const origin = new window.google.maps.LatLng(userCoordinates.lat, userCoordinates.long);
+        const origin = new window.google.maps.LatLng(userCoords.lat, userCoords.long);
         const destination = new window.google.maps.LatLng(spotCoordinates.lat, spotCoordinates.long);
 
         this.setState({
-            isLoading: true,
             distanceText: null,
+            isLoading: true,
+            userCoords,
         }, () => {
             matrixService.getDistanceMatrix({
                 origins: [origin],
@@ -61,14 +67,19 @@ class UserDistanceToSpot extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (isEqual(this.props, prevProps)) {
+        if (!isEqual(this.props, prevProps)) {
+            this.fetchDistance();
             return;
         }
-        this.fetchDistance();
+
+        if (this.context.userCoords !== this.state.userCoords) {
+            this.fetchDistance();
+            return;
+        }
     }
 
     render() {
-        if (this.state.isLoading || this.props.userCoordinatesLoading) {
+        if (this.state.isLoading || this.context.userCoordsLoading) {
             return '...';
         }
 
@@ -77,12 +88,16 @@ class UserDistanceToSpot extends Component {
 };
 
 UserDistanceToSpot.propTypes = {
-    userCoordinatesLoading: PropTypes.bool,
     spotCoordinates: PropTypes.shape({
         lat: PropTypes.number,
         long: PropTypes.number,
     }),
-    userCoordinates: PropTypes.shape({
+};
+
+UserDistanceToSpot.contextTypes = {
+    userCoordsLoading: PropTypes.bool,
+    userCoordsDenied: PropTypes.bool,
+    userCoords: PropTypes.shape({
         lat: PropTypes.number,
         long: PropTypes.number,
     }),

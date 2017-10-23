@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
 import moment from 'moment';
 import 'moment-timezone';
@@ -34,11 +35,22 @@ class App extends Component {
         this.mapStateParkingToListItem = this.mapStateParkingToListItem.bind(this);
     }
 
+    getChildContext() {
+        return {
+            userCoordsLoading: this.state.userCoordsLoading,
+            userCoordsDenied: this.state.userCoordsDenied,
+            userCoords: this.state.userCoords,
+        };
+    }
+
     updateUserPosition(position) {
         const lat = position.coords.latitude;
         const long = position.coords.longitude;
 
-        this.setState({ userCoordsLoading: false, userCoords: { lat, long } });
+        this.setState({
+            userCoordsLoading: false,
+            userCoords: { lat, long },
+        });
     }
 
     showListPage(ev) {
@@ -80,7 +92,7 @@ class App extends Component {
 
     componentDidMount() {
         if (navigator && navigator.geolocation) {
-            this.setState({ userCoordinatesLoading: true });
+            this.setState({ userCoordsLoading: true });
             navigator.geolocation.getCurrentPosition(
                 this.updateUserPosition,
                 this.disableUserPosition,
@@ -99,8 +111,12 @@ class App extends Component {
         });
     }
 
-    disableUserPosition(errorCode) {
-        this.setState({ userCoordsDenied: true });
+    disableUserPosition(error) {
+        this.setState({
+            userCoordsDenied: true,
+            userCoordsLoading: false,
+        });
+        console.error(error.message || error);
     }
 
     getParkings() {
@@ -198,14 +214,10 @@ class App extends Component {
     }
 
     mapStateParkingToListItem({ name, freeSpots, coordinates, id }) {
-        const { userCoords, userCoordsLoading, userCoordsDenied } = this.state;
         return {
             key: id,
             name: name,
             spotCoordinates: coordinates,
-            userCoordinates: userCoords,
-            userCoordinatesDenied: userCoordsDenied,
-            userCoordinatesLoading: userCoordsLoading,
             freeSpots: freeSpots,
             onClick: ev => this.showDetailsPage(ev, name, id),
         };
@@ -238,9 +250,6 @@ class App extends Component {
                         trend={this.getTrend()}
                         backButtonHandler={this.showListPage}
                         nowIndex={this.state.history.length - 1}
-                        userPosition={this.state.userCoords}
-                        userPositionDenied={this.state.userCoordsDenied}
-                        userPositionLoading={this.state.userCoordsLoading}
                     />
                 </div>
             </div>
@@ -253,5 +262,11 @@ App.defaultProps = {
     getHistory: () => Promise.resolve(),
     getPredictions: () => Promise.resolve(),
 };
+
+App.childContextTypes = {
+    userCoordsLoading: PropTypes.bool,
+    userCoordsDenied: PropTypes.bool,
+    userCoords: PropTypes.shape({}),
+}
 
 export default App;

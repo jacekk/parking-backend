@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {BarChart, Bar, ResponsiveContainer, Rectangle} from 'recharts';
 
 import SingleParkingMap from '../SingleParkingMap';
@@ -25,9 +26,8 @@ const ParkingDetails = ({
     activeParkingChartData,
     trend,
     nowIndex,
-    userPosition,
-    userPositionDenied,
-    userPositionLoading,
+}, {
+    userCoordsDenied,
 }) => {
     const CustomLabel = (props) => {
         if (props.index !== nowIndex) {
@@ -66,13 +66,9 @@ const ParkingDetails = ({
                 <Card label="Trend">
                     {trend}
                 </Card>
-                { !userPositionDenied &&
+                { !userCoordsDenied &&
                     <Card label="Dystans">
-                        <UserDistanceToSpot
-                            spotCoordinates={activeParking.coordinates}
-                            userCoordinates={userPosition}
-                            userCoordinatesLoading={userPositionLoading}
-                        />
+                        <UserDistanceToSpot spotCoordinates={activeParking.coordinates} />
                     </Card>
                 }
                 <Card>
@@ -91,12 +87,15 @@ const ParkingDetails = ({
                         mapElement={<div style={{ height: `100%` }} />}
                         lat={activeParking.coordinates.lat}
                         long={activeParking.coordinates.long}
-                        userPosition={userPosition}
                     />
                 </div>
             }
         </section>
     ];
+};
+
+ParkingDetails.contextTypes = {
+    userCoordsDenied: PropTypes.bool,
 };
 
 
