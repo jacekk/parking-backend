@@ -2,7 +2,7 @@
 
 ### Development
 
-* `$ git clone https://github.com/jacekk/parkly.git`
+* `$ git clone git@bitbucket.org:jacekk/parkly.git`
 * `$ cd ./parkly/server`
 * `$ yarn install`
 * `$ cd ..`
@@ -16,7 +16,7 @@
 ### Deploy
 
 * `$ cd /var/www`
-* `$ git clone https://github.com/jacekk/parkly.git`
+* `$ git clone git@bitbucket.org:jacekk/parkly.git`
 * `$ cd parkly/client`
 * `$ yarn install`
 * `$ yarn run build:prod`
