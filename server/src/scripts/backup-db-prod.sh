@@ -9,6 +9,7 @@ mkdir -p $BACKUP_PATH
 mongodump \
     --db parkly \
     --host localhost \
-    --out $BACKUP_PATH
+    --archive=$BACKUP_PATH \
+    --gzip
 
 echo "Backed up sucessfully into: $BACKUP_PATH."
