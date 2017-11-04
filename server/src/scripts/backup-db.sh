@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-NOW_FORMATTED=`date +%Y%m%d-%H%M%S-%Z`
+NOW_FORMATTED=`date +%A`
 BACKUP_DIR="./db-backups"
 BACKUP_PATH="$BACKUP_DIR/$NOW_FORMATTED"
 
