@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-NOW_FORMATTED=`date +%Y%m%d-%H%M%S-%Z`
+NOW_FORMATTED=`date +%A`
 BACKUP_DIR="/backups/dbs"
 BACKUP_PATH="$BACKUP_DIR/$NOW_FORMATTED"
 
@@ -9,6 +9,7 @@ mkdir -p $BACKUP_PATH
 mongodump \
     --db parkly \
     --host localhost \
-    --out $BACKUP_PATH
+    --archive=$BACKUP_PATH \
+    --gzip
 
 echo "Backed up sucessfully into: $BACKUP_PATH."
