@@ -76,17 +76,19 @@ const fetchAndParseParkings = () => {
 
 const syncLocations = async (repo, locations) => {
     const persistedLocations = await repo.getLocations();
-    syncLogger.info(
-        'SYNC_LOCATIONS, incoming: %d | persisted: %d',
-        locations.length,
-        persistedLocations.length,
-    );
-    const newLength = locations.length - persistedLocations.length;
-    if (newLength > 0) {
-        syncLogger.info('SYNC_ADDING_LOCATIONS');
-        await repo.addParkingLocation(locations);
-    }
-    syncLogger.info('SYNC_LOCATIONS_FINISHED added: %d', newLength);
+    let addedNumber = 0;
+
+    locations.forEach((location) => {
+        const alreadyAdded = persistedLocations.filter(item => item.name === location.name).length > 0
+
+        if (!alreadyAdded) {
+            syncLogger.info('SYNC_ADDING_LOCATIONS name: %s', location.name);
+            repo.addParkingLocation(location);
+            addedNumber += 1;
+        }
+    });
+
+    syncLogger.info('SYNC_LOCATIONS_FINISHED added: %d', addedNumber);
 };
 
 const synchronize = async repo => {
