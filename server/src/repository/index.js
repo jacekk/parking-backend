@@ -79,31 +79,20 @@ function addCoordinates(parking) {
     const newData = Object.assign({}, parking);
 
     switch (parking.name) {
+        case 'Nowy Targ':
+            newData.coordinates = { lat: 51.111308, long: 17.038396 };
+            break;
         case 'Renoma':
-            newData.coordinates = {
-                lat: 51.1036327,
-                long: 17.0293532,
-            };
+            newData.coordinates = { lat: 51.1036327, long: 17.0293532 };
             break;
         case 'Narodowe Forum Muzyki':
-            newData.coordinates = {
-                lat: 51.1078935,
-                long: 17.0241357,
-            };
+            newData.coordinates = { lat: 51.1078935, long: 17.0241357 };
             break;
         case 'Parking Hala Stulecia':
-            newData.coordinates = {
-                lat: 51.1063,
-                long: 17.0776538,
-            };
+            newData.coordinates = { lat: 51.1063, long: 17.0776538 };
             break;
         case 'ul. św. Antoniego':
-            newData.coordinates = {
-                lat: 51.0973204,
-                long: 17.0319734,
-            };
-            break;
-        default:
+            newData.coordinates = { lat: 51.0973204, long: 17.0319734 };
             break;
     }
 
