@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-NOW_FORMATTED=`date +%A`
-BACKUP_DIR="/backups/dbs"
+LEAVE_LATEST=5
+NOW_FORMATTED=`date +%Y%m%d-%H%M%S-%Z`
+BACKUP_DIR="/backups/parkly-db"
 BACKUP_PATH="$BACKUP_DIR/$NOW_FORMATTED"
 
 mkdir -p $BACKUP_PATH
@@ -12,4 +13,9 @@ mongodump \
     --archive=$BACKUP_PATH \
     --gzip
 
-echo "Backed up sucessfully into: $BACKUP_PATH."
+echo "Backup created sucessfully into: $BACKUP_PATH."
+
+cd "$BACKUP_DIR"
+ls . | head -n -$LEAVE_LATEST | xargs rm -rf
+
+echo "Removed oldest backups; left $LEAVE_LATEST."

@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-const { startApp } = require('./src/app/run');
+const { startApp } = require('./app/run');
 const {
     getLocations,
     getLocationHistory,
     getLocationPredictions,
-} = require('./src/app/routes');
+} = require('./app/routes');
 
 app.use(cors());
 app.get('/locations', getLocations);
