@@ -8,7 +8,7 @@
     "db:backup:prod": "./src/scripts/backup-db-prod.sh",
     "db:drop": "node ./src/scripts/drop-db.js",
     "db:drop:prod": "yarn run db:backup && NODE_ENV=production node ./src/scripts/drop-db.js",
-    "serve:dev": "nodemon index.js",
+    "serve:dev": "nodemon start.js",
     "serve:prod": "pm2 start ecosystem.config.js --env production",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

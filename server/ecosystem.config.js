@@ -6,7 +6,8 @@ module.exports = {
     apps : [
         {
             name: 'parkly-api',
-            script: './index.js', // @todo move all js files to 'src' directory
+            script: './start.js',
+            log_date_format: 'YYYY-MM-DD HH:mm Z',
             env: {
                 SERVE_PORT: 4000,
                 NODE_ENV: 'development',
