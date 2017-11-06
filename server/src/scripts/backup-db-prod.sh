@@ -2,7 +2,7 @@
 
 LEAVE_LATEST=5
 NOW_FORMATTED=`date +%Y%m%d-%H%M%S-%Z`
-BACKUP_DIR="/backups/dbs"
+BACKUP_DIR="/backups/parkly-db"
 BACKUP_PATH="$BACKUP_DIR/$NOW_FORMATTED"
 
 mkdir -p $BACKUP_PATH
