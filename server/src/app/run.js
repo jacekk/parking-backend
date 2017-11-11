@@ -10,14 +10,16 @@ const appListenCallback = err => {
 };
 
 const startApp = (app) => {
-    fetchAndParseParkings().then(({ locations, entries }) => {
-        getRepository()
-            .then(repository => {
-                startSynchronizingWithAPI(repository, SYNC_INTERVAL);
-                app.listen(API_PORT, appListenCallback);
-            })
-            .catch(err => console.error(err));
-    });
+    fetchAndParseParkings()
+        .then(({ locations, entries }) => {
+            getRepository()
+                .then(repository => {
+                    startSynchronizingWithAPI(repository, SYNC_INTERVAL);
+                    app.listen(API_PORT, appListenCallback);
+                })
+                .catch(err => console.error(err));
+        })
+        .catch(() => {});
 };
 
 module.exports = { startApp };

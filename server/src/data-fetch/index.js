@@ -71,7 +71,10 @@ const fetchSuccess = lines => {
 const fetchAndParseParkings = () => {
     return getCSV(CSV_FILE_URL, { headers: false, encoding: 'utf8' })
         .then(fetchSuccess)
-        .catch(err => console.error('Fetch error', err));
+        .catch(err => {
+            console.error('Fetch error', err)
+            throw err;
+        });
 };
 
 const syncLocations = async (repo, locations) => {
