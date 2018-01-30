@@ -11,7 +11,7 @@ const sortEntries = (curr, next) =>
 const normalizeCsvDate = src => [src.split('.')[0], WRO_OPEN_DATA_TZ].join('');
 
 const parse = (parsedEntries = [], groupedEntriesByLocation = {}, line) => {
-    const [time, freeSpots, carsIn, carsOut, location] = line.split(';');
+    const [id, time, freeSpots, carsIn, carsOut, location] = line.split(',');
     const parsedTime = moment(normalizeCsvDate(time)).toDate();
 
     const newEntry = {
