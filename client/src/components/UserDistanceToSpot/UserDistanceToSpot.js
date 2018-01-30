@@ -13,6 +13,10 @@ class UserDistanceToSpot extends Component {
     }
 
     componentDidMount() {
+        document.addEventListener('google-maps-loaded', () => {
+            this.fetchDistance();
+        });
+
         this.setState({
             userCoords: this.context.userCoords,
         }, () => {
@@ -27,7 +31,7 @@ class UserDistanceToSpot extends Component {
         if (!userCoords || !spotCoordinates) {
             return;
         }
-        if (!window.google || !window.google.maps) {
+        if (!get(window, 'google.maps')) {
             return;
         }
 
@@ -67,12 +71,14 @@ class UserDistanceToSpot extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if (!this.props.name) {
+            return;
+        }
         if (!isEqual(this.props, prevProps)) {
             this.fetchDistance();
             return;
         }
-
-        if (this.context.userCoords !== this.state.userCoords) {
+        if (!isEqual(this.context.userCoords, this.state.userCoords)) {
             this.fetchDistance();
             return;
         }

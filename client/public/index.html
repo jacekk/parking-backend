@@ -22,11 +22,14 @@
     <link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet">
     <title>PARKLY | Wolne miejsca parkingowe w zasięgu twoich kół!</title>
     <script>
+        var triggerGoogleMapsLoadedEvent = function () {
+            document.dispatchEvent(new CustomEvent('google-maps-loaded'));
+        };
         var GOOGLE_API_KEY = 'AIzaSyAJc0tOv428FoJYWwwHQcCnfLHVn6E4U18';
         var GOOGLE_MAP_URL = [
             'https://maps.googleapis.com/maps/api/js?key=',
             GOOGLE_API_KEY,
-            '&v=3.exp&libraries=geometry,drawing,places'
+            '&v=3.exp&libraries=geometry,drawing,places&callback=triggerGoogleMapsLoadedEvent'
         ].join('');
 
         var googleMapsScript = document.createElement('script');
