@@ -71,9 +71,6 @@ class UserDistanceToSpot extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (!this.props.name) {
-            return;
-        }
         if (!isEqual(this.props, prevProps)) {
             this.fetchDistance();
             return;
