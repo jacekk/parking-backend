@@ -15,6 +15,7 @@ const getLocations = async (req, res) => {
 
         res.send(parkings);
     } catch (err) {
+        console.log(err);
         res.status(500).end();
     }
 
@@ -37,8 +38,8 @@ const getLocationHistory = async (req, res) => {
 
         res.send(entries);
     } catch (err) {
-        console.log(err)
-        res.status(500).end(err);
+        console.error(err);
+        res.status(500).end();
     }
 };
 
@@ -72,7 +73,7 @@ const getLocationPredictions = async (req, res) => {
         res.send(mapPredictions(entries, parking.freeSpots));
     } catch (err) {
         console.log(err);
-        res.status(500).end(err);
+        res.status(500).end();
     }
 };
 
