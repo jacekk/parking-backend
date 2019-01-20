@@ -2,7 +2,7 @@
   "name": "parkly-api",
   "version": "0.1.0",
   "private": true,
-  "main": "index.js",
+  "main": "start.js",
   "scripts": {
     "db:backup": "./src/scripts/backup-db.sh",
     "db:backup:prod": "./src/scripts/backup-db-prod.sh",
@@ -10,7 +10,7 @@
     "db:drop:prod": "yarn run db:backup && NODE_ENV=production node ./src/scripts/drop-db.js",
     "serve:dev": "nodemon start.js",
     "serve:prod": "pm2 start ecosystem.config.js --env production",
-    "start": "node index.js",
+    "start": "node start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
