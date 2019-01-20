@@ -52,7 +52,10 @@ const getRepository = async () => {
                             id: 1,
                         },
                     },
-                ])
+                ], {
+                    allowDiskUse: true,
+                    cursor: { batchSize: 1000 }
+                })
                 .toArray();
 
             return parkings.map(addCoordinates);
